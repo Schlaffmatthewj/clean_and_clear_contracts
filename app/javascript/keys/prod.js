@@ -1,3 +1,3 @@
 module.exports = {
-    PRIME_KEY: PRIME_KEY
+    PRIME_KEY: process.env.PRIME_KEY
 }
