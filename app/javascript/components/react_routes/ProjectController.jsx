@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 
 import Project from "../partials/projects/Project"
-import Task from "../partials/tasks/Task"
+import Task from "../partials/projects/Task"
 
 class ProjectController extends Component {
     constructor(props) {
@@ -37,6 +37,7 @@ class ProjectController extends Component {
                         loggedInStatus={this.props.loggedInStatus}
                         company={this.props.company}
                         project_id={project_id}
+                        phaseForm={this.phaseForm}
                         />
             case 'Task':
                 return <Task

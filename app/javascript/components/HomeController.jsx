@@ -74,6 +74,13 @@ export default class HomeController extends Component {
                             company={this.state.company}
                             />}
           />
+          <Route path='/create/project/:project_id/phase' exact
+          render={props => <CreateController {...props}
+                            currentStatus='Phase_New'
+                            loggedInStatus={this.state.loggedInStatus}
+                            company={this.state.company}
+                            />}
+          />
           <Route path='/create/project/:project_id/phase/:phase_id/task' exact
           render={props => <CreateController {...props}
                             currentStatus='Task_New'

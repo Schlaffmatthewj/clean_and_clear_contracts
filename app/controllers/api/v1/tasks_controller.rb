@@ -20,10 +20,17 @@ module Api
             def create
                 @api_v1_task = Api::V1::Task.new api_v1_task_params
                 phase_id = params[:phase_id]
+                project_id = params[:project_id].to_i
                 @api_v1_task[:api_v1_phase_id] = phase_id
+                task = { id: @api_v1_task[:id], title: @api_v1_task[:title], 
+                    description: @api_v1_task[:description], budget: @api_v1_task[:budget], 
+                    is_done: @api_v1_task[:is_done], api_v1_phase_id: @api_v1_task[:api_v1_phase_id],
+                    project_id: project_id, start_date: @api_v1_task[:start_date], 
+                    turnover_date: @api_v1_task[:turnover_date]
+                    }
         
                 if @api_v1_task.save
-                    render json: { message: 'Task was successfully created.', results: @api_v1_task }
+                    render json: { message: 'Task was successfully created.', results: task }
                 else
                     render json: { message: 'Task was NOT successfully created.', results: @api_v1_task.errors }
                 end

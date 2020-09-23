@@ -1,8 +1,10 @@
 import React, { Component } from "react"
+import { Redirect } from "react-router-dom"
 
+import PhaseNew from "../partials/projects/PhaseNew"
 import PrimeNew from "../partials/auth/PrimeNew"
 import ProjectNew from "../partials/projects/ProjectNew"
-import TaskNew from "../partials/tasks/Task"
+import TaskNew from "../partials/projects/TaskNew"
 
 class CreateController extends Component {
     constructor(props) {
@@ -14,6 +16,7 @@ class CreateController extends Component {
 
         this.togglePrime = this.togglePrime.bind(this)
         this.successfulProject = this.successfulProject.bind(this)
+        this.successfulPhaseOrTask = this.successfulPhaseOrTask.bind(this)
     }
 
     componentDidMount() {
@@ -62,6 +65,11 @@ class CreateController extends Component {
         })
     }
 
+    successfulPhaseOrTask(id) {
+        // <Redirect push to={`/project/${id}`} />
+        this.props.history.push(`/project/${id}`)  // NEED TO UNDERSTAND MORE ABOUT HOW TO UPDATE OR REDIRECT
+    }
+
     conditionalRender() {
         let project_id = this.props.match.params.project_id
         let phase_id = this.props.match.params.phase_id
@@ -70,8 +78,14 @@ class CreateController extends Component {
                 return <ProjectNew
                         loggedInStatus={this.props.loggedInStatus}
                         company={this.props.company}
-                        project_id={project_id}
                         successfulProject={this.successfulProject}
+                        />
+            case 'Phase_New':
+                return <PhaseNew
+                        loggedInStatus={this.props.loggedInStatus}
+                        company={this.props.company}
+                        project_id={project_id}
+                        successfulPhaseOrTask={this.successfulPhaseOrTask}
                         />
             case 'Task_New':
                 return <TaskNew
@@ -79,6 +93,7 @@ class CreateController extends Component {
                         company={this.props.company}
                         project_id={project_id}
                         phase_id={phase_id}
+                        successfulPhaseOrTask={this.successfulPhaseOrTask}
                         />
             case 'Prime_Contractor':
                 return <PrimeNew

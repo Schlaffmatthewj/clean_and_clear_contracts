@@ -36,15 +36,15 @@ class Task extends Component {
                 <p>Completed: {this.state.task.is_done ? 'Completed' : 'Incomplete'}</p>
                 <ul>
                     <li>Sub Contractor</li>
-                        <ul>
+                        {this.state.task.sub_contractor ? <ul>
                             <li>{this.state.task.sub_contractor.name}</li>
                             <li>{this.state.task.sub_contractor.address}</li>
                             <li>{this.state.task.sub_contractor.phone}</li>
-                        </ul>
-                    <li>Sub Contract</li>
-                        <ul>
-                            <li>{this.state.task.subcontract.amount}</li>
-                        </ul>
+                            <li>
+                                <h5>Sub Contract</h5>
+                                <p>Total: {this.state.task.subcontracts.amount}</p>
+                            </li>
+                        </ul> : <span>No Subcontractor</span>}
                 </ul>
             </article>
         )

@@ -15,12 +15,28 @@ class Project extends Component {
         fetch(`/api/v1/projects/${id}`)
         .then(res => res.json())
         .then(res => {
-            console.log('fetching', res)
+            // console.log('fetching', res)
             this.setState({
                 project: res.results,
                 dataLoaded: true
             })
         })
+    }
+
+    addAPhase() {
+        return (
+            <li>
+                {this.props.loggedInStatus === 'LOGGED_IN' ? (this.props.company.id === this.state.project.prime_contractor.id) ? <Link to={`/create/project/${this.state.project.id}/phase`}>Add A Phase</Link> : null : null}
+            </li>
+        )
+    }
+
+    addATask(phase_id) {
+        return (
+            <li>
+                {this.props.loggedInStatus === 'LOGGED_IN' ? (this.props.company.id === this.state.project.prime_contractor.id) ? <Link to={`/create/project/${this.state.project.id}/phase/${phase_id}/task`}>Add A Task</Link> : null : null}
+            </li>
+        )
     }
 
     conditionalRender() {
@@ -58,6 +74,7 @@ class Project extends Component {
                 </div>
                 <ul>
                     <li>Phases</li>
+                    {this.state.dataLoaded && this.addAPhase()}
                     <li>
                     {phases.length > 0 
                     ? phases.map(el => {
@@ -69,8 +86,10 @@ class Project extends Component {
                                 <li>{el.start_date}</li>
                                 <li>{el.turnover_date}</li>
                                 <li>Completed: {el.is_done ? 'Completed' : 'Incomplete'}</li>
+                                <li>Tasks</li>
+                                {this.state.dataLoaded && this.addATask(el.id)}
                                 <li>
-                                    Tasks: {el.tasks.length > 0 ? el.tasks.map(task => (
+                                    {el.tasks.length > 0 ? el.tasks.map(task => (
                                         <ul key={task.id}>
                                             <li><Link to={`/project/${id}/phase/${el.id}/task/${task.id}`}>{task.title}</Link></li>
                                             <li>{task.budget}</li>
@@ -78,19 +97,17 @@ class Project extends Component {
                                             <li>{task.start_date}</li>
                                             <li>{task.turnover_date}</li>
                                             <li>Completed: {task.is_done ? 'Completed' : 'Incomplete'}</li>
+                                            <li>Sub Contractor</li>
                                             <li>
-                                                <h5>Sub Contractor</h5>
-                                                <ul>
+                                                {task.sub_contractor ? <ul>
                                                     <li><Link to={`/company/${task.sub_contractor.id}`}>{task.sub_contractor.name}</Link></li>
                                                     <li>{task.sub_contractor.address}</li>
                                                     <li>{task.sub_contractor.phone}</li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <h5>Sub Contract</h5>
-                                                <ul>
-                                                    <li>Total: {task.subcontracts.amount}</li>
-                                                </ul>
+                                                    <li>
+                                                        <h5>Sub Contract</h5>
+                                                        <p>Total: {task.subcontracts.amount}</p>
+                                                    </li>
+                                                </ul> : <span>No Subcontractor</span>}
                                             </li>
                                         </ul>
                                     )) : <span>No Tasks</span>}
