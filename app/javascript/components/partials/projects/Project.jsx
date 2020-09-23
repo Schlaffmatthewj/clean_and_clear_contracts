@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 
-class ProjectController extends Component {
+class Project extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -91,4 +91,4 @@ class ProjectController extends Component {
         )
     }
 }
-export default ProjectController;
+export default Project;
