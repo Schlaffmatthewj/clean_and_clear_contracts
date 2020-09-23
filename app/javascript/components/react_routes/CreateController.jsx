@@ -15,7 +15,6 @@ class CreateController extends Component {
         }
 
         this.togglePrimeOrOwner = this.togglePrimeOrOwner.bind(this)
-        this.successfulProject = this.successfulProject.bind(this)
         this.successfulPhaseOrTask = this.successfulPhaseOrTask.bind(this)
         this.primeContract = this.primeContract.bind(this)
         this.subContract = this.subContract.bind(this)

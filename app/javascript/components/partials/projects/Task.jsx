@@ -37,12 +37,16 @@ class Task extends Component {
                 <ul>
                     <li>Sub Contractor</li>
                         {this.state.task.sub_contractor ? <ul>
-                            <li>{this.state.task.sub_contractor.name}</li>
+                            <li>
+                                <Link to={`/company/${this.state.task.sub_contractor.id}`}>
+                                {this.state.task.sub_contractor.name}
+                                </Link>
+                            </li>
                             <li>{this.state.task.sub_contractor.address}</li>
                             <li>{this.state.task.sub_contractor.phone}</li>
                             <li>
                                 <h5>Sub Contract</h5>
-                                <p>Total: {this.state.task.subcontracts.amount}</p>
+                                <p>Total: {this.state.task.subcontract.amount}</p>
                             </li>
                         </ul> : <span>No Subcontractor</span>}
                 </ul>

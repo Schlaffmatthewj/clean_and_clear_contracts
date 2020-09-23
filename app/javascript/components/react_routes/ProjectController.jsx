@@ -10,6 +10,8 @@ class ProjectController extends Component {
             pageStatus: '',
             dataLoaded: false
         }
+
+        this.switchToProfile = this.switchToProfile.bind(this)
     }
 
     componentDidUpdate() {
@@ -27,6 +29,10 @@ class ProjectController extends Component {
         }
     }
 
+    switchToProfile() {
+        this.props.history.push(`/profile/${this.props.company.id}`)
+    }
+
     conditionalRender() {
         let project_id = this.props.match.params.project_id
         let phase_id = this.props.match.params.phase_id
@@ -38,6 +44,7 @@ class ProjectController extends Component {
                         company={this.props.company}
                         project_id={project_id}
                         phaseForm={this.phaseForm}
+                        switchToProfile={this.switchToProfile}
                         />
             case 'Task':
                 return <Task
@@ -46,6 +53,7 @@ class ProjectController extends Component {
                         project_id={project_id}
                         phase_id={phase_id}
                         task_id={task_id}
+                        addedContract={this.addedContract}
                         />
             default:
                 this.props.history.push('/')
