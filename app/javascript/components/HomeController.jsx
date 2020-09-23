@@ -60,6 +60,13 @@ export default class HomeController extends Component {
                             company={this.state.company}
                             />}
           />
+          <Route path='/create/owner' exact
+          render={props => <CreateController {...props}
+                            currentStatus='Property_Owner'
+                            loggedInStatus={this.state.loggedInStatus}
+                            company={this.state.company}
+                            />}
+          />
           <Route path='/create/prime' exact
           render={props => <CreateController {...props}
                             currentStatus='Prime_Contractor'

@@ -19,7 +19,9 @@ module Api
         
             def create
                 @api_v1_project = Api::V1::Project.new api_v1_project_params
-                
+                property_owner = Api::V1::Company.find_by name: @api_v1_project[:owner]
+                @api_v1_project[:api_v1_company_id] = property_owner[:id]
+
                 if @api_v1_project.save
                     render json: { message: 'Project was successfully created.', results: @api_v1_project }
                 else

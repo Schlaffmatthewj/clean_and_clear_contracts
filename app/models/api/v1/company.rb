@@ -3,6 +3,7 @@ module Api
         class Company < ApplicationRecord
             has_secure_password
 
+            has_many :api_v1_projects, class_name: 'Api::V1::Project', foreign_key: :api_v1_company_id, dependent: :destroy
             has_many :api_v1_prime_contracts, class_name: 'Api::V1::PrimeContract', foreign_key: :api_v1_company_id, dependent: :destroy
             has_many :api_v1_sub_contracts, class_name: 'Api::V1::SubContract', foreign_key: :api_v1_company_id, dependent: :destroy
 
@@ -12,6 +13,7 @@ module Api
             validates :established_date, presence: true
 
             def to_json_with_contracts
+                owned_projects = self.api_v1_projects
                 sub_contracts = self.api_v1_sub_contracts
                 if sub_contracts.length > 0
                     sub_tasks = sub_contracts.map { |contract|
@@ -33,8 +35,9 @@ module Api
                     prime_projects = []
                 end
                 { id: self.id, name: self.name, address: self.address, phone: self.phone, 
-                    established_date: self.established_date, is_prime: self.is_prime, 
-                    contracts: { prime_contracts: prime_projects, sub_contracts: sub_tasks } }
+                    established_date: self.established_date, is_owner: self.is_owner, is_prime: self.is_prime,
+                    owned_projects: owned_projects, contracts: { prime_contracts: prime_projects,
+                    sub_contracts: sub_tasks } }
             end
         end
     end

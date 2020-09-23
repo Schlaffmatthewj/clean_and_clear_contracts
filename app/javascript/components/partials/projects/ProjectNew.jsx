@@ -5,7 +5,6 @@ class ProjectNew extends Component {
         super(props)
         this.state = {
             name: '',
-            owner: '',
             location: '',
             budget: '',
             start_date: '',
@@ -24,7 +23,6 @@ class ProjectNew extends Component {
         evt.preventDefault()
         const {
             name,
-            owner,
             location,
             budget,
             start_date,
@@ -33,7 +31,7 @@ class ProjectNew extends Component {
         let data = {
             api_v1_project: {
                 name: name,
-                owner: owner,
+                owner: this.props.company.name,
                 location: location,
                 budget: budget,
                 start_date: start_date,
@@ -50,8 +48,8 @@ class ProjectNew extends Component {
         })
         .then(res => res.json())
         .then(res => {
-            // console.log('NEW Project res', res)
-            this.props.successfulProject(res.results)
+            console.log('NEW Project res', res)
+            // this.props.successfulProject(res.results)
         })
     }
 
@@ -63,13 +61,6 @@ class ProjectNew extends Component {
                 name='name'
                 value={this.state.name}
                 placeholder="Project's Name"
-                onChange={this.handleChange}
-                />
-                <input
-                type='text'
-                name='owner'
-                value={this.state.owner}
-                placeholder="Property Owner"
                 onChange={this.handleChange}
                 />
                 <input
@@ -106,7 +97,7 @@ class ProjectNew extends Component {
                 </label>
                 <input
                 type='submit'
-                value='Sign Contract'
+                value='Draft Project'
                 />
             </form>
         )

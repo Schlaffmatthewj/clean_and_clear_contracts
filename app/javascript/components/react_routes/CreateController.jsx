@@ -1,6 +1,6 @@
 import React, { Component } from "react"
-import { Redirect } from "react-router-dom"
 
+import OwnerNew from "../partials/auth/OwnerNew"
 import PhaseNew from "../partials/projects/PhaseNew"
 import PrimeNew from "../partials/auth/PrimeNew"
 import ProjectNew from "../partials/projects/ProjectNew"
@@ -14,9 +14,11 @@ class CreateController extends Component {
             dataLoaded: false
         }
 
-        this.togglePrime = this.togglePrime.bind(this)
+        this.togglePrimeOrOwner = this.togglePrimeOrOwner.bind(this)
         this.successfulProject = this.successfulProject.bind(this)
         this.successfulPhaseOrTask = this.successfulPhaseOrTask.bind(this)
+        this.primeContract = this.primeContract.bind(this)
+        this.subContract = this.subContract.bind(this)
     }
 
     componentDidMount() {
@@ -34,21 +36,23 @@ class CreateController extends Component {
         }
     }
 
-    togglePrime() {
-        this.props.history.push(`/profile/${this.props.company.id}`)
+    togglePrimeOrOwner(company_id) {
+        this.props.history.push(`/profile/${company_id}`)
     }
 
-    successfulProject(data) {
+    subContract() {
+        // may need to take in data
+    }
+
+    primeContract(data) {
         // console.log(data)
-        let subTotal = data.budget * .05
-        let amount = Math.round(data.budget) + subTotal
         let project_id = data.id
         let company_id = this.props.company.id
         let contract = {
             api_v1_prime_contract: {
                 api_v1_company_id: company_id,
                 api_v1_project_id: project_id,
-                amount: amount
+                amount: amount  // MAKE SURE THIS DOES NOT EXCEED 10% OF PROJECT BUDGET
             }
         }
         fetch(`/api/v1/companies/${company_id}/projects/${project_id}/prime_contracts`, {
@@ -78,7 +82,6 @@ class CreateController extends Component {
                 return <ProjectNew
                         loggedInStatus={this.props.loggedInStatus}
                         company={this.props.company}
-                        successfulProject={this.successfulProject}
                         />
             case 'Phase_New':
                 return <PhaseNew
@@ -99,7 +102,13 @@ class CreateController extends Component {
                 return <PrimeNew
                         loggedInStatus={this.props.loggedInStatus}
                         company={this.props.company}
-                        togglePrime={this.togglePrime}
+                        togglePrimeOrOwner={this.togglePrimeOrOwner}
+                        />
+            case 'Property_Owner':
+                return <OwnerNew
+                        loggedInStatus={this.props.loggedInStatus}
+                        company={this.props.company}
+                        togglePrimeOrOwner={this.togglePrimeOrOwner}
                         />
             default:
                 this.props.history.push('/')

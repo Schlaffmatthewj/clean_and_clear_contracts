@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_21_163742) do
+ActiveRecord::Schema.define(version: 2020_09_23_171955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2020_09_21_163742) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "password_digest"
+    t.boolean "is_owner", default: false
   end
 
   create_table "api_v1_phases", force: :cascade do |t|
@@ -59,6 +60,8 @@ ActiveRecord::Schema.define(version: 2020_09_21_163742) do
     t.boolean "is_done", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "api_v1_company_id"
+    t.index ["api_v1_company_id"], name: "index_api_v1_projects_on_api_v1_company_id"
   end
 
   create_table "api_v1_sub_contracts", force: :cascade do |t|
@@ -85,6 +88,7 @@ ActiveRecord::Schema.define(version: 2020_09_21_163742) do
   add_foreign_key "api_v1_phases", "api_v1_projects"
   add_foreign_key "api_v1_prime_contracts", "api_v1_companies"
   add_foreign_key "api_v1_prime_contracts", "api_v1_projects"
+  add_foreign_key "api_v1_projects", "api_v1_companies"
   add_foreign_key "api_v1_sub_contracts", "api_v1_companies"
   add_foreign_key "api_v1_sub_contracts", "api_v1_tasks"
   add_foreign_key "api_v1_tasks", "api_v1_phases"

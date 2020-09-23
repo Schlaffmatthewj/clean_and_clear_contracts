@@ -48,7 +48,7 @@ module Api
             end
         
             def api_v1_company_params
-                params.require(:api_v1_company).permit(:name, :password, :password_confirmation, :address, :phone, :established_date, :is_prime)
+                params.require(:api_v1_company).permit(:name, :password, :password_confirmation, :address, :phone, :established_date, :is_prime, :is_owner)
             end
         end
     end    

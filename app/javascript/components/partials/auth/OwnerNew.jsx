@@ -2,7 +2,7 @@ import React, { Component } from "react"
 const keys = require('../../../keys')
 
 
-class PrimeNew extends Component {
+class OwnerNew extends Component {
     constructor(props) {
         super(props)
 
@@ -20,10 +20,10 @@ class PrimeNew extends Component {
 
     handleSubmit(evt) {
         evt.preventDefault()
-        if (this.state.password === keys.PRIME_KEY) {
+        if (this.state.password === keys.OWNER_KEY) {
             let data = {
                 api_v1_company: {
-                    is_prime: true
+                    is_owner: true
                 }
             }
             fetch(`/api/v1/companies/${this.props.company.id}`, {
@@ -49,7 +49,7 @@ class PrimeNew extends Component {
                 type='password'
                 name='password'
                 value={this.state.password}
-                placeholder='Prime Contractor Password'
+                placeholder='Project Owner Password'
                 onChange={this.handleChange}
                 />
                 <input
@@ -60,4 +60,4 @@ class PrimeNew extends Component {
         )
     }
 }
-export default PrimeNew
+export default OwnerNew

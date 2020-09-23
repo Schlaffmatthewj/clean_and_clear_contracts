@@ -1,6 +1,7 @@
 module Api
     module V1
         class Project < ApplicationRecord
+            belongs_to :api_v1_company, class_name: 'Api::V1::Company'
             has_one :api_v1_prime_contracts, class_name: 'Api::V1::PrimeContract', foreign_key: :api_v1_project_id, dependent: :destroy
             has_many :api_v1_phases, class_name: 'Api::V1::Phase', foreign_key: :api_v1_project_id, dependent: :destroy
             has_many :api_v1_tasks, class_name: 'Api::V1::Task', through: :api_v1_phases, dependent: :destroy
@@ -37,17 +38,10 @@ module Api
                     turnover_date: phase.turnover_date, is_done: phase.is_done, 
                     api_v1_project_id: phase.api_v1_project_id, tasks: tasks_with_contracts }
                 }
-                { id: self.id, name: self.name, owner: self.owner, location: self.location, 
+                { id: self.id, name: self.name, owner: self.owner, api_v1_company: self.api_v1_company, location: self.location, 
                 budget: self.budget, start_date: self.start_date, turnover_date: self.turnover_date, 
                 is_done: self.is_done, prime_contractor: prime_contractor, prime_contract: prime_contract, phases: phases_with_tasks }
             end
-
-            # def to_json_with_only_prime
-            #     prime_contract = self.api_v1_prime_contracts
-            #     { id: self.id, name: self.name, owner: self.owner, location: self.location, 
-            #     budget: self.budget, start_date: self.start_date, turnover_date: self.turnover_date, 
-            #     is_done: self.is_done, prime_contract: prime_contract }
-            # end
         end
     end
 end

@@ -74,7 +74,15 @@ class Profile extends Component {
     isPrimeContractor() {
         return (
             <aside>
-                {this.state.company.is_prime ? <Link to='/create/project'>Create New Project</Link> : <Link to='/create/prime'>Prime Contractor Permission</Link> }
+                {!this.state.company.is_prime ? <Link to='/create/prime'>Prime Contractor Permissions</Link> : null }
+            </aside>
+        )
+    }
+
+    isPropertyOwner() {
+        return (
+            <aside>
+                {!this.state.company.is_owner ? <Link to='/create/owner'>Property Owner Permissions</Link> : <Link to='/create/project'>Create New Project</Link> }
             </aside>
         )
     }
@@ -82,6 +90,7 @@ class Profile extends Component {
     render() {
         return (
             <main>
+               {this.state.dataLoaded && this.isPropertyOwner()}
                {this.state.dataLoaded && this.isPrimeContractor()}
                {this.state.dataLoaded ? this.conditionalRender() : <p>Loading...</p>}
             </main>

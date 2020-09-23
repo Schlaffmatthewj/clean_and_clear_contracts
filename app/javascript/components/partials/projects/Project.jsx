@@ -1,6 +1,9 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 
+import PrimeContractNew from "../partials/projects/PrimeContractNew"
+import SubContractNew from "../partials/projects/SubContractNew"
+
 class Project extends Component {
     constructor(props) {
         super(props)
@@ -26,7 +29,11 @@ class Project extends Component {
     addAPhase() {
         return (
             <li>
-                {this.props.loggedInStatus === 'LOGGED_IN' ? (this.props.company.id === this.state.project.prime_contractor.id) ? <Link to={`/create/project/${this.state.project.id}/phase`}>Add A Phase</Link> : null : null}
+                {this.props.loggedInStatus === 'LOGGED_IN'
+                ? (this.props.company.id === this.state.project.prime_contractor.id
+                || this.props.company.name === this.state.project.owner)
+                ? <Link to={`/create/project/${this.state.project.id}/phase`}>Add A Phase</Link>
+                : null : null}
             </li>
         )
     }
@@ -34,12 +41,29 @@ class Project extends Component {
     addATask(phase_id) {
         return (
             <li>
-                {this.props.loggedInStatus === 'LOGGED_IN' ? (this.props.company.id === this.state.project.prime_contractor.id) ? <Link to={`/create/project/${this.state.project.id}/phase/${phase_id}/task`}>Add A Task</Link> : null : null}
+                {this.props.loggedInStatus === 'LOGGED_IN'
+                ? (this.props.company.id === this.state.project.prime_contractor.id
+                || this.props.company.name === this.state.project.owner)
+                ? <Link to={`/create/project/${this.state.project.id}/phase/${phase_id}/task`}>Add A Task</Link>
+                : null : null}
             </li>
         )
     }
 
+    checkPrime() {
+        return (
+            <div>
+                {(this.props.loggedInStatus ===  'LOGGED_IN')
+                ? (this.company.is_prime)
+                ? <PrimeContractNew project={this.state.project} />
+                : <Link to='/create/prime'>Request Prime Contractor Permissions</Link>
+                : <p>No Prime Contractor</p> }
+            </div>
+        )
+    }
+
     conditionalRender() {
+        console.log(this.state.project)
         const {
             id,
             name,
@@ -51,18 +75,20 @@ class Project extends Component {
             start_date,
             turnover_date,
             is_done,
-            phases
+            phases,
+            api_v1_company
         } = this.state.project
         return (
             <article>
                 <h2>{name}</h2>
-                <cite>{owner}</cite>
+                <cite><Link to={`/company/${api_v1_company.id}`}>{owner}</Link></cite>
                 <p>{location}</p>
                 <p>{budget}</p>
                 <p>{start_date}</p>
                 <p>{turnover_date}</p>
                 <p>Completed: {is_done ? 'Completed' : 'Incomplete'}</p>
-                <div>
+                {prime_contractor
+                ? <div>
                     <h5>Prime Contractor</h5>
                     <h6><Link to={`/company/${prime_contractor.id}`}>{prime_contractor.name}</Link></h6>
                     <p>{prime_contractor.address}</p>
@@ -72,6 +98,7 @@ class Project extends Component {
                         <p>{prime_contract.amount}</p>
                     </div>
                 </div>
+                : this.checkPrime()}
                 <ul>
                     <li>Phases</li>
                     {this.state.dataLoaded && this.addAPhase()}
@@ -99,7 +126,8 @@ class Project extends Component {
                                             <li>Completed: {task.is_done ? 'Completed' : 'Incomplete'}</li>
                                             <li>Sub Contractor</li>
                                             <li>
-                                                {task.sub_contractor ? <ul>
+                                                {task.sub_contractor
+                                                ? <ul>
                                                     <li><Link to={`/company/${task.sub_contractor.id}`}>{task.sub_contractor.name}</Link></li>
                                                     <li>{task.sub_contractor.address}</li>
                                                     <li>{task.sub_contractor.phone}</li>
@@ -107,7 +135,10 @@ class Project extends Component {
                                                         <h5>Sub Contract</h5>
                                                         <p>Total: {task.subcontracts.amount}</p>
                                                     </li>
-                                                </ul> : <span>No Subcontractor</span>}
+                                                </ul>
+                                                : (this.props.loggedInStatus === 'LOGGED_IN')
+                                                ? <SubContractNew project={this.state.project} phase={el} task={task} />
+                                                : <span>No Subcontract</span>}
                                             </li>
                                         </ul>
                                     )) : <span>No Tasks</span>}
