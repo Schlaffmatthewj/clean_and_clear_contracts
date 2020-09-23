@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 
 import PrimeNew from "../partials/auth/PrimeNew"
-import ProjectNew from "../partials/projects/Project"
+import ProjectNew from "../partials/projects/ProjectNew"
 import TaskNew from "../partials/tasks/Task"
 
 class CreateController extends Component {
@@ -13,6 +13,7 @@ class CreateController extends Component {
         }
 
         this.togglePrime = this.togglePrime.bind(this)
+        this.successfulProject = this.successfulProject.bind(this)
     }
 
     componentDidMount() {
@@ -34,6 +35,33 @@ class CreateController extends Component {
         this.props.history.push(`/profile/${this.props.company.id}`)
     }
 
+    successfulProject(data) {
+        // console.log(data)
+        let subTotal = data.budget * .05
+        let amount = Math.round(data.budget) + subTotal
+        let project_id = data.id
+        let company_id = this.props.company.id
+        let contract = {
+            api_v1_prime_contract: {
+                api_v1_company_id: company_id,
+                api_v1_project_id: project_id,
+                amount: amount
+            }
+        }
+        fetch(`/api/v1/companies/${company_id}/projects/${project_id}/prime_contracts`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(contract),
+            credentials: 'include'
+        })
+        .then(res => res.json())
+        .then(() => {
+            this.props.history.push(`/project/${data.id}`)
+        })
+    }
+
     conditionalRender() {
         let project_id = this.props.match.params.project_id
         let phase_id = this.props.match.params.phase_id
@@ -43,6 +71,7 @@ class CreateController extends Component {
                         loggedInStatus={this.props.loggedInStatus}
                         company={this.props.company}
                         project_id={project_id}
+                        successfulProject={this.successfulProject}
                         />
             case 'Task_New':
                 return <TaskNew

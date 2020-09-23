@@ -15,7 +15,7 @@ class Project extends Component {
         fetch(`/api/v1/projects/${id}`)
         .then(res => res.json())
         .then(res => {
-            // console.log('fetching', res)
+            console.log('fetching', res)
             this.setState({
                 project: res.results,
                 dataLoaded: true
@@ -24,22 +24,43 @@ class Project extends Component {
     }
 
     conditionalRender() {
+        const {
+            id,
+            name,
+            owner,
+            location,
+            budget,
+            prime_contract,
+            prime_contractor,
+            start_date,
+            turnover_date,
+            is_done,
+            phases
+        } = this.state.project
         return (
             <article>
-                <h2>{this.state.project.name}</h2>
-                <cite>{this.state.project.owner}</cite>
-                <p>{this.state.project.location}</p>
-                <p>{this.state.project.budget}</p>
-                <p>{this.state.project.prime_contractor}</p>
-                <p>{this.state.project.prime_contract}</p>
-                <p>{this.state.project.start_date}</p>
-                <p>{this.state.project.turnover_date}</p>
-                <p>Completed: {this.state.project.is_done ? 'Completed' : 'Incomplete'}</p>
+                <h2>{name}</h2>
+                <cite>{owner}</cite>
+                <p>{location}</p>
+                <p>{budget}</p>
+                <p>{start_date}</p>
+                <p>{turnover_date}</p>
+                <p>Completed: {is_done ? 'Completed' : 'Incomplete'}</p>
+                <div>
+                    <h5>Prime Contractor</h5>
+                    <h6><Link to={`/company/${prime_contractor.id}`}>{prime_contractor.name}</Link></h6>
+                    <p>{prime_contractor.address}</p>
+                    <p>{prime_contractor.phone}</p>
+                    <div>
+                        <h5>Prime Contract</h5>
+                        <p>{prime_contract.amount}</p>
+                    </div>
+                </div>
                 <ul>
                     <li>Phases</li>
                     <li>
-                    {this.state.project.phases.length > 0 
-                    ? this.state.project.phases.map(el => {
+                    {phases.length > 0 
+                    ? phases.map(el => {
                         return (
                             <ul key={el.id}>
                                 <li>{el.title}</li>
@@ -51,7 +72,7 @@ class Project extends Component {
                                 <li>
                                     Tasks: {el.tasks.length > 0 ? el.tasks.map(task => (
                                         <ul key={task.id}>
-                                            <li><Link to={`/project/${this.state.project.id}/phase/${el.id}/task/${task.id}`}>{task.title}</Link></li>
+                                            <li><Link to={`/project/${id}/phase/${el.id}/task/${task.id}`}>{task.title}</Link></li>
                                             <li>{task.budget}</li>
                                             <li>{task.description}</li>
                                             <li>{task.start_date}</li>
@@ -76,7 +97,7 @@ class Project extends Component {
                                 </li>
                             </ul>
                         )
-                    }) : <li>No Phases</li>}
+                    }) : <span>No Phases</span>}
                     </li>
                 </ul>
             </article>

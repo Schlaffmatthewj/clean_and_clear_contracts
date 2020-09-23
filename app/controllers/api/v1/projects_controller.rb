@@ -19,7 +19,7 @@ module Api
         
             def create
                 @api_v1_project = Api::V1::Project.new api_v1_project_params
-        
+                
                 if @api_v1_project.save
                     render json: { message: 'Project was successfully created.', results: @api_v1_project }
                 else
