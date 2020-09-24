@@ -14,6 +14,31 @@ module Api
 
             def to_json_with_contracts
                 owned_projects = self.api_v1_projects
+                if owned_projects.length > 0
+                    owned_with_prime = owned_projects.map { |project|
+                        prime_contract = Api::V1::PrimeContract.find_by api_v1_project_id: project[:id]
+                        prime_contracts = []
+                        prime_contracts.push(prime_contract)
+                        if prime_contracts
+                            each_contract = prime_contracts.map { |contract|
+                                prime_contractor = contract.api_v1_company
+                                { id: contract[:id], amount: contract[:amount],
+                                api_v1_company_id: contract[:api_v1_company_id],
+                                api_v1_project_id: contract[:api_v1_project_id],
+                                prime_contractor: prime_contractor
+                                }
+                            }
+                        else
+                            prime_contract = []
+                        end
+                        { api_v1_company_id: project[:api_v1_company_id], budget: project[:budget],
+                            id: project[:id], is_done: project[:is_done], location: project[:location],
+                            name: project[:name], owner: project[:owner], start_date: project[:start_date],
+                            turnover_date: project[:turnover_date], prime_contract: each_contract }
+                    }
+                else
+                    owned_projects = []
+                end
                 sub_contracts = self.api_v1_sub_contracts
                 if sub_contracts.length > 0
                     sub_tasks = sub_contracts.map { |contract|
@@ -36,7 +61,7 @@ module Api
                 end
                 { id: self.id, name: self.name, address: self.address, phone: self.phone, 
                     established_date: self.established_date, is_owner: self.is_owner, is_prime: self.is_prime,
-                    owned_projects: owned_projects, contracts: { prime_contracts: prime_projects,
+                    owned_projects: owned_with_prime, contracts: { prime_contracts: prime_projects,
                     sub_contracts: sub_tasks } }
             end
         end

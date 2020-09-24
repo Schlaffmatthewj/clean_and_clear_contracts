@@ -16,8 +16,6 @@ class CreateController extends Component {
 
         this.togglePrimeOrOwner = this.togglePrimeOrOwner.bind(this)
         this.successfulPhaseOrTask = this.successfulPhaseOrTask.bind(this)
-        this.primeContract = this.primeContract.bind(this)
-        this.subContract = this.subContract.bind(this)
     }
 
     componentDidMount() {
@@ -37,35 +35,6 @@ class CreateController extends Component {
 
     togglePrimeOrOwner(company_id) {
         this.props.history.push(`/profile/${company_id}`)
-    }
-
-    subContract() {
-        // may need to take in data
-    }
-
-    primeContract(data) {
-        // console.log(data)
-        let project_id = data.id
-        let company_id = this.props.company.id
-        let contract = {
-            api_v1_prime_contract: {
-                api_v1_company_id: company_id,
-                api_v1_project_id: project_id,
-                amount: amount  // MAKE SURE THIS DOES NOT EXCEED 10% OF PROJECT BUDGET
-            }
-        }
-        fetch(`/api/v1/companies/${company_id}/projects/${project_id}/prime_contracts`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(contract),
-            credentials: 'include'
-        })
-        .then(res => res.json())
-        .then(() => {
-            this.props.history.push(`/project/${data.id}`)
-        })
     }
 
     successfulPhaseOrTask(id) {

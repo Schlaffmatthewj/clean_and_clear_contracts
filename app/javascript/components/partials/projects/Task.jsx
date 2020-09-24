@@ -28,6 +28,7 @@ class Task extends Component {
     conditionalRender() {
         return (
             <article>
+                {/* <h2>Project: <Link to={`/project/${this.props.project_id}`}>{this.props.project.name}</Link></h2> */}
                 <h2>{this.state.task.title}</h2>
                 <p>{this.state.task.description}</p>
                 <p>{this.state.task.budget}</p>

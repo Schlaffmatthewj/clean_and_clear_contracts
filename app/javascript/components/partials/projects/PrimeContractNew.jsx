@@ -24,7 +24,7 @@ export default class PrimeContractNew extends Component {
                 api_v1_project: this.props.project.id
             }
         }
-        fetch(`/api/v1/companies/${this.props.company.id}/projects/${this.props.project.id}/prime_contracts`, {
+        fetch(`/api/v1/companies/${this.props.company.id}/prime_contracts`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -41,14 +41,27 @@ class Profile extends Component {
                 <p>{this.state.company.address}</p>
                 <p>{this.state.company.phone}</p>
                 <ul>
+                    <li>Owned Projects</li>
+                    <li>
+                        {this.state.company.owned_projects.length > 0 
+                        ? this.state.company.owned_projects.map(el => {
+                            return (
+                                <ul key={el.id}>
+                                    <li><Link to={`/project/${el.id}`}>{el.name}</Link></li>
+                                    <li>{el.address}</li>
+                                </ul>
+                            )
+                        }) : <p>No Prime Contracts</p>}
+                    </li>
                     <li>Prime Contracts</li>
                     <li>
                     {this.state.company.contracts.prime_contracts.length > 0 
                     ? this.state.company.contracts.prime_contracts.map(el => {
+                        // NEED MORE INFO FROM THE CONTRACTS FOR HERE AND THE COMPANY PAGES
                         return (
                             <ul key={el.id}>
+                                <li><Link to={`/project/${el.id}`}>{el.name}</Link></li>
                                 <li>Total: {el.amount}</li>
-                                <li>{el.project.title}</li>
                             </ul>
                         )
                     }) : <p>No Prime Contracts</p>}

@@ -5,12 +5,8 @@ Rails.application.routes.draw do
       delete :logout, to: "sessions#logout"
       get :logged_in, to: "sessions#logged_in"
       resources :companies, only: [:index, :show, :create, :update, :destroy] do
-          resources :projects, only: [:index, :show], controller: 'prime_contracts' do
-            resources :prime_contracts, only: [:create, :destroy]
-          end
-          resources :tasks, only: [:index, :show], controller: 'sub_contracts' do
-            resources :sub_contracts, only: [:create, :destroy]
-          end
+        resources :prime_contracts, only: [:create, :destroy]
+        resources :sub_contracts, only: [:create, :destroy]
       end
       resources :projects, only: [:index, :show, :create, :update, :destroy] do
         resources :phases, only: [:index, :show, :create, :update, :destroy] do
