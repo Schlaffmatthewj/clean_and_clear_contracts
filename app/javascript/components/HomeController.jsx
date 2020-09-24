@@ -18,7 +18,7 @@ export default class HomeController extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      loggedInStatus: "NOT_LOGGED_IN",
+      loggedInStatus: 'NOT_LOGGED_IN',
       company: {}
     }
 
@@ -28,16 +28,37 @@ export default class HomeController extends Component {
 
   currentCompany(data) {
     this.setState({
-      loggedInStatus: "LOGGED_IN",
+      loggedInStatus: 'LOGGED_IN',
       company: data
     })
   }
 
   handleLogout() {
     this.setState({
-      loggedInStatus: "NOT_LOGGED_IN",
+      loggedInStatus: 'NOT_LOGGED_IN',
       company: {}
     })
+  }
+
+  componentDidMount() {
+    if (this.state.loggedInStatus === 'NOT_LOGGED_IN') {
+      fetch('/api/v1/logged_in', {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      })
+      .then(res => res.json())
+      .then(res => {
+        // console.log('sessions res', res)
+        if (res.logged_in) {
+          this.setState({
+            company: res.company,
+            loggedInStatus: 'LOGGED_IN'
+          })
+        }
+      })
+    }
   }
 
   render() {

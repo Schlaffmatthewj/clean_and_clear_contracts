@@ -43,7 +43,7 @@ class Profile extends Component {
                 <ul>
                     <li>Owned Projects</li>
                     <li>
-                        {this.state.company.owned_projects.length > 0 
+                        {this.state.company.owned_projects
                         ? this.state.company.owned_projects.map(el => {
                             return (
                                 <ul key={el.id}>
