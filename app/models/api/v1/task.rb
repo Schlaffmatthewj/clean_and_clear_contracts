@@ -12,7 +12,9 @@ module Api
             validates :turnover_date, presence: true
 
             def to_json_with_sub_contract
-                p self
+                project = self.api_v1_project
+                prime_contract = project.api_v1_prime_contracts
+                prime_contractor = prime_contract.api_v1_company
                 subcontract = self.api_v1_sub_contracts
                 if subcontract 
                     sub_contractor = subcontract.api_v1_company
@@ -20,7 +22,8 @@ module Api
                 { id: self.id, title: self.title, description: self.description,
                 budget: self.budget, start_date: self.start_date,
                 turnover_date: self.turnover_date, is_done: self.is_done,
-                api_v1_phase_id: self.api_v1_phase_id, sub_contractor: sub_contractor, subcontract: subcontract }
+                api_v1_phase_id: self.api_v1_phase_id, sub_contractor: sub_contractor,
+                subcontract: subcontract, project: project, prime_contractor: prime_contractor }
             end
         end
     end

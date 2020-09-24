@@ -28,8 +28,10 @@ class Task extends Component {
     conditionalRender() {
         return (
             <article>
-                {/* <h2>Project: <Link to={`/project/${this.props.project_id}`}>{this.props.project.name}</Link></h2> */}
-                <h2>{this.state.task.title}</h2>
+                <h2>Owner: <Link to={`/company/${this.state.task.project.api_v1_company_id}`}>{this.state.task.project.owner}</Link></h2>
+                <h2>Project: <Link to={`/project/${this.state.task.project.id}`}>{this.state.task.project.name}</Link></h2>
+                <h2>Prime Contractor: <Link to={`/company/${this.state.task.prime_contractor.id}`}>{this.state.task.prime_contractor.name}</Link></h2>
+                <h3>{this.state.task.title}</h3>
                 <p>{this.state.task.description}</p>
                 <p>{this.state.task.budget}</p>
                 <p>{this.state.task.start_date}</p>

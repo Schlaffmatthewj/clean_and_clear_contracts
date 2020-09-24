@@ -38,7 +38,6 @@ class Company extends Component {
     }
 
     conditionalRender() {
-        console.log('this.state', this.state.company)
         const {
             name,
             established_date,
