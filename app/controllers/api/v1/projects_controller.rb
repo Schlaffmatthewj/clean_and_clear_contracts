@@ -30,7 +30,7 @@ module Api
             end
         
             def update
-                if @api_v1_project.update api_v1_project_params
+                if @api_v1_project.update! api_v1_project_params
                     render json: { message: 'Project was successfully updated.', results: @api_v1_project.to_json_with_phases_and_contracts }
                 else
                     render json: { message: 'Project was NOT successfully updated.', results: @api_v1_project.errors }
@@ -38,7 +38,7 @@ module Api
             end
         
             def destroy
-                @api_v1_project.destroy
+                @api_v1_project.destroy!
                 render json: { message: 'Project was successfully deleted.' }
             end
         

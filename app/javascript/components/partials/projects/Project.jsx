@@ -118,11 +118,10 @@ class Project extends Component {
                 <p>{budget}</p>
                 <p>{start_date}</p>
                 <p>{turnover_date}</p>
-                <p>Completed: {is_done ? 'Completed' : 'Incomplete'}</p>
+                <p>Status: {is_done ? 'Completed' : 'Incomplete'}</p>
                 <ToggleIsDone
                     parentType='Project'
                     is_done={is_done}
-                    updatedAt={updated}
                     fireReload={this.fireReload}
                     project_id={id}
                 />
@@ -151,11 +150,10 @@ class Project extends Component {
                                 <li><p>Description: {el.description}</p></li>
                                 <li>{el.start_date}</li>
                                 <li>{el.turnover_date}</li>
-                                <li>Completed: {el.is_done ? 'Completed' : 'Incomplete'}</li>
+                                <li>Status: {el.is_done ? 'Completed' : 'Incomplete'}</li>
                                 <ToggleIsDone
                                     parentType='Phase'
                                     is_done={el.is_done}
-                                    updatedAt={el.updated}
                                     fireReload={this.fireReload}
                                     project_id={id}
                                     phase_id={el.id}
@@ -170,14 +168,13 @@ class Project extends Component {
                                             <li>{task.description}</li>
                                             <li>{task.start_date}</li>
                                             <li>{task.turnover_date}</li>
-                                            <li>Completed: {task.is_done
+                                            <li>Status: {task.is_done
                                                         ? 'Completed'
                                                         : 'Incomplete'}
                                             </li>
                                             <ToggleIsDone
                                                 parentType='Task'
                                                 is_done={task.is_done}
-                                                updatedAt={task.updated}
                                                 fireReload={this.fireReload}
                                                 project_id={id}
                                                 phase_id={el.id}

@@ -65,7 +65,6 @@ class Task extends Component {
                 <ToggleIsDone
                 parentType='Task'
                 is_done={task.is_done}
-                updatedAt={task.updated}
                 fireReload={this.fireReload}
                 project_id={this.props.project_id}
                 phase_id={this.props.phase_id}
