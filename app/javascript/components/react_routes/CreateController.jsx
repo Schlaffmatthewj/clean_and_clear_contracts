@@ -1,10 +1,10 @@
 import React, { Component } from "react"
 
 import OwnerNew from "../partials/auth/OwnerNew"
-import PhaseNew from "../partials/projects/PhaseNew"
+import PhaseNew from "../partials/projects/create/PhaseNew"
 import PrimeNew from "../partials/auth/PrimeNew"
-import ProjectNew from "../partials/projects/ProjectNew"
-import TaskNew from "../partials/projects/TaskNew"
+import ProjectNew from "../partials/projects/create/ProjectNew"
+import TaskNew from "../partials/projects/create/TaskNew"
 
 class CreateController extends Component {
     constructor(props) {

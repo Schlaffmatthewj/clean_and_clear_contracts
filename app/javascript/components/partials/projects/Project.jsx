@@ -1,8 +1,10 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 
-import PrimeContractNew from "./PrimeContractNew"
-import SubContractNew from "./SubContractNew"
+import PrimeContractNew from "./create/PrimeContractNew"
+import SubContractNew from "./create/SubContractNew"
+import ToggleIsDone from "./forms/ToggleIsDone"
+
 class Project extends Component {
     constructor(props) {
         super(props)
@@ -12,6 +14,7 @@ class Project extends Component {
         }
 
         this.addedContract = this.addedContract.bind(this)
+        this.fireReload = this.fireReload.bind(this)
     }
 
     componentDidMount() {
@@ -77,7 +80,21 @@ class Project extends Component {
         this.props.switchToProfile()
     }
 
+    fireReload() {
+        let id = this.props.project_id
+        fetch(`/api/v1/projects/${id}`)
+        .then(res => res.json())
+        .then(res => {
+            // console.log('fetching', res)
+            this.setState({
+                project: res.results,
+                dataLoaded: true
+            })
+        })
+    }
+
     conditionalRender() {
+        console.log(this.state.project)
         const {
             id,
             name,
@@ -90,7 +107,8 @@ class Project extends Component {
             turnover_date,
             is_done,
             phases,
-            api_v1_company
+            api_v1_company,
+            updated
         } = this.state.project
         return (
             <article>
@@ -101,6 +119,13 @@ class Project extends Component {
                 <p>{start_date}</p>
                 <p>{turnover_date}</p>
                 <p>Completed: {is_done ? 'Completed' : 'Incomplete'}</p>
+                <ToggleIsDone
+                    parentType='Project'
+                    is_done={is_done}
+                    updatedAt={updated}
+                    fireReload={this.fireReload}
+                    project_id={id}
+                />
                 {prime_contractor
                 ? <div>
                     <h5>Prime Contractor</h5>
@@ -127,6 +152,14 @@ class Project extends Component {
                                 <li>{el.start_date}</li>
                                 <li>{el.turnover_date}</li>
                                 <li>Completed: {el.is_done ? 'Completed' : 'Incomplete'}</li>
+                                <ToggleIsDone
+                                    parentType='Phase'
+                                    is_done={el.is_done}
+                                    updatedAt={el.updated}
+                                    fireReload={this.fireReload}
+                                    project_id={id}
+                                    phase_id={el.id}
+                                />
                                 <li>Tasks</li>
                                 {this.state.dataLoaded && this.addATask(el.id)}
                                 <li>
@@ -137,7 +170,19 @@ class Project extends Component {
                                             <li>{task.description}</li>
                                             <li>{task.start_date}</li>
                                             <li>{task.turnover_date}</li>
-                                            <li>Completed: {task.is_done ? 'Completed' : 'Incomplete'}</li>
+                                            <li>Completed: {task.is_done
+                                                        ? 'Completed'
+                                                        : 'Incomplete'}
+                                            </li>
+                                            <ToggleIsDone
+                                                parentType='Task'
+                                                is_done={task.is_done}
+                                                updatedAt={task.updated}
+                                                fireReload={this.fireReload}
+                                                project_id={id}
+                                                phase_id={el.id}
+                                                task_id={task.id}
+                                            />
                                             <li>Sub Contractor</li>
                                             <li>
                                                 {task.sub_contractor

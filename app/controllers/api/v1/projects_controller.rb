@@ -31,7 +31,7 @@ module Api
         
             def update
                 if @api_v1_project.update api_v1_project_params
-                    render json: { message: 'Project was successfully updated.', results: @api_v1_project }
+                    render json: { message: 'Project was successfully updated.', results: @api_v1_project.to_json_with_phases_and_contracts }
                 else
                     render json: { message: 'Project was NOT successfully updated.', results: @api_v1_project.errors }
                 end

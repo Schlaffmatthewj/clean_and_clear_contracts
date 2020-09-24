@@ -24,6 +24,9 @@ module Api
                     tasks = tasks_method[:tasks]
                     tasks_with_contracts = tasks.map { |task|
                         api_task = Api::V1::Task.find task[:id]
+                        # p api_task
+                        # p 'task from project'
+                        # p task
                         subcontracts = api_task.api_v1_sub_contracts
                         if subcontracts
                             sub_contractor = subcontracts.api_v1_company
@@ -31,16 +34,19 @@ module Api
                         { id: task[:id], title: task[:title], description: task[:description],
                         budget: task[:budget], start_date: task[:start_date],
                         turnover_date: task[:turnover_date], is_done: task[:is_done],
-                        api_v1_phase_id: task[:api_v1_phase_id], sub_contractor: sub_contractor, subcontracts: subcontracts }
+                        api_v1_phase_id: task[:api_v1_phase_id], sub_contractor: sub_contractor,
+                        subcontracts: subcontracts, updated: task[:updated_at] }
                     }
                     { id: phase.id, title: phase.title, description: phase.description, 
                     budget: phase.budget, start_date: phase.start_date, 
                     turnover_date: phase.turnover_date, is_done: phase.is_done, 
-                    api_v1_project_id: phase.api_v1_project_id, tasks: tasks_with_contracts }
+                    api_v1_project_id: phase.api_v1_project_id, tasks: tasks_with_contracts,
+                    updated: phase.updated_at }
                 }
-                { id: self.id, name: self.name, owner: self.owner, api_v1_company: self.api_v1_company, location: self.location, 
-                budget: self.budget, start_date: self.start_date, turnover_date: self.turnover_date, 
-                is_done: self.is_done, prime_contractor: prime_contractor, prime_contract: prime_contract, phases: phases_with_tasks }
+                { id: self.id, name: self.name, owner: self.owner, api_v1_company: self.api_v1_company,
+                    location: self.location, budget: self.budget, start_date: self.start_date,
+                    turnover_date: self.turnover_date, is_done: self.is_done, prime_contractor: prime_contractor,
+                    prime_contract: prime_contract, phases: phases_with_tasks, updated: self.updated_at}
             end
         end
     end

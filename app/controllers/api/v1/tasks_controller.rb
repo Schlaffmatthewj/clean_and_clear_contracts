@@ -38,7 +38,7 @@ module Api
         
             def update
                 if @api_v1_task.update api_v1_task_params
-                    render json: { message: 'Task was successfully updated.', results: @api_v1_task }
+                    render json: { message: 'Task was successfully updated.', results: @api_v1_task.to_json_with_sub_contract }
                 else
                     render json: { message: 'Task was NOT successfully updated.', results: @api_v1_task.errors }
                 end

@@ -1,6 +1,8 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 
+import ToggleIsDone from "../projects/forms/ToggleIsDone"
+
 class Task extends Component {
     constructor(props) {
         super(props)
@@ -8,6 +10,8 @@ class Task extends Component {
             task: null,
             dataLoaded: false
         }
+
+        this.fireReload = this.fireReload.bind(this)
     }
 
     componentDidMount() {
@@ -25,31 +29,61 @@ class Task extends Component {
         })
     }
 
+    fireReload() {
+        let project_id = this.props.project_id
+        let phase_id = this.props.phase_id
+        let id = this.props.task_id
+        fetch(`/api/v1/projects/${project_id}/phases/${phase_id}/tasks/${id}`)
+        .then(res => res.json())
+        .then(res => {
+            // console.log('fetching', res)
+            this.setState({
+                task: res.results,
+                dataLoaded: true
+            })
+        })
+    }
+
     conditionalRender() {
+        const {
+            task
+        } = this.state
         return (
             <article>
-                <h2>Owner: <Link to={`/company/${this.state.task.project.api_v1_company_id}`}>{this.state.task.project.owner}</Link></h2>
-                <h2>Project: <Link to={`/project/${this.state.task.project.id}`}>{this.state.task.project.name}</Link></h2>
-                <h2>Prime Contractor: <Link to={`/company/${this.state.task.prime_contractor.id}`}>{this.state.task.prime_contractor.name}</Link></h2>
-                <h3>{this.state.task.title}</h3>
-                <p>{this.state.task.description}</p>
-                <p>{this.state.task.budget}</p>
-                <p>{this.state.task.start_date}</p>
-                <p>{this.state.task.turnover_date}</p>
-                <p>Completed: {this.state.task.is_done ? 'Completed' : 'Incomplete'}</p>
+                <h2>Owner: <Link to={`/company/${task.project.api_v1_company_id}`}>{task.project.owner}</Link></h2>
+                <h2>Project: <Link to={`/project/${task.project.id}`}>{task.project.name}</Link></h2>
+                <h2>Prime Contractor: <Link to={`/company/${task.prime_contractor.id}`}>{task.prime_contractor.name}</Link></h2>
+                <h3>{task.title}</h3>
+                <p>{task.description}</p>
+                <p>{task.budget}</p>
+                <p>{task.start_date}</p>
+                <p>{task.turnover_date}</p>
+                <p>Completed: {task.is_done
+                        ? 'Completed'
+                        : 'Incomplete'}
+                </p>
+                <ToggleIsDone
+                parentType='Task'
+                is_done={task.is_done}
+                updatedAt={task.updated}
+                fireReload={this.fireReload}
+                project_id={this.props.project_id}
+                phase_id={this.props.phase_id}
+                task_id={this.props.id}
+                />
                 <ul>
                     <li>Sub Contractor</li>
-                        {this.state.task.sub_contractor ? <ul>
+                        {task.sub_contractor ? <ul>
                             <li>
-                                <Link to={`/company/${this.state.task.sub_contractor.id}`}>
-                                {this.state.task.sub_contractor.name}
+                                <Link to={`/company/${task.sub_contractor.id}`}>
+                                {task.sub_contractor.name}
                                 </Link>
                             </li>
-                            <li>{this.state.task.sub_contractor.address}</li>
-                            <li>{this.state.task.sub_contractor.phone}</li>
+                            <li>{task.sub_contractor.address}</li>
+                            <li>{task.sub_contractor.phone}</li>
                             <li>
                                 <h5>Sub Contract</h5>
-                                <p>Total: {this.state.task.subcontract.amount}</p>
+                                <p>Total: {task.subcontract.amount}</p>
                             </li>
                         </ul> : <span>No Subcontractor</span>}
                 </ul>

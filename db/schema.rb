@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_23_171955) do
+ActiveRecord::Schema.define(version: 2020_09_24_172130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,8 @@ ActiveRecord::Schema.define(version: 2020_09_23_171955) do
     t.date "turnover_date", null: false
     t.boolean "is_done", default: false
     t.bigint "api_v1_phase_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["api_v1_phase_id"], name: "index_api_v1_tasks_on_api_v1_phase_id"
   end
 

@@ -20,11 +20,12 @@ module Api
                     { id: task.id, title: task.title, description: task.description,
                     budget: task.budget, start_date: task.start_date,
                     turnover_date: task.turnover_date, is_done: task.is_done,
-                    api_v1_phase_id: task.api_v1_phase_id, sub_contractor: sub_contractor, subcontract: subcontract }
+                    api_v1_phase_id: task.api_v1_phase_id, sub_contractor: sub_contractor,
+                    subcontract: subcontract }
                 }
                 { id: self.id, title: self.title, description: self.description,
                 budget: self.budget, start_date: self.start_date, turnover_date: self.turnover_date, 
-                is_done: self.is_done, tasks: tasks_with_contract }
+                is_done: self.is_done, tasks: tasks_with_contract, updated: self.updated_at }
             end
         end
     end

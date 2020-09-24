@@ -31,7 +31,7 @@ module Api
         
             def update
                 if @api_v1_phase.update api_v1_phase_params
-                    render json: { message: 'Phase was successfully updated.', results: @api_v1_phase }
+                    render json: { message: 'Phase was successfully updated.', results: @api_v1_phase.to_json_with_tasks }
                 else
                     render json: { message: 'Phase was NOT successfully updated.', results: @api_v1_phase.errors }
                 end

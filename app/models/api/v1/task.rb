@@ -23,7 +23,8 @@ module Api
                 budget: self.budget, start_date: self.start_date,
                 turnover_date: self.turnover_date, is_done: self.is_done,
                 api_v1_phase_id: self.api_v1_phase_id, sub_contractor: sub_contractor,
-                subcontract: subcontract, project: project, prime_contractor: prime_contractor }
+                subcontract: subcontract, project: project, prime_contractor: prime_contractor,
+                updated: self.updated_at }
             end
         end
     end
