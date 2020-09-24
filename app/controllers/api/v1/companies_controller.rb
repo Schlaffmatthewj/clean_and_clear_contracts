@@ -37,6 +37,7 @@ module Api
             end
 
             def destroy
+                reset_session
                 @api_v1_company.destroy
                 render json: { message: 'Company was successfully deleted.' }
             end

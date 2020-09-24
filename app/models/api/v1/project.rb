@@ -1,10 +1,19 @@
 module Api
     module V1
         class Project < ApplicationRecord
-            belongs_to :api_v1_company, class_name: 'Api::V1::Company'
-            has_one :api_v1_prime_contracts, class_name: 'Api::V1::PrimeContract', foreign_key: :api_v1_project_id, dependent: :destroy
-            has_many :api_v1_phases, class_name: 'Api::V1::Phase', foreign_key: :api_v1_project_id, dependent: :destroy
-            has_many :api_v1_tasks, class_name: 'Api::V1::Task', through: :api_v1_phases, dependent: :destroy
+            belongs_to :api_v1_company, 
+                class_name: 'Api::V1::Company'
+            has_one :api_v1_prime_contracts,
+                class_name: 'Api::V1::PrimeContract', 
+                foreign_key: :api_v1_project_id, 
+                dependent: :destroy
+            has_many :api_v1_phases, 
+                class_name: 'Api::V1::Phase', 
+                foreign_key: :api_v1_project_id, 
+                dependent: :destroy
+            has_many :api_v1_tasks, 
+                class_name: 'Api::V1::Task', 
+                through: :api_v1_phases
 
             validates :name, presence: true, uniqueness: true
             validates :owner, presence: true
@@ -24,9 +33,6 @@ module Api
                     tasks = tasks_method[:tasks]
                     tasks_with_contracts = tasks.map { |task|
                         api_task = Api::V1::Task.find task[:id]
-                        # p api_task
-                        # p 'task from project'
-                        # p task
                         subcontracts = api_task.api_v1_sub_contracts
                         if subcontracts
                             sub_contractor = subcontracts.api_v1_company

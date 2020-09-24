@@ -15,7 +15,7 @@ class CreateController extends Component {
         }
 
         this.togglePrimeOrOwner = this.togglePrimeOrOwner.bind(this)
-        this.successfulPhaseOrTask = this.successfulPhaseOrTask.bind(this)
+        this.successfulCreation = this.successfulCreation.bind(this)
     }
 
     componentDidMount() {
@@ -33,13 +33,13 @@ class CreateController extends Component {
         }
     }
 
-    togglePrimeOrOwner(company_id) {
-        this.props.history.push(`/profile/${company_id}`)
+    togglePrimeOrOwner(company) {
+        this.props.updateCompany(company)
+        this.props.history.push(`/profile/${company.id}`)
     }
 
-    successfulPhaseOrTask(id) {
-        // <Redirect push to={`/project/${id}`} />
-        this.props.history.push(`/project/${id}`)  // NEED TO UNDERSTAND MORE ABOUT HOW TO UPDATE OR REDIRECT
+    successfulCreation(id) {
+        this.props.history.push(`/project/${id}`)
     }
 
     conditionalRender() {
@@ -50,13 +50,14 @@ class CreateController extends Component {
                 return <ProjectNew
                         loggedInStatus={this.props.loggedInStatus}
                         company={this.props.company}
+                        successfulCreation={this.successfulCreation}
                         />
             case 'Phase_New':
                 return <PhaseNew
                         loggedInStatus={this.props.loggedInStatus}
                         company={this.props.company}
                         project_id={project_id}
-                        successfulPhaseOrTask={this.successfulPhaseOrTask}
+                        successfulCreation={this.successfulCreation}
                         />
             case 'Task_New':
                 return <TaskNew
@@ -64,7 +65,7 @@ class CreateController extends Component {
                         company={this.props.company}
                         project_id={project_id}
                         phase_id={phase_id}
-                        successfulPhaseOrTask={this.successfulPhaseOrTask}
+                        successfulCreation={this.successfulCreation}
                         />
             case 'Prime_Contractor':
                 return <PrimeNew

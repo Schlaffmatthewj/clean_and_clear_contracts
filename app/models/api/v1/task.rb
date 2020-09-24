@@ -1,9 +1,16 @@
 module Api
     module V1
         class Task < ApplicationRecord
-            has_one :api_v1_sub_contracts, class_name: 'Api::V1::SubContract', foreign_key: :api_v1_task_id
-            belongs_to :api_v1_phase, class_name: 'Api::V1::Phase', foreign_key: :api_v1_phase_id
-            has_one :api_v1_project, class_name: 'Api::V1::Project', :through => :api_v1_phase
+            has_one :api_v1_sub_contracts,
+                class_name: 'Api::V1::SubContract', 
+                foreign_key: :api_v1_task_id, 
+                dependent: :destroy
+            belongs_to :api_v1_phase, 
+                class_name: 'Api::V1::Phase', 
+                foreign_key: :api_v1_phase_id
+            has_one :api_v1_project, 
+                class_name: 'Api::V1::Project', 
+                :through => :api_v1_phase
 
             validates :title, presence: true
             validates :description, presence: true
@@ -14,7 +21,9 @@ module Api
             def to_json_with_sub_contract
                 project = self.api_v1_project
                 prime_contract = project.api_v1_prime_contracts
-                prime_contractor = prime_contract.api_v1_company
+                if prime_contract
+                    prime_contractor = prime_contract.api_v1_company
+                end
                 subcontract = self.api_v1_sub_contracts
                 if subcontract 
                     sub_contractor = subcontract.api_v1_company

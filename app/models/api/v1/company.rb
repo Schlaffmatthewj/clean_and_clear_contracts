@@ -3,9 +3,21 @@ module Api
         class Company < ApplicationRecord
             has_secure_password
 
-            has_many :api_v1_projects, class_name: 'Api::V1::Project', foreign_key: :api_v1_company_id, dependent: :destroy
-            has_many :api_v1_prime_contracts, class_name: 'Api::V1::PrimeContract', foreign_key: :api_v1_company_id, dependent: :destroy
-            has_many :api_v1_sub_contracts, class_name: 'Api::V1::SubContract', foreign_key: :api_v1_company_id, dependent: :destroy
+            has_many :api_v1_projects, 
+                class_name: 'Api::V1::Project', 
+                foreign_key: 
+                :api_v1_company_id, 
+                dependent: :destroy
+            has_many :api_v1_prime_contracts, 
+                class_name: 'Api::V1::PrimeContract', 
+                foreign_key: 
+                :api_v1_company_id, 
+                dependent: :destroy
+            has_many :api_v1_sub_contracts, 
+                class_name: 'Api::V1::SubContract', 
+                foreign_key: 
+                :api_v1_company_id, 
+                dependent: :destroy
 
             validates :name, presence: true, uniqueness: true 
             validates :address, presence: true, uniqueness: true
@@ -17,10 +29,8 @@ module Api
                 if owned_projects.length > 0
                     owned_with_prime = owned_projects.map { |project|
                         prime_contract = Api::V1::PrimeContract.find_by api_v1_project_id: project[:id]
-                        prime_contracts = []
-                        prime_contracts.push(prime_contract)
-                        if prime_contracts
-                            each_contract = prime_contracts.map { |contract|
+                        if prime_contract
+                            each_contract = prime_contract.map { |contract|
                                 prime_contractor = contract.api_v1_company
                                 { id: contract[:id], amount: contract[:amount],
                                 api_v1_company_id: contract[:api_v1_company_id],
@@ -29,7 +39,7 @@ module Api
                                 }
                             }
                         else
-                            prime_contract = []
+                            each_contract = []
                         end
                         { api_v1_company_id: project[:api_v1_company_id], budget: project[:budget],
                             id: project[:id], is_done: project[:is_done], location: project[:location],

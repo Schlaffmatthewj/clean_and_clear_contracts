@@ -56,7 +56,7 @@ class Project extends Component {
         return (
             <li>
                 {this.props.loggedInStatus === 'LOGGED_IN'
-                ? (this.props.company.id === this.state.project.prime_contractor.id
+                ? (this.props.company.id === (this.state.project.prime_contractor ? this.state.project.prime_contractor.id : null)
                 || this.props.company.name === this.state.project.owner)
                 ? <Link to={`/create/project/${this.state.project.id}/phase/${phase_id}/task`}>Add A Task</Link>
                 : null : null}
@@ -98,7 +98,6 @@ class Project extends Component {
     }
 
     conditionalRender() {
-        console.log(this.state.project)
         const {
             id,
             name,
@@ -126,12 +125,25 @@ class Project extends Component {
                         ? `Completed • ${updated}`
                         : 'Incomplete'}
                 </p>
-                <ToggleIsDone
-                    parentType='Project'
-                    is_done={is_done}
-                    fireReload={this.fireReload}
-                    project_id={id}
-                />
+                {(this.props.loggedInStatus === 'LOGGED_IN')
+                    ? (this.props.company.id === api_v1_company.id)
+                        ? <ToggleIsDone
+                            parentType='Project'
+                            is_done={is_done}
+                            fireReload={this.fireReload}
+                            project_id={id}
+                            />
+                        : (prime_contractor)
+                            ? (prime_contractor.id === this.props.company.id)
+                                ? <ToggleIsDone
+                                    parentType='Project'
+                                    is_done={is_done}
+                                    fireReload={this.fireReload}
+                                    project_id={id}
+                                    />
+                                : null
+                            : null
+                    : null}
                 {prime_contractor
                 ? <div>
                     <h5>Prime Contractor</h5>
@@ -161,13 +173,25 @@ class Project extends Component {
                                         ? `Completed • ${el.updated}` 
                                         : 'Incomplete'}
                                 </li>
-                                <ToggleIsDone
-                                    parentType='Phase'
-                                    is_done={el.is_done}
-                                    fireReload={this.fireReload}
-                                    project_id={id}
-                                    phase_id={el.id}
-                                />
+                                {(this.props.loggedInStatus === 'LOGGED_IN')
+                                    ? (this.props.company.id === api_v1_company.id)
+                                        ? <ToggleIsDone
+                                            parentType='Project'
+                                            is_done={el.is_done}
+                                            fireReload={this.fireReload}
+                                            project_id={id}
+                                            />
+                                        : (prime_contractor)
+                                            ? (prime_contractor.id === this.props.company.id)
+                                                ? <ToggleIsDone
+                                                    parentType='Project'
+                                                    is_done={el.is_done}
+                                                    fireReload={this.fireReload}
+                                                    project_id={id}
+                                                    />
+                                                : null
+                                            : null
+                                    : null}
                                 <li>Tasks</li>
                                 {this.state.dataLoaded && this.addATask(el.id)}
                                 <li>
@@ -182,14 +206,25 @@ class Project extends Component {
                                                         ? `Completed • ${task.updated}`
                                                         : 'Incomplete'}
                                             </li>
-                                            <ToggleIsDone
-                                                parentType='Task'
-                                                is_done={task.is_done}
-                                                fireReload={this.fireReload}
-                                                project_id={id}
-                                                phase_id={el.id}
-                                                task_id={task.id}
-                                            />
+                                            {(this.props.loggedInStatus === 'LOGGED_IN')
+                                                ? (this.props.company.id === api_v1_company.id)
+                                                    ? <ToggleIsDone
+                                                        parentType='Project'
+                                                        is_done={task.is_done}
+                                                        fireReload={this.fireReload}
+                                                        project_id={id}
+                                                        />
+                                                    : (prime_contractor)
+                                                        ? (prime_contractor.id === this.props.company.id)
+                                                            ? <ToggleIsDone
+                                                                parentType='Project'
+                                                                is_done={task.is_done}
+                                                                fireReload={this.fireReload}
+                                                                project_id={id}
+                                                                />
+                                                            : null
+                                                        : null
+                                                : null}
                                             <li>Sub Contractor</li>
                                             <li>
                                                 {task.sub_contractor

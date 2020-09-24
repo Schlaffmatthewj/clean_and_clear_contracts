@@ -24,6 +24,8 @@ export default class HomeController extends Component {
 
     this.currentCompany = this.currentCompany.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
+    this.updateCompany = this.updateCompany.bind(this)
+    this.deletedCompany = this.deletedCompany.bind(this)
   }
 
   currentCompany(data) {
@@ -37,6 +39,17 @@ export default class HomeController extends Component {
     this.setState({
       loggedInStatus: 'NOT_LOGGED_IN',
       company: {}
+    })
+  }
+
+  updateCompany(company) {
+    this.setState({ company: company })
+  }
+
+  deletedCompany() {
+    this.setState({
+      company: {},
+      loggedInStatus: 'NOT_LOGGED_IN'
     })
   }
 
@@ -83,6 +96,7 @@ export default class HomeController extends Component {
           />
           <Route path='/create/owner' exact
           render={props => <CreateController {...props}
+                            updateCompany={this.updateCompany}
                             currentStatus='Property_Owner'
                             loggedInStatus={this.state.loggedInStatus}
                             company={this.state.company}
@@ -90,6 +104,7 @@ export default class HomeController extends Component {
           />
           <Route path='/create/prime' exact
           render={props => <CreateController {...props}
+                            updateCompany={this.updateCompany}
                             currentStatus='Prime_Contractor'
                             loggedInStatus={this.state.loggedInStatus}
                             company={this.state.company}
@@ -120,6 +135,7 @@ export default class HomeController extends Component {
           render={props => <Profile {...props}
                             company={this.state.company}
                             handleLogout={this.handleLogout}
+                            deletedCompany={this.deletedCompany}
                             />}
           />
           <Route path='/project/:project_id' exact

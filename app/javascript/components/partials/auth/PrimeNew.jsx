@@ -34,7 +34,7 @@ class PrimeNew extends Component {
             .then(res => res.json())
             .then(res => {
                 // console.log('PRIME TOGGLE RES', res)
-                this.props.togglePrimeOrOwner(res.results.id)
+                this.props.togglePrimeOrOwner(res.results)
             })
         } else {
             alert('You did NOT enter the Correct password!')

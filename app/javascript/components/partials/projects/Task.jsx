@@ -2,6 +2,8 @@ import React, { Component } from "react"
 import { Link } from "react-router-dom"
 
 import ToggleIsDone from "../projects/forms/ToggleIsDone"
+import SubContractNew from "./create/SubContractNew"
+import PrimeContractNew from "./create/PrimeContractNew"
 
 class Task extends Component {
     constructor(props) {
@@ -29,6 +31,23 @@ class Task extends Component {
         })
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.company.is_prime !== this.props.company.is_prime) {
+            let project_id = this.props.project_id
+            let phase_id = this.props.phase_id
+            let id = this.props.task_id
+            fetch(`/api/v1/projects/${project_id}/phases/${phase_id}/tasks/${id}`)
+            .then(res => res.json())
+            .then(res => {
+                // console.log('fetching', res)
+                this.setState({
+                    task: res.results,
+                    dataLoaded: true
+                })
+            })
+        }
+    }
+
     fireReload() {
         let project_id = this.props.project_id
         let phase_id = this.props.phase_id
@@ -44,6 +63,26 @@ class Task extends Component {
         })
     }
 
+    addedContract() {
+        this.props.switchToProfile()
+    }
+
+    checkPrime() {
+        return (
+            <div>
+                {(this.props.loggedInStatus ===  'LOGGED_IN')
+                ? (this.props.company.is_prime)
+                ? <PrimeContractNew
+                        project={this.state.task.project}
+                        company={this.props.company}
+                        addedContract={this.addedContract}
+                    />
+                : <Link to='/create/prime'>Request Prime Contractor Permissions</Link>
+                : <p>No Prime Contractor</p> }
+            </div>
+        )
+    }
+
     conditionalRender() {
         console.log('state from task', this.state.task)
         const {
@@ -53,7 +92,9 @@ class Task extends Component {
             <article>
                 <h2>Owner: <Link to={`/company/${task.project.api_v1_company_id}`}>{task.project.owner}</Link></h2>
                 <h2>Project: <Link to={`/project/${task.project.id}`}>{task.project.name}</Link></h2>
-                <h2>Prime Contractor: <Link to={`/company/${task.prime_contractor.id}`}>{task.prime_contractor.name}</Link></h2>
+                {task.prime_contractor
+                    ? <h2>Prime Contractor: <Link to={`/company/${task.prime_contractor.id}`}>{task.prime_contractor.name}</Link></h2> 
+                    : this.checkPrime() }
                 <h3>{task.title}</h3>
                 <p>{task.description}</p>
                 <p>{task.budget}</p>

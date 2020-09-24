@@ -12,6 +12,7 @@ class Profile extends Component {
         }
 
         this.toggleLogout = this.toggleLogout.bind(this)
+        this.deleteAccount = this.deleteAccount.bind(this)
     }
 
     componentDidMount() {
@@ -30,6 +31,18 @@ class Profile extends Component {
     toggleLogout() {
         this.props.history.push('/')
         this.props.handleLogout()
+    }
+
+    deleteAccount(evt) {
+        evt.preventDefault()
+        fetch(`/api/v1/companies/${this.state.company.id}`, {
+            method: 'DELETE',
+            credentials: 'include'
+        })
+        .then(() => {
+            this.props.deletedCompany()
+            this.props.history.push('/')
+        })
     }
 
     conditionalRender() {
@@ -80,6 +93,12 @@ class Profile extends Component {
                     }) : <p>No Sub Contracts</p>}
                     </li>
                 </ul>
+                <form onSubmit={this.deleteAccount}>
+                    <input
+                    type='submit'
+                    value='Delete Account'
+                    />
+                </form>
             </article>
         )
     }

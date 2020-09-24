@@ -48,7 +48,7 @@ class PhaseNew extends Component {
         .then(res => res.json())
         .then(res => {
             // console.log('NEW Phase res', res)
-            this.props.successfulPhaseOrTask(res.results.api_v1_project_id)
+            this.props.successfulCreation(res.results.api_v1_project_id)
         })
     }
 

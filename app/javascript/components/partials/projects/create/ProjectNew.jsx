@@ -48,8 +48,8 @@ class ProjectNew extends Component {
         })
         .then(res => res.json())
         .then(res => {
-            console.log('NEW Project res', res)
-            // this.props.successfulProject(res.results)
+            // console.log('NEW Project res', res)
+            this.props.successfulCreation(res.results.id)
         })
     }
 
