@@ -59,7 +59,7 @@ class Task extends Component {
                 <p>{task.budget}</p>
                 <p>{task.start_date}</p>
                 <p>{task.turnover_date}</p>
-                <p>Completed: {task.is_done
+                <p>Status: {task.is_done
                         ? `Completed • ${task.updated}`
                         : 'Incomplete'}
                 </p>
