@@ -45,6 +45,7 @@ class Task extends Component {
     }
 
     conditionalRender() {
+        console.log('state from task', this.state.task)
         const {
             task
         } = this.state
@@ -59,16 +60,16 @@ class Task extends Component {
                 <p>{task.start_date}</p>
                 <p>{task.turnover_date}</p>
                 <p>Completed: {task.is_done
-                        ? 'Completed'
+                        ? `Completed • ${task.updated}`
                         : 'Incomplete'}
                 </p>
                 <ToggleIsDone
-                parentType='Task'
-                is_done={task.is_done}
-                fireReload={this.fireReload}
-                project_id={this.props.project_id}
-                phase_id={this.props.phase_id}
-                task_id={this.props.id}
+                    parentType='Task'
+                    is_done={task.is_done}
+                    fireReload={this.fireReload}
+                    project_id={this.props.project_id}
+                    phase_id={this.props.phase_id}
+                    task_id={this.props.task_id}
                 />
                 <ul>
                     <li>Sub Contractor</li>

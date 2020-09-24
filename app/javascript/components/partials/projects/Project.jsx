@@ -69,7 +69,11 @@ class Project extends Component {
             <div>
                 {(this.props.loggedInStatus ===  'LOGGED_IN')
                 ? (this.props.company.is_prime)
-                ? <PrimeContractNew project={this.state.project} company={this.props.company} addedContract={this.addedContract} />
+                ? <PrimeContractNew
+                        project={this.state.project}
+                        company={this.props.company}
+                        addedContract={this.addedContract}
+                    />
                 : <Link to='/create/prime'>Request Prime Contractor Permissions</Link>
                 : <p>No Prime Contractor</p> }
             </div>
@@ -118,7 +122,10 @@ class Project extends Component {
                 <p>{budget}</p>
                 <p>{start_date}</p>
                 <p>{turnover_date}</p>
-                <p>Status: {is_done ? 'Completed' : 'Incomplete'}</p>
+                <p>Status: {is_done
+                        ? `Completed • ${updated}`
+                        : 'Incomplete'}
+                </p>
                 <ToggleIsDone
                     parentType='Project'
                     is_done={is_done}
@@ -150,7 +157,10 @@ class Project extends Component {
                                 <li><p>Description: {el.description}</p></li>
                                 <li>{el.start_date}</li>
                                 <li>{el.turnover_date}</li>
-                                <li>Status: {el.is_done ? 'Completed' : 'Incomplete'}</li>
+                                <li>Status: {el.is_done
+                                        ? `Completed • ${el.updated}` 
+                                        : 'Incomplete'}
+                                </li>
                                 <ToggleIsDone
                                     parentType='Phase'
                                     is_done={el.is_done}
@@ -169,7 +179,7 @@ class Project extends Component {
                                             <li>{task.start_date}</li>
                                             <li>{task.turnover_date}</li>
                                             <li>Status: {task.is_done
-                                                        ? 'Completed'
+                                                        ? `Completed • ${task.updated}`
                                                         : 'Incomplete'}
                                             </li>
                                             <ToggleIsDone

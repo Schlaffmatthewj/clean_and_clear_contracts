@@ -13,14 +13,18 @@ export default class ToggleIsDone extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            is_done: this.props.is_done,
-            dataLoaded: true
-        })
+        if (this.props.is_done) this.setState({ is_done: 'Completed', dataLoaded: true })
+        else this.setState({ is_done: 'Incomplete', dataLoaded: true })
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.is_done !== this.props.is_done) {
+            if (this.props.is_done) this.setState({ is_done: 'Completed' })
+            else this.setState({ is_done: 'Incomplete' })
+        }
     }
 
     handleChange(evt) {
-
         this.setState({ [evt.target.name]: evt.target.value })
     }
 
@@ -87,22 +91,23 @@ export default class ToggleIsDone extends Component {
     setInputValue() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <label> Completed:
+                {this.props.is_done
+                ? <label> Incomplete:
                     <input
                     type='checkbox'
                     name='is_done'
-                    value='Completed'
+                    value={'Incomplete'}
                     onChange={this.handleChange}
                     />
                 </label>
-                <label> Incomplete:
+                : <label> Completed:
                     <input
                     type='checkbox'
                     name='is_done'
-                    value='Incomplete'
+                    value={'Completed'}
                     onChange={this.handleChange}
                     />
-                </label>
+                </label> }
                 <input
                 type='submit'
                 value='Update Status'
