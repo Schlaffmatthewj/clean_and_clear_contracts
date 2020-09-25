@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Link } from "react-router-dom"
 
 import PrimeContractNew from "./create/PrimeContractNew"
-import SubContractNew from "./create/SubContractNew"
+import ProjectPhases from "./ProjectPhases"
 import ToggleIsDone from "./forms/ToggleIsDone"
 
 class Project extends Component {
@@ -31,23 +31,13 @@ class Project extends Component {
                 dataLoaded: true
             })
             if (this.props.loggedInStatus === 'LOGGED_IN') {
-                if (this.props.company.id === this.state.project.api_v1_company.id) {
-                    this.setState({ is_current_owner: true })
-                }
-                if (this.state.project.prime_contractor) {
-                    if (this.state.project.prime_contractor.id === this.props.company.id) {
-                        this.setState({ is_current_prime: true })
-                    }
-                }
+                if (this.props.company.id === this.state.project.api_v1_company.id) this.setState({ is_current_owner: true })
+                if (this.state.project.prime_contractor) if (this.state.project.prime_contractor.id === this.props.company.id) this.setState({ is_current_prime: true })
                 if (this.state.project.phases) {
                     this.state.project.phases.map(phase => {
                         if (phase.tasks) {
                             phase.tasks.map(task => {
-                                if (task.sub_contractor) {
-                                    if (task.sub_contractor.id === this.props.company.id) {
-                                        this.setState({ is_current_sub: true })
-                                    }
-                                }
+                                if (task.sub_contractor) if (task.sub_contractor.id === this.props.company.id) this.setState({ is_current_sub: true })
                             })
                         }
                     })
@@ -61,16 +51,6 @@ class Project extends Component {
             <p>
                 {(this.state.is_current_owner || this.state.is_current_prime)
                 ? <Link to={`/create/project/${this.state.project.id}/phase`}>Add A Phase</Link>
-                : null}
-            </p>
-        )
-    }
-
-    addATask(phase_id) {
-        return (
-            <p>
-                {(this.state.is_current_owner || this.state.is_current_prime)
-                ? <Link to={`/create/project/${this.state.project.id}/phase/${phase_id}/task`}>Add A Task</Link>
                 : null}
             </p>
         )
@@ -175,108 +155,16 @@ class Project extends Component {
                         {this.state.dataLoaded && this.addAPhase()}
                     </aside>
                 </article>
-                <article>
-                    {phases.length > 0
-                        ? <h3>Phases</h3>
-                        : null}
-                    <ol>
-                        {phases.length > 0
-                            ? phases.map(phase => {
-                                return (
-                                    <li key={phase.id}>
-                                        <div>
-                                            <h4>{phase.title}</h4>
-                                            <div>
-                                                <p>Description: {phase.description}</p>
-                                                <p>Start Date: {phase.start_date}</p>
-                                                <p>Turnover Date: {phase.turnover_date}</p>
-                                                <p>Budget: {phase.budget}</p>
-                                                <p>Status: {phase.is_done
-                                                    ? `Completed • ${phase.updated}` 
-                                                    : 'Incomplete'}
-                                                </p>
-                                                {(this.state.is_current_owner
-                                                    || this.state.is_current_prime)
-                                                    ? <ToggleIsDone
-                                                        parentType='Phase'
-                                                        is_done={phase.is_done}
-                                                        fireReload={this.fireReload}
-                                                        project_id={id}
-                                                        phase_id={phase.id}
-                                                        />
-                                                    : null}
-                                                <div>
-                                                    {phase.tasks.length > 0
-                                                        ? <h4>Tasks</h4>
-                                                        : null}
-                                                    <ol>
-                                                        {phase.tasks.length > 0
-                                                            ? phase.tasks.map(task => {
-                                                                return (
-                                                                    <li key={task.id}>
-                                                                        <h4>
-                                                                            <Link to={`/project/${id}/phase/${phase.id}/task/${task.id}`}>
-                                                                                {task.title}
-                                                                            </Link>
-                                                                        </h4>
-                                                                        <div>
-                                                                            <p>Description: {task.description}</p>
-                                                                            <p>Start Date: {task.start_date}</p>
-                                                                            <p>Turnover Date: {task.turnover_date}</p>
-                                                                            <p>Budget: {task.budget}</p>
-                                                                            <p>Status: {task.is_done
-                                                                                ? `Completed • ${task.updated}`
-                                                                                : 'Incomplete'}
-                                                                            </p>
-                                                                            {(task.sub_contractor)
-                                                                                ? <ul>
-                                                                                    <li><Link to={`/company/${task.sub_contractor.id}`}>{task.sub_contractor.name}</Link></li>
-                                                                                    <li>{task.sub_contractor.address}</li>
-                                                                                    <li>{task.sub_contractor.phone}</li>
-                                                                                    <li>
-                                                                                        <h5>Sub Contract</h5>
-                                                                                        <p>Total: {task.subcontracts.amount}</p>
-                                                                                    </li>
-                                                                                </ul>
-                                                                                : (this.props.loggedInStatus === 'LOGGED_IN')
-                                                                                ? <SubContractNew
-                                                                                    project={this.state.project}
-                                                                                    phase={phase}
-                                                                                    task={task}
-                                                                                    addedContract={this.addedContract}
-                                                                                    company={this.props.company}
-                                                                                />
-                                                                                : <span>No Subcontract</span>}
-                                                                            {(task.sub_contractor && (this.state.is_current_owner || this.state.is_current_prime))
-                                                                                ? <ToggleIsDone
-                                                                                    parentType='Task'
-                                                                                    is_done={task.is_done}
-                                                                                    fireReload={this.fireReload}
-                                                                                    project_id={id}
-                                                                                    phase_id={phase.id}
-                                                                                    task_id={task.id}
-                                                                                    />
-                                                                                : null}
-                                                                            delete option
-                                                                        </div>
-                                                                    </li>
-                                                                )
-                                                            })
-                                                            : null}
-                                                    </ol>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                {this.addATask(phase.id)}
-                                                delete phase
-                                            </div>
-                                        </div>
-                                    </li>
-                                )
-                            })
-                            : null}
-                    </ol>
-                </article>
+                <ProjectPhases 
+                loggedInStatus={this.props.loggedInStatus}
+                project_id={id}
+                project={this.state.project}
+                phases={phases}
+                is_current_owner={this.state.is_current_owner}
+                is_current_prime={this.state.is_current_prime}
+                fireReload={this.fireReload}
+                addedContract={this.addedContract}
+                />
             </section>
         )
     }
