@@ -3,13 +3,15 @@ import { Link } from "react-router-dom"
 
 import ToggleIsDone from "../projects/forms/ToggleIsDone"
 import SubContractNew from "./create/SubContractNew"
-import PrimeContractNew from "./create/PrimeContractNew"
 
 class Task extends Component {
     constructor(props) {
         super(props)
         this.state = {
             task: null,
+            is_current_owner: false,
+            is_current_prime: false,
+            is_current_sub: false,
             dataLoaded: false
         }
 
@@ -23,11 +25,26 @@ class Task extends Component {
         fetch(`/api/v1/projects/${project_id}/phases/${phase_id}/tasks/${id}`)
         .then(res => res.json())
         .then(res => {
-            console.log('fetching', res)
+            // console.log('fetching', res)
             this.setState({
                 task: res.results,
                 dataLoaded: true
             })
+            if (this.props.loggedInStatus === 'LOGGED_IN') {
+                if (this.props.company.id === this.state.task.project.api_v1_company_id) {
+                    this.setState({ is_current_owner: true })
+                }
+                if (this.state.task.prime_contractor) {
+                    if (this.state.task.prime_contractor.id === this.props.company.id) {
+                        this.setState({ is_current_prime: true })
+                    }
+                }
+                if (this.state.task.sub_contractor) {
+                    if (this.state.task.sub_contractor.id === this.props.company.id) {
+                        this.setState({ is_current_sub: true })
+                    }
+                }
+            }
         })
     }
 
@@ -42,7 +59,6 @@ class Task extends Component {
                 // console.log('fetching', res)
                 this.setState({
                     task: res.results,
-                    dataLoaded: true
                 })
             })
         }
@@ -58,7 +74,6 @@ class Task extends Component {
             // console.log('fetching', res)
             this.setState({
                 task: res.results,
-                dataLoaded: true
             })
         })
     }
@@ -72,13 +87,27 @@ class Task extends Component {
             <div>
                 {(this.props.loggedInStatus ===  'LOGGED_IN')
                 ? (this.props.company.is_prime)
-                ? <PrimeContractNew
-                        project={this.state.task.project}
-                        company={this.props.company}
-                        addedContract={this.addedContract}
-                    />
-                : <Link to='/create/prime'>Request Prime Contractor Permissions</Link>
+                    ? <PrimeContractNew
+                            project={this.state.task.project}
+                            company={this.props.company}
+                            addedContract={this.addedContract}
+                        />
+                    : <Link to='/create/prime'>Request Prime Contractor Permissions</Link>
                 : <p>No Prime Contractor</p> }
+            </div>
+        )
+    }
+
+    checkSub() {
+        return (
+            <div>
+                {(this.props.loggedInStatus === 'LOGGED_IN')
+                ? <SubContractNew
+                task={this.state.task}
+                addedContract={this.addedContract}
+                company={this.props.company}
+                />
+                : <p>No Sub Contractor</p>}
             </div>
         )
     }
@@ -86,8 +115,16 @@ class Task extends Component {
     isPrimeOrOwner() {
         return (
             <div>
-                {/* {(this.props.loggedInStatus === 'LOGGED_IN')
-                ? (this.company.id === this.)} */}
+                {(this.state.is_current_owner || this.state.is_current_prime || this.state.is_current_sub )
+                ? <ToggleIsDone
+                    parentType='Task'
+                    is_done={this.state.task.is_done}
+                    fireReload={this.fireReload}
+                    project_id={this.props.project_id}
+                    phase_id={this.props.phase_id}
+                    task_id={this.props.task_id}
+                />
+                : null}
             </div>
         )
     }
@@ -113,7 +150,7 @@ class Task extends Component {
                         ? `Completed • ${task.updated}`
                         : 'Incomplete'}
                 </p>
-                {this.isPrimeOrOwner()}
+                {task.sub_contractor && this.isPrimeOrOwner()}
                 <ul>
                     <li>Sub Contractor</li>
                         {task.sub_contractor ? <ul>
@@ -128,7 +165,7 @@ class Task extends Component {
                                 <h5>Sub Contract</h5>
                                 <p>Total: {task.subcontract.amount}</p>
                             </li>
-                        </ul> : <span>No Subcontractor</span>}
+                        </ul> : this.checkSub()}
                 </ul>
             </article>
         )

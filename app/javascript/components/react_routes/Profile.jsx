@@ -105,7 +105,9 @@ class Profile extends Component {
     isPrimeContractor() {
         return (
             <aside>
-                {!this.state.company.is_prime ? <Link to='/create/prime'>Prime Contractor Permissions</Link> : null }
+                {!this.state.company.is_prime
+                    ? <Link to='/create/prime'>Prime Contractor Permissions</Link>
+                    : null }
             </aside>
         )
     }
@@ -113,7 +115,9 @@ class Profile extends Component {
     isPropertyOwner() {
         return (
             <aside>
-                {!this.state.company.is_owner ? <Link to='/create/owner'>Property Owner Permissions</Link> : <Link to='/create/project'>Create New Project</Link> }
+                {!this.state.company.is_owner
+                    ? <Link to='/create/owner'>Property Owner Permissions</Link>
+                    : <Link to='/create/project'>Create New Project</Link> }
             </aside>
         )
     }
