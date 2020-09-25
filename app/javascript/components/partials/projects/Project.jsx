@@ -18,6 +18,7 @@ class Project extends Component {
 
         this.addedContract = this.addedContract.bind(this)
         this.fireReload = this.fireReload.bind(this)
+        this.deleter = this.deleter.bind(this)
     }
 
     componentDidMount() {
@@ -89,6 +90,25 @@ class Project extends Component {
         })
     }
 
+    deleter(type, project_id, phase_id, task_id) {
+        if (type === 'Project') {
+            fetch(`/api/v1/projects/${project_id}`, {
+                method: 'DELETE',
+                credentials: 'include'
+            }).then(() => this.props.switchToProfile())
+        } else if (type === 'Phase') {
+            fetch(`/api/v1/projects/${project_id}/phases/${phase_id}`, {
+                method: 'DELETE',
+                credentials: 'include'
+            }).then(() => this.fireReload())
+        } else if (type === 'Task') {
+            fetch(`/api/v1/projects/${project_id}/phases/${phase_id}/tasks/${task_id}`, {
+                method: 'DELETE',
+                credentials: 'include'
+            }).then(() => this.fireReload())
+        }
+    }
+
     conditionalRender() {
         const {
             id,
@@ -125,7 +145,14 @@ class Project extends Component {
                         {this.state.is_current_owner
                             ? <div>
                                 <h6>You Own This Project</h6>
-                                <p>Delete This Project?</p>
+                                <p>Delete Project? • <span onClick={() => this.deleter('Project', id)}>🗑️</span></p>
+                                <Link to={{
+                                    pathname: '/edit',
+                                    state: {
+                                        project: this.state.project,
+                                        pageStatus: 'Project'
+                                    }
+                                }}>Edit Project? • 🛠️</Link>
                             </div>
                             : null}
                     </aside>
@@ -164,6 +191,7 @@ class Project extends Component {
                 is_current_prime={this.state.is_current_prime}
                 fireReload={this.fireReload}
                 addedContract={this.addedContract}
+                deleter={this.deleter}
                 />
             </section>
         )

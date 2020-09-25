@@ -33,8 +33,7 @@ class Profile extends Component {
         this.props.handleLogout()
     }
 
-    deleteAccount(evt) {
-        evt.preventDefault()
+    deleteAccount() {
         fetch(`/api/v1/companies/${this.state.company.id}`, {
             method: 'DELETE',
             credentials: 'include'
@@ -92,12 +91,14 @@ class Profile extends Component {
                     }) : <p>No Sub Contracts</p>}
                     </li>
                 </ul>
-                <form onSubmit={this.deleteAccount}>
-                    <input
-                    type='submit'
-                    value='Delete Account'
-                    />
-                </form>
+                <button onClick={() => this.deleteAccount()}>Delete Account</button>
+                <Link to={{
+                    pathname: '/edit',
+                    state: {
+                        company: this.state.company,
+                        pageStatus: 'Company'
+                    }
+                }}>Edit Profile? • 🛠️</Link>
             </article>
         )
     }

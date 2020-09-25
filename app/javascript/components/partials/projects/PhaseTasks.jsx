@@ -63,7 +63,21 @@ export default class PhaseTasks extends Component {
                                                 task_id={task.id}
                                                 />
                                             : null}
-                                        delete option
+                                        {this.props.is_current_owner
+                                            || this.props.is_current_prime
+                                            ? <div>
+                                                <p>Delete Task? • <span onClick={() => this.props.deleter('Task', this.props.project_id, this.props.phase.id, task.id)}>X</span></p>
+                                                <Link to={{
+                                                    pathname: '/edit',
+                                                    state: {
+                                                        project: this.props.project,
+                                                        phase: this.props.phase,
+                                                        task: task,
+                                                        pageStatus: 'Task'
+                                                    }
+                                                }}>Edit Task? • 🛠️</Link>
+                                            </div>
+                                            : null}
                                     </div>
                                 </li>
                             )

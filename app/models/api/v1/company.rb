@@ -31,7 +31,7 @@ module Api
                         prime_contract = Api::V1::PrimeContract.find_by api_v1_project_id: project[:id]
                         prime_contracts = []
                         prime_contracts.push(prime_contract)
-                        if prime_contracts.length > 0
+                        if prime_contract
                             each_contract = prime_contracts.map { |contract|
                                 prime_contractor = contract.api_v1_company
                                 { id: contract[:id], amount: contract[:amount],

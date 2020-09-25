@@ -8,6 +8,7 @@ import Home from "../components/react_routes/Home"
 import Company from "./react_routes/Company"
 import Profile from "./react_routes/Profile"
 import AuthController from "../components/react_routes/AuthController"
+import EditController from "../components/react_routes/EditController"
 import CreateController from "../components/react_routes/CreateController"
 import ProjectController from "../components/react_routes/ProjectController";
 
@@ -129,6 +130,13 @@ export default class HomeController extends Component {
                             currentStatus='Task_New'
                             loggedInStatus={this.state.loggedInStatus}
                             company={this.state.company}
+                            />}
+          />
+          <Route path='/edit' exact
+          render={props => <EditController {...props}
+                            loggedInStatus={this.state.loggedInStatus}
+                            company={this.state.company}
+                            currentCompany={this.currentCompany}
                             />}
           />
           <Route path='/profile/:company_id' exact

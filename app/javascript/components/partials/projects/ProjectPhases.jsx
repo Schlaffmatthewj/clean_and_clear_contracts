@@ -52,17 +52,33 @@ export default class ProjectPhases extends Component {
                                                     />
                                                 : null}
                                             <PhaseTasks
+                                            is_current_prime={this.props.is_current_prime}
+                                            is_current_owner={this.props.is_current_owner}
                                             phase={phase}
                                             project_id={this.props.project_id}
                                             project={this.props.project}
                                             addedContract={this.props.addedContract}
                                             company={this.props.company}
                                             fireReload={this.props.fireReload}
+                                            deleter={this.props.deleter}
                                             />
                                         </div>
                                         <div>
                                             {this.addATask(phase.id)}
-                                            delete phase
+                                            {this.props.is_current_owner
+                                                || this.props.is_current_prime
+                                                ? <div>
+                                                    <p>Delete Phase? • <span onClick={() => this.props.deleter('Phase', this.props.project_id, phase.id)}>X</span></p>
+                                                    <Link to={{
+                                                        pathname: '/edit',
+                                                        state: {
+                                                            project: this.props.project,
+                                                            phase: phase,
+                                                            pageStatus: 'Phase'
+                                                        }
+                                                    }}>Edit Phase? • 🛠️</Link>
+                                                </div>
+                                                : null}
                                         </div>
                                     </div>
                                 </li>
