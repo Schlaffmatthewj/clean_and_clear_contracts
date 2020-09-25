@@ -35,6 +35,10 @@ module Api
                 budget: self.budget, start_date: self.start_date, turnover_date: self.turnover_date, 
                 is_done: self.is_done, tasks: tasks_with_contract, updated: self.updated_at }
             end
+
+            def self.default_scope
+                order(created_at: :desc)
+            end
         end
     end
 end

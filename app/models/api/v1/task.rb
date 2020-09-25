@@ -35,6 +35,10 @@ module Api
                 subcontract: subcontract, project: project, prime_contractor: prime_contractor,
                 updated: self.updated_at }
             end
+
+            def self.default_scope
+                order(created_at: :desc)
+            end
         end
     end
 end

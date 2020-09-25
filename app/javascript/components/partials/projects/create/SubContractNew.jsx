@@ -20,9 +20,6 @@ export default class SubContractNew extends Component {
         let budget = Math.round(this.props.task.budget)
         let percentage = budget / 10
         let max = budget + percentage
-        console.log('budget', budget)
-        console.log('percentage', percentage)
-        console.log('max', max)
         let data = {
             api_v1_sub_contract: {
                 amount: this.state.amount,

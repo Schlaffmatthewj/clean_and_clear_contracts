@@ -41,7 +41,7 @@ module Api
                         budget: task[:budget], start_date: task[:start_date],
                         turnover_date: task[:turnover_date], is_done: task[:is_done],
                         api_v1_phase_id: task[:api_v1_phase_id], sub_contractor: sub_contractor,
-                        subcontracts: subcontracts, updated: task[:updated_at] }
+                        subcontracts: subcontracts, updated: api_task.updated_at }
                     }
                     { id: phase.id, title: phase.title, description: phase.description, 
                     budget: phase.budget, start_date: phase.start_date, 
