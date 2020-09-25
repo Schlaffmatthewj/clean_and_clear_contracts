@@ -23,7 +23,7 @@ class Task extends Component {
         fetch(`/api/v1/projects/${project_id}/phases/${phase_id}/tasks/${id}`)
         .then(res => res.json())
         .then(res => {
-            // console.log('fetching', res)
+            console.log('fetching', res)
             this.setState({
                 task: res.results,
                 dataLoaded: true
@@ -83,8 +83,17 @@ class Task extends Component {
         )
     }
 
+    isPrimeOrOwner() {
+        return (
+            <div>
+                {/* {(this.props.loggedInStatus === 'LOGGED_IN')
+                ? (this.company.id === this.)} */}
+            </div>
+        )
+    }
+
     conditionalRender() {
-        console.log('state from task', this.state.task)
+        // console.log('state from task', this.state.task)
         const {
             task
         } = this.state
@@ -104,14 +113,7 @@ class Task extends Component {
                         ? `Completed • ${task.updated}`
                         : 'Incomplete'}
                 </p>
-                <ToggleIsDone
-                    parentType='Task'
-                    is_done={task.is_done}
-                    fireReload={this.fireReload}
-                    project_id={this.props.project_id}
-                    phase_id={this.props.phase_id}
-                    task_id={this.props.task_id}
-                />
+                {this.isPrimeOrOwner()}
                 <ul>
                     <li>Sub Contractor</li>
                         {task.sub_contractor ? <ul>

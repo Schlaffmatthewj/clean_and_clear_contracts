@@ -27,7 +27,7 @@ module Api
             end
         
             def api_v1_prime_contract_params
-                params.require(:api_v1_prime_contract).permit(:amount)
+                params.require(:api_v1_prime_contract).permit(:amount, :api_v1_company_id, :api_v1_project_id)
             end
         end
     end    

@@ -10,8 +10,6 @@ class Home extends Component {
             dataLoaded: false
         }
     }
-    // THIS WILL LOAD ALL COMPANIES AND ALL PROJECTS
-
     // FIGURE OUT HOW TO REFORMAT THE DATE TO GET MONTH NAME AND 'th' FOR DAYS
 
     componentDidMount() {

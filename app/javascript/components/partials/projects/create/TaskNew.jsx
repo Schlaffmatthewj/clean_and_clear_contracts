@@ -59,7 +59,7 @@ class TaskNew extends Component {
                 type='text'
                 name='title'
                 value={this.state.title}
-                placeholder="Phase's title"
+                placeholder="Task's title"
                 onChange={this.handleChange}
                 />
                 <textarea
