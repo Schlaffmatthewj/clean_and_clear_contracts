@@ -147,7 +147,7 @@ class Project extends Component {
                                 <h6>You Own This Project</h6>
                                 <p>Delete Project? • <span onClick={() => this.deleter('Project', id)}>🗑️</span></p>
                                 <Link to={{
-                                    pathname: '/edit',
+                                    pathname: `/edit/project/${id}`,
                                     state: {
                                         project: this.state.project,
                                         pageStatus: 'Project'

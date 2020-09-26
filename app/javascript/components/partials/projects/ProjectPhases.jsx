@@ -68,9 +68,9 @@ export default class ProjectPhases extends Component {
                                             {this.props.is_current_owner
                                                 || this.props.is_current_prime
                                                 ? <div>
-                                                    <p>Delete Phase? • <span onClick={() => this.props.deleter('Phase', this.props.project_id, phase.id)}>X</span></p>
+                                                    <p>Delete Phase? • <span onClick={() => this.props.deleter('Phase', this.props.project_id, phase.id)}>🗑️</span></p>
                                                     <Link to={{
-                                                        pathname: '/edit',
+                                                        pathname: `/edit/phase/${phase.id}`,
                                                         state: {
                                                             project: this.props.project,
                                                             phase: phase,

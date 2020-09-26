@@ -44,14 +44,36 @@ class Profile extends Component {
         })
     }
 
+    isPrimeOrOwner() {
+        return (
+            <aside>
+                {!this.state.company.is_prime
+                    ? <Link to='/create/prime'>Prime Contractor Permissions</Link>
+                    : null }
+                {!this.state.company.is_owner
+                    ? <Link to='/create/owner'>Property Owner Permissions</Link>
+                    : <Link to='/create/project'>Create New Project</Link> }
+            </aside>
+        )
+    }
+
     conditionalRender() {
         return (
             <article>
+                {this.isPrimeOrOwner()}
                 <Logout toggleLogout={this.toggleLogout} />
+                <button onClick={() => this.deleteAccount()}>Delete Account • 🗑️</button>
+                <Link to={{
+                    pathname: `/edit/company/${this.state.company.id}`,
+                    state: {
+                        company: this.state.company,
+                        pageStatus: 'Company'
+                    }
+                }}>Edit Profile? • 🛠️</Link>
                 <h2>{this.state.company.name}</h2>
-                <cite>{this.state.company.established_date}</cite>
-                <p>{this.state.company.address}</p>
-                <p>{this.state.company.phone}</p>
+                <cite>EST: {this.state.company.established_date}</cite>
+                <p>Address: {this.state.company.address}</p>
+                <p>Phone: {this.state.company.phone}</p>
                 <ul>
                     <li>Owned Projects</li>
                     <li>
@@ -60,7 +82,7 @@ class Profile extends Component {
                             return (
                                 <ul key={el.id}>
                                     <li><Link to={`/project/${el.id}`}>{el.name}</Link></li>
-                                    <li>{el.address}</li>
+                                    <li>Address: {el.address}</li>
                                 </ul>
                             )
                         }) : <p>No Owned Projects</p>}
@@ -91,43 +113,13 @@ class Profile extends Component {
                     }) : <p>No Sub Contracts</p>}
                     </li>
                 </ul>
-                <button onClick={() => this.deleteAccount()}>Delete Account</button>
-                <Link to={{
-                    pathname: '/edit',
-                    state: {
-                        company: this.state.company,
-                        pageStatus: 'Company'
-                    }
-                }}>Edit Profile? • 🛠️</Link>
             </article>
-        )
-    }
-
-    isPrimeContractor() {
-        return (
-            <aside>
-                {!this.state.company.is_prime
-                    ? <Link to='/create/prime'>Prime Contractor Permissions</Link>
-                    : null }
-            </aside>
-        )
-    }
-
-    isPropertyOwner() {
-        return (
-            <aside>
-                {!this.state.company.is_owner
-                    ? <Link to='/create/owner'>Property Owner Permissions</Link>
-                    : <Link to='/create/project'>Create New Project</Link> }
-            </aside>
         )
     }
 
     render() {
         return (
             <main>
-               {this.state.dataLoaded && this.isPropertyOwner()}
-               {this.state.dataLoaded && this.isPrimeContractor()}
                {this.state.dataLoaded ? this.conditionalRender() : <p>Loading...</p>}
             </main>
         )

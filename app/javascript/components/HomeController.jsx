@@ -132,7 +132,7 @@ export default class HomeController extends Component {
                             company={this.state.company}
                             />}
           />
-          <Route path='/edit' exact
+          <Route path='/edit/:type/:type_id' exact
           render={props => <EditController {...props}
                             loggedInStatus={this.state.loggedInStatus}
                             company={this.state.company}
