@@ -26,7 +26,7 @@ class Project extends Component {
         fetch(`/api/v1/projects/${id}`)
         .then(res => res.json())
         .then(res => {
-            // console.log('fetching', res)
+            // console.log('fetching projects res', res)
             this.setState({
                 project: res.results,
                 dataLoaded: true
@@ -51,7 +51,7 @@ class Project extends Component {
         return (
             <p>
                 {(this.state.is_current_owner || this.state.is_current_prime)
-                ? <Link to={`/create/project/${this.state.project.id}/phase`}>Add A Phase</Link>
+                ? <Link to={`/create/project/${this.state.project.id}/phase`}><button>Add A Phase • 👷</button></Link>
                 : null}
             </p>
         )
@@ -82,7 +82,6 @@ class Project extends Component {
         fetch(`/api/v1/projects/${id}`)
         .then(res => res.json())
         .then(res => {
-            // console.log('fetching', res)
             this.setState({
                 project: res.results,
                 dataLoaded: true
@@ -125,6 +124,9 @@ class Project extends Component {
             api_v1_company,
             updated
         } = this.state.project
+        let new_start = (new Date(start_date)).toLocaleDateString()
+        let new_turn = (new Date(turnover_date)).toDateString()
+        let new_update = (new Date(updated)).toDateString()
         return (
             <section>
                 <article>
@@ -145,14 +147,14 @@ class Project extends Component {
                         {this.state.is_current_owner
                             ? <div>
                                 <h6>You Own This Project</h6>
-                                <p>Delete Project? • <span onClick={() => this.deleter('Project', id)}>🗑️</span></p>
+                                <button onClick={() => this.deleter('Project', id)}>Delete Project • 🗑️</button>
                                 <Link to={{
                                     pathname: `/edit/project/${id}`,
                                     state: {
                                         project: this.state.project,
                                         pageStatus: 'Project'
                                     }
-                                }}>Edit Project? • 🛠️</Link>
+                                }}><button>Edit Project • 🛠️</button></Link>
                             </div>
                             : null}
                     </aside>
@@ -160,13 +162,13 @@ class Project extends Component {
                         <h2>{name}</h2>
                         <cite><Link to={`/company/${api_v1_company.id}`}>{owner}</Link></cite>
                         <p>Address: {location}</p>
-                        <p>Start Date: {start_date}</p>
-                        <p>Turnover Date: {turnover_date}</p>
+                        <p>Start Date: {new_start}</p>
+                        <p>Turnover Date: {new_turn}</p>
                     </div>
                     <aside>
                         <div>
                             <p>Status: {is_done
-                                    ? `Completed • ${updated}`
+                                    ? `Completed • ${new_update}`
                                     : 'Incomplete'}
                             </p>
                             {(prime_contractor && (this.state.is_current_owner || this.state.is_current_prime))

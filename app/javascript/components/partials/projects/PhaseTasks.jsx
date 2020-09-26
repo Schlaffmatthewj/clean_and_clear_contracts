@@ -18,6 +18,9 @@ export default class PhaseTasks extends Component {
                 <ol>
                     {this.props.phase.tasks.length > 0
                         ? this.props.phase.tasks.map(task => {
+                            let new_start = (new Date(task.start_date)).toDateString()
+                            let new_turn = (new Date(task.turnover_date)).toDateString()
+                            let new_update = (new Date(task.updated)).toDateString()
                             return (
                                 <li key={task.id}>
                                     <h4>
@@ -27,11 +30,11 @@ export default class PhaseTasks extends Component {
                                     </h4>
                                     <div>
                                         <p>Description: {task.description}</p>
-                                        <p>Start Date: {task.start_date}</p>
-                                        <p>Turnover Date: {task.turnover_date}</p>
+                                        <p>Start Date: {new_start}</p>
+                                        <p>Turnover Date: {new_turn}</p>
                                         <p>Budget: {task.budget}</p>
                                         <p>Status: {task.is_done
-                                            ? `Completed • ${task.updated}`
+                                            ? `Completed • ${new_update}`
                                             : 'Incomplete'}
                                         </p>
                                         {(task.sub_contractor)
@@ -66,7 +69,7 @@ export default class PhaseTasks extends Component {
                                         {this.props.is_current_owner
                                             || this.props.is_current_prime
                                             ? <div>
-                                                <p>Delete Task? • <span onClick={() => this.props.deleter('Task', this.props.project_id, this.props.phase.id, task.id)}>🗑️</span></p>
+                                                <button onClick={() => this.props.deleter('Task', this.props.project_id, this.props.phase.id, task.id)}>Delete Task • 🗑️</button>
                                                 <Link to={{
                                                     pathname: `/edit/task/${task.id}`,
                                                     state: {
@@ -75,7 +78,7 @@ export default class PhaseTasks extends Component {
                                                         task: task,
                                                         pageStatus: 'Task'
                                                     }
-                                                }}>Edit Task? • 🛠️</Link>
+                                                }}><button>Edit Task • 🛠️</button></Link>
                                             </div>
                                             : null}
                                     </div>

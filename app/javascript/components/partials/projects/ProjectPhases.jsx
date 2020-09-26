@@ -13,7 +13,7 @@ export default class ProjectPhases extends Component {
         return (
             <p>
                 {(this.props.is_current_owner || this.props.is_current_prime)
-                ? <Link to={`/create/project/${this.props.project_id}/phase/${phase_id}/task`}>Add A Task</Link>
+                ? <Link to={`/create/project/${this.props.project_id}/phase/${phase_id}/task`}><button>Add A Task • 👷</button></Link>
                 : null}
             </p>
         )
@@ -28,17 +28,20 @@ export default class ProjectPhases extends Component {
                 <ol>
                     {this.props.phases.length > 0
                         ? this.props.phases.map(phase => {
+                            let new_start = (new Date(phase.start_date)).toDateString()
+                            let new_turn = (new Date(phase.turnover_date)).toDateString()
+                            let new_update = (new Date(phase.updated)).toDateString()
                             return (
                                 <li key={phase.id}>
                                     <div>
                                         <h4>{phase.title}</h4>
                                         <div>
                                             <p>Description: {phase.description}</p>
-                                            <p>Start Date: {phase.start_date}</p>
-                                            <p>Turnover Date: {phase.turnover_date}</p>
+                                            <p>Start Date: {new_start}</p>
+                                            <p>Turnover Date: {new_turn}</p>
                                             <p>Budget: {phase.budget}</p>
                                             <p>Status: {phase.is_done
-                                                ? `Completed • ${phase.updated}` 
+                                                ? `Completed • ${new_update}` 
                                                 : 'Incomplete'}
                                             </p>
                                             {(this.props.is_current_owner
@@ -68,7 +71,7 @@ export default class ProjectPhases extends Component {
                                             {this.props.is_current_owner
                                                 || this.props.is_current_prime
                                                 ? <div>
-                                                    <p>Delete Phase? • <span onClick={() => this.props.deleter('Phase', this.props.project_id, phase.id)}>🗑️</span></p>
+                                                    <button onClick={() => this.props.deleter('Phase', this.props.project_id, phase.id)}>Delete Phase • 🗑️</button>
                                                     <Link to={{
                                                         pathname: `/edit/phase/${phase.id}`,
                                                         state: {
@@ -76,7 +79,7 @@ export default class ProjectPhases extends Component {
                                                             phase: phase,
                                                             pageStatus: 'Phase'
                                                         }
-                                                    }}>Edit Phase? • 🛠️</Link>
+                                                    }}><button>Edit Phase • 🛠️</button></Link>
                                                 </div>
                                                 : null}
                                         </div>

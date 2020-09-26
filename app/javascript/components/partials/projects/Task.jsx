@@ -134,6 +134,9 @@ class Task extends Component {
         const {
             task
         } = this.state
+        let new_start = (new Date(task.start_date)).toDateString()
+        let new_turn = (new Date(task.turnover_date)).toDateString()
+        let new_update = (new Date(task.updated)).toDateString()
         return (
             <article>
                 <h2>Owner: <Link to={`/company/${task.project.api_v1_company_id}`}>{task.project.owner}</Link></h2>
@@ -144,10 +147,10 @@ class Task extends Component {
                 <h3>{task.title}</h3>
                 <p>{task.description}</p>
                 <p>{task.budget}</p>
-                <p>{task.start_date}</p>
-                <p>{task.turnover_date}</p>
+                <p>{new_start}</p>
+                <p>{new_turn}</p>
                 <p>Status: {task.is_done
-                        ? `Completed • ${task.updated}`
+                        ? `Completed • ${new_update}`
                         : 'Incomplete'}
                 </p>
                 {task.sub_contractor && this.isPrimeOrOwner()}

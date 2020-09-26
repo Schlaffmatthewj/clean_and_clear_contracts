@@ -48,16 +48,17 @@ class Profile extends Component {
         return (
             <aside>
                 {!this.state.company.is_prime
-                    ? <Link to='/create/prime'>Prime Contractor Permissions</Link>
+                    ? <Link to='/create/prime'><button>Prime Contractor Permissions • 🏗️</button></Link>
                     : null }
                 {!this.state.company.is_owner
-                    ? <Link to='/create/owner'>Property Owner Permissions</Link>
-                    : <Link to='/create/project'>Create New Project</Link> }
+                    ? <Link to='/create/owner'><button>Property Owner Permissions • 💼</button></Link>
+                    : <Link to='/create/project'><button>Create New Project • 👷</button></Link> }
             </aside>
         )
     }
 
     conditionalRender() {
+        let year = (this.state.company.established_date).split('-')[0]
         return (
             <article>
                 {this.isPrimeOrOwner()}
@@ -69,9 +70,9 @@ class Profile extends Component {
                         company: this.state.company,
                         pageStatus: 'Company'
                     }
-                }}>Edit Profile? • 🛠️</Link>
+                }}><button>Edit Profile • 🛠️</button></Link>
                 <h2>{this.state.company.name}</h2>
-                <cite>EST: {this.state.company.established_date}</cite>
+                <cite>EST: {year}</cite>
                 <p>Address: {this.state.company.address}</p>
                 <p>Phone: {this.state.company.phone}</p>
                 <ul>

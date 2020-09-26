@@ -46,12 +46,13 @@ class Company extends Component {
             owned_projects,
             contracts,
         } = this.state.company
+        let year = established_date.split('-')[0]
         return (
             <article>
                 <h2>{name}</h2>
-                <cite>{established_date}</cite>
-                <p>{address}</p>
-                <p>{phone}</p>
+                <cite>EST: {year}</cite>
+                <p>Address: {address}</p>
+                <p>Phone: {phone}</p>
                 <ul>
                     <li>
                         <h4>Owned Projects</h4>
@@ -67,7 +68,6 @@ class Company extends Component {
                                     <p>Address: {owned.location}</p>
                                     <p>Completed: {owned.is_done ? 'Completed' : 'Incomplete'}</p>
                                     <p>Budget: ${owned.budget}</p>
-                                    <p>Turnover Date: {owned.turnover_date}</p>
                                     <div>
                                         {owned.prime_contract.length > 0
                                         ? owned.prime_contract.map(contract => {
@@ -75,7 +75,7 @@ class Company extends Component {
                                                 <p key={contract.id} onClick={() => this.toggleCompanies(contract.prime_contractor.id)}>Prime Contractor: {contract.prime_contractor.name}</p>
                                             )
                                         })
-                                        : null } {/* maybe have sign contract here?? */}
+                                        : null }
                                     </div>
                                 </div>
                             )

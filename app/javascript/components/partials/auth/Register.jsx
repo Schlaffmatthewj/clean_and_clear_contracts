@@ -96,7 +96,7 @@ class Register extends Component {
                 <input
                 type='text'
                 name='established_date'
-                placeholder="Established Date"
+                placeholder="Established Year"
                 value={this.state.established_date}
                 onChange={this.handleChange}
                 />
