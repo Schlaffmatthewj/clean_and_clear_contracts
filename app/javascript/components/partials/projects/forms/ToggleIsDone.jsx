@@ -67,8 +67,8 @@ export default class ToggleIsDone extends Component {
                 <input
                 type='submit'
                 value={this.props.is_done
-                        ? 'Mark as Incomplete'
-                        : 'Mark as Completed'}
+                        ? 'Mark as Incomplete • ↩️'
+                        : 'Mark as Completed • ✅'}
                 />
             </form>
         )

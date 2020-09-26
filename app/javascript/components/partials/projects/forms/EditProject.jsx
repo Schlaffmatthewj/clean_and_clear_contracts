@@ -80,7 +80,7 @@ export default class EditProject extends Component {
         />
         <input
         type='submit'
-        value='Submit Changes'
+        value='Submit Changes • 🛠️'
         />
       </form>
     )

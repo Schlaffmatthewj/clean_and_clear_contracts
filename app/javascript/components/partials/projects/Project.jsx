@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
+import NumberFormat from 'react-number-format';
 
 import PrimeContractNew from "./create/PrimeContractNew"
 import ProjectPhases from "./ProjectPhases"
@@ -140,7 +141,13 @@ class Project extends Component {
                                 <p>{prime_contractor.phone}</p>
                                 <div>
                                     <h5>Prime Contract</h5>
-                                    <p>{prime_contract.amount}</p>
+                                    <p>Contract Amount: <NumberFormat
+                                                            value={prime_contract.amount}
+                                                            displayType={'text'}
+                                                            thousandSeparator={true}
+                                                            prefix={'$'}
+                                                        />
+                                    </p>
                                 </div>
                             </div>
                             : this.checkPrime()}
@@ -174,28 +181,35 @@ class Project extends Component {
                             </p>
                             {(prime_contractor && (this.state.is_current_owner || this.state.is_current_prime))
                                 ? <ToggleIsDone
-                                    parentType='Project'
-                                    is_done={is_done}
-                                    fireReload={this.fireReload}
-                                    project_id={id}
+                                        parentType='Project'
+                                        is_done={is_done}
+                                        fireReload={this.fireReload}
+                                        project_id={id}
                                     />
                                 : null}
                         </div>
-                        <p>{budget}</p>
+                        <p>Project Budget: <NumberFormat
+                                                value={budget}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                prefix={'$'}
+                                            />
+                        </p>
+                        {/* NEED TO PHASES AND TASKS COST */}
                         {this.state.dataLoaded && this.addAPhase()}
                     </aside>
                 </article>
                 <ProjectPhases 
-                loggedInStatus={this.props.loggedInStatus}
-                project_id={id}
-                project={this.state.project}
-                phases={phases}
-                is_current_owner={this.state.is_current_owner}
-                is_current_prime={this.state.is_current_prime}
-                fireReload={this.fireReload}
-                addedContract={this.addedContract}
-                deleter={this.deleter}
-                company={this.props.company}
+                    loggedInStatus={this.props.loggedInStatus}
+                    project_id={id}
+                    project={this.state.project}
+                    phases={phases}
+                    is_current_owner={this.state.is_current_owner}
+                    is_current_prime={this.state.is_current_prime}
+                    fireReload={this.fireReload}
+                    addedContract={this.addedContract}
+                    deleter={this.deleter}
+                    company={this.props.company}
                 />
             </section>
         )

@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
+import NumberFormat from 'react-number-format';
 
 import Logout from "../partials/auth/Logout"
 
@@ -85,6 +86,14 @@ class Profile extends Component {
                                 <ul key={el.id}>
                                     <li><Link to={`/project/${el.id}`}>{el.name}</Link></li>
                                     <li>Address: {el.address}</li>
+                                    <li>Project Budget: <NumberFormat
+                                                            value={el.budget}
+                                                            displayType={'text'}
+                                                            thousandSeparator={true}
+                                                            prefix={'$'}
+                                                        />
+                                    </li>
+                                    {/* NEED AMOUNT OF PRIME CONTRACT */}
                                 </ul>
                             )
                         }) : <p>No Owned Projects</p>}
@@ -96,7 +105,14 @@ class Profile extends Component {
                         return (
                             <ul key={el.id}>
                                 <li><Link to={`/project/${el.project.id}`}>{el.project.name}</Link></li>
-                                <li>Total: {el.amount}</li>
+                                <li>Contract Amount: <NumberFormat
+                                                        value={el.amount}
+                                                        displayType={'text'}
+                                                        thousandSeparator={true}
+                                                        prefix={'$'}
+                                                    />
+                                </li>
+                                {/* NEED TOTAL COST OF PHASES AND TASKS */}
                             </ul>
                         )
                     }) : <p>No Prime Contracts</p>}
@@ -108,7 +124,14 @@ class Profile extends Component {
                         return (
                             <ul key={el.id}>
                                 <li>Project: {el.project.name}</li>
-                                <li>Total: {el.amount}</li>
+                                <li>Contract Amount: <NumberFormat
+                                                value={el.amount}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                prefix={'$'}
+                                            />
+                                </li>
+                                {/* NEED TASK BUDGET */}
                                 <li><Link to={`/project/${el.project.id}/phase/${el.task.api_v1_phase_id}/task/${el.task.id}`}>{el.task.title}</Link></li>
                             </ul>
                         )

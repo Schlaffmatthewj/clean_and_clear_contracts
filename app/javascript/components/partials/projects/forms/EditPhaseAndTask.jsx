@@ -107,7 +107,7 @@ export default class EditPhaseAndTask extends Component {
         />
         <input
         type='submit'
-        value='Submit Changes'
+        value='Submit Changes • 🛠️'
         />
       </form>
     )

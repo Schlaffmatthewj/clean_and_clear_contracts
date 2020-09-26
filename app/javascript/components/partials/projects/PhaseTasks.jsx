@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
+import NumberFormat from 'react-number-format';
 
 import SubContractNew from "./create/SubContractNew"
 import ToggleIsDone from "./forms/ToggleIsDone"
@@ -32,7 +33,13 @@ export default class PhaseTasks extends Component {
                                         <p>Description: {task.description}</p>
                                         <p>Start Date: {new_start}</p>
                                         <p>Turnover Date: {new_turn}</p>
-                                        <p>Budget: {task.budget}</p>
+                                        <p>Task Budget: <NumberFormat
+                                                            value={task.budget}
+                                                            displayType={'text'}
+                                                            thousandSeparator={true}
+                                                            prefix={'$'}
+                                                        />
+                                        </p>
                                         <p>Status: {task.is_done
                                             ? `Completed • ${new_update}`
                                             : 'Incomplete'}
@@ -44,7 +51,13 @@ export default class PhaseTasks extends Component {
                                                 <li>{task.sub_contractor.phone}</li>
                                                 <li>
                                                     <h5>Sub Contract</h5>
-                                                    <p>Total: {task.subcontracts.amount}</p>
+                                                    <p>Contract Amount: <NumberFormat
+                                                                            value={task.subcontracts.amount}
+                                                                            displayType={'text'}
+                                                                            thousandSeparator={true}
+                                                                            prefix={'$'}
+                                                                        />
+                                                    </p>
                                                 </li>
                                             </ul>
                                             : (this.props.loggedInStatus === 'LOGGED_IN')

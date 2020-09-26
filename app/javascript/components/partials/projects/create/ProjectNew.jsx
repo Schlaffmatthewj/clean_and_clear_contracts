@@ -97,7 +97,7 @@ class ProjectNew extends Component {
                 </label>
                 <input
                 type='submit'
-                value='Draft Project'
+                value='Draft Project • 🏗️'
                 />
             </form>
         )

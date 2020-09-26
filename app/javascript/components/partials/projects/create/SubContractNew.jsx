@@ -59,7 +59,7 @@ export default class SubContractNew extends Component {
                 />
                 <input
                 type='submit'
-                value='Sign Contract'
+                value='Sign Contract • ✍️'
                 />
             </form>
         )

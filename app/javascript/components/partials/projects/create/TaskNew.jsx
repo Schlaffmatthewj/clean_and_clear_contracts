@@ -95,7 +95,7 @@ class TaskNew extends Component {
                 </label>
                 <input
                 type='submit'
-                value='Create Task'
+                value='Create Task • 🏗️'
                 />
             </form>
         )

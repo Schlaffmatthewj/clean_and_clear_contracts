@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
+import NumberFormat from 'react-number-format';
 
 import PhaseTasks from "./PhaseTasks"
 import ToggleIsDone from "./forms/ToggleIsDone"
@@ -39,7 +40,14 @@ export default class ProjectPhases extends Component {
                                             <p>Description: {phase.description}</p>
                                             <p>Start Date: {new_start}</p>
                                             <p>Turnover Date: {new_turn}</p>
-                                            <p>Budget: {phase.budget}</p>
+                                            <p>Phase Budget: <NumberFormat
+                                                                value={phase.budget}
+                                                                displayType={'text'}
+                                                                thousandSeparator={true}
+                                                                prefix={'$'}
+                                                            />
+                                            </p>
+                                            {/* NEED TOTAL TASKS COST */}
                                             <p>Status: {phase.is_done
                                                 ? `Completed • ${new_update}` 
                                                 : 'Incomplete'}

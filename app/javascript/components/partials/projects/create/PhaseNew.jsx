@@ -95,7 +95,7 @@ class PhaseNew extends Component {
                 </label>
                 <input
                 type='submit'
-                value='Create Phase'
+                value='Create Phase • 🏗️'
                 />
             </form>
         )

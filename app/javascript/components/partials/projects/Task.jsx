@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
+import NumberFormat from 'react-number-format';
 
 import ToggleIsDone from "../projects/forms/ToggleIsDone"
 import SubContractNew from "./create/SubContractNew"
@@ -145,10 +146,16 @@ class Task extends Component {
                     ? <h2>Prime Contractor: <Link to={`/company/${task.prime_contractor.id}`}>{task.prime_contractor.name}</Link></h2> 
                     : this.checkPrime() }
                 <h3>{task.title}</h3>
-                <p>{task.description}</p>
-                <p>{task.budget}</p>
-                <p>{new_start}</p>
-                <p>{new_turn}</p>
+                <p>Description: {task.description}</p>
+                <p>Task Budget: <NumberFormat
+                                    value={task.budget}
+                                    displayType={'text'}
+                                    thousandSeparator={true}
+                                    prefix={'$'}
+                                />
+                </p>
+                <p>Start Date: {new_start}</p>
+                <p>Turnover Date: {new_turn}</p>
                 <p>Status: {task.is_done
                         ? `Completed • ${new_update}`
                         : 'Incomplete'}
@@ -166,7 +173,13 @@ class Task extends Component {
                             <li>{task.sub_contractor.phone}</li>
                             <li>
                                 <h5>Sub Contract</h5>
-                                <p>Total: {task.subcontract.amount}</p>
+                                <p>Contract Amount: <NumberFormat
+                                                        value={task.subcontract.amount}
+                                                        displayType={'text'}
+                                                        thousandSeparator={true}
+                                                        prefix={'$'}
+                                                    />
+                                </p>
                             </li>
                         </ul> : this.checkSub()}
                 </ul>

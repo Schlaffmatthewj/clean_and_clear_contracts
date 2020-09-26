@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
+import NumberFormat from 'react-number-format';
 
 class Company extends Component {
     constructor(props) {
@@ -68,12 +69,31 @@ class Company extends Component {
                                     </p>
                                     <p>Address: {owned.location}</p>
                                     <p>Completed: {owned.is_done ? 'Completed' : 'Incomplete'}</p>
-                                    <p>Budget: ${owned.budget}</p>
+                                    <p>
+                                        Project Budget: <NumberFormat
+                                                            value={owned.budget}
+                                                            displayType={'text'}
+                                                            thousandSeparator={true}
+                                                            prefix={'$'}
+                                                        />
+                                    </p>
                                     <div>
                                         {owned.prime_contract.length > 0
                                         ? owned.prime_contract.map(contract => {
                                             return (
-                                                <p key={contract.id} onClick={() => this.toggleCompanies(contract.prime_contractor.id)}>Prime Contractor: {contract.prime_contractor.name}</p>
+                                                <div>
+                                                    <p key={contract.id}
+                                                        onClick={() => this.toggleCompanies(contract.prime_contractor.id)}>
+                                                            Prime Contractor: {contract.prime_contractor.name}
+                                                    </p>
+                                                    <p>Contract Amount: <NumberFormat
+                                                                            value={contract.amount}
+                                                                            displayType={'text'}
+                                                                            thousandSeparator={true}
+                                                                            prefix={'$'}
+                                                                        />
+                                                    </p>
+                                                </div>
                                             )
                                         })
                                         : null }
@@ -94,8 +114,20 @@ class Company extends Component {
                                         </Link>
                                     </p>
                                     <p onClick={() => this.toggleCompanies(prime.project.api_v1_company_id)}>Project Owner: {prime.project.owner}</p>
-                                    <p>Contract: ${prime.amount}</p>
-                                    <p>Project Budget: ${prime.project.budget}</p>
+                                    <p>Contract: <NumberFormat
+                                                    value={prime.amount}
+                                                    displayType={'text'}
+                                                    thousandSeparator={true}
+                                                    prefix={'$'}
+                                                />
+                                    </p>
+                                    <p>Project Budget: <NumberFormat
+                                                            value={prime.project.budget}
+                                                            displayType={'text'}
+                                                            thousandSeparator={true}
+                                                            prefix={'$'}
+                                                        />
+                                    </p>
                                 </div>
                             )
                         }) : <p>No Prime Contracts</p>}
@@ -111,13 +143,25 @@ class Company extends Component {
                                             {task.project.name}
                                         </Link>
                                     </p>
-                                    <p>Contract: ${task.amount}</p>
+                                    <p>Contract: <NumberFormat
+                                                    value={task.amount}
+                                                    displayType={'text'}
+                                                    thousandSeparator={true}
+                                                    prefix={'$'}
+                                                />
+                                    </p>
                                     <p>Task: 
                                         <Link to={`/project/${task.id}/phase/${task.task.api_v1_phase_id}/task/${task.task.id}`}>
                                             {task.task.title}
                                         </Link>
                                     </p>
-                                    <p>Task Budget: ${task.task.budget}</p>
+                                    <p>Task Budget: <NumberFormat
+                                                        value={task.task.budget}
+                                                        displayType={'text'}
+                                                        thousandSeparator={true}
+                                                        prefix={'$'}
+                                                    />
+                                    </p>
                                 </div>
                             )
                         }) : <p>No Sub Contracts</p>}
