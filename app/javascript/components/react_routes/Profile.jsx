@@ -17,6 +17,9 @@ class Profile extends Component {
     }
 
     componentDidMount() {
+        if (this.props.loggedInStatus === 'NOT_LOGGED_IN') {
+            this.props.history.push('/')
+        }
         let id = this.props.match.params.company_id
         fetch(`/api/v1/companies/${id}`)
         .then(res => res.json())
@@ -27,6 +30,12 @@ class Profile extends Component {
                 dataLoaded: true
             })
         })
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.company !== this.props.company) {
+            this.props.history.push('/')
+        }
     }
 
     toggleLogout() {

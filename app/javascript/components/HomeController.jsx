@@ -80,6 +80,7 @@ export default class HomeController extends Component {
       <Router>
         <Header
           loggedInStatus={this.state.loggedInStatus}
+          handleLogout={this.handleLogout}
           company={this.state.company}
           />
         <Switch>
@@ -144,6 +145,7 @@ export default class HomeController extends Component {
                             company={this.state.company}
                             handleLogout={this.handleLogout}
                             deletedCompany={this.deletedCompany}
+                            loggedInStatus={this.state.loggedInStatus}
                             />}
           />
           <Route path='/project/:project_id' exact
