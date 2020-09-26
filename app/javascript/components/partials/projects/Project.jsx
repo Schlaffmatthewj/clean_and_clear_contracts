@@ -4,7 +4,7 @@ import NumberFormat from 'react-number-format';
 
 import PrimeContractNew from "./create/PrimeContractNew"
 import ProjectPhases from "./ProjectPhases"
-import ToggleIsDone from "./forms/ToggleIsDone"
+import ToggleIsDone from "./edit/ToggleIsDone"
 
 class Project extends Component {
     constructor(props) {
@@ -27,7 +27,6 @@ class Project extends Component {
         fetch(`/api/v1/projects/${id}`)
         .then(res => res.json())
         .then(res => {
-            // console.log('fetching projects res', res)
             this.setState({
                 project: res.results,
                 dataLoaded: true
@@ -46,6 +45,7 @@ class Project extends Component {
                 }
             }
         })
+        .catch(err => console.log(err))
     }
 
     addAPhaseAndToggleDone() {
@@ -96,6 +96,7 @@ class Project extends Component {
                 dataLoaded: true
             })
         })
+        .catch(err => console.log(err))
     }
 
     deleter(type, project_id, phase_id, task_id) {
@@ -104,16 +105,19 @@ class Project extends Component {
                 method: 'DELETE',
                 credentials: 'include'
             }).then(() => this.props.switchToProfile())
+            .catch(err => console.log(err))
         } else if (type === 'Phase') {
             fetch(`/api/v1/projects/${project_id}/phases/${phase_id}`, {
                 method: 'DELETE',
                 credentials: 'include'
             }).then(() => this.fireReload())
+            .catch(err => console.log(err))
         } else if (type === 'Task') {
             fetch(`/api/v1/projects/${project_id}/phases/${phase_id}/tasks/${task_id}`, {
                 method: 'DELETE',
                 credentials: 'include'
             }).then(() => this.fireReload())
+            .catch(err => console.log(err))
         }
     }
 
@@ -140,7 +144,6 @@ class Project extends Component {
         let new_start = (new Date(start_date)).toLocaleDateString()
         let new_turn = (new Date(turnover_date)).toDateString()
         let new_update = (new Date(updated)).toDateString()
-        // console.log(this.state.project)
         return (
             <section>
                 <article>

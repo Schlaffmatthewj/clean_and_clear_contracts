@@ -56,6 +56,7 @@ export default class EditPhaseAndTask extends Component {
         body: JSON.stringify(data),
         credentials: 'include'
       }).then(() => this.props.handleSuccessfulEdit(this.props.project.id))
+      .catch(err => console.log(err))
     } else {
       let data = {
         api_v1_phase: {
@@ -71,6 +72,7 @@ export default class EditPhaseAndTask extends Component {
         body: JSON.stringify(data),
         credentials: 'include'
       }).then(() => this.props.handleSuccessfulEdit(this.props.project.id))
+      .catch(err => console.log(err))
     }
   }
 

@@ -38,7 +38,6 @@ class Login extends Component {
         })
         .then(res => res.json())
         .then(res => {
-            // console.log('Sessions Response', res)
             this.props.handleSuccessfulAuth(res.company)
         })
         .catch(err => console.log(err))

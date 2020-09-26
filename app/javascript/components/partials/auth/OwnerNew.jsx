@@ -33,9 +33,9 @@ class OwnerNew extends Component {
             })
             .then(res => res.json())
             .then(res => {
-                // console.log('PRIME TOGGLE RES', res)
                 this.props.togglePrimeOrOwner(res.results)
             })
+            .catch(err => console.log(err))
         } else {
             alert('You did NOT enter the Correct password!')
             this.setState({ password: '' })

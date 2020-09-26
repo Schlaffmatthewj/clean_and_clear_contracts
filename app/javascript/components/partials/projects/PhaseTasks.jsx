@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import NumberFormat from 'react-number-format';
 
 import SubContractNew from "./create/SubContractNew"
-import ToggleIsDone from "./forms/ToggleIsDone"
+import ToggleIsDone from "./edit/ToggleIsDone"
 
 export default class PhaseTasks extends Component {
     constructor(props) {

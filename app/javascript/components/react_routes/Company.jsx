@@ -16,12 +16,12 @@ class Company extends Component {
         fetch(`/api/v1/companies/${id}`)
         .then(res => res.json())
         .then(res => {
-            // console.log('fetching', res)
             this.setState({
                 company: res.results,
                 dataLoaded: true
             })
         })
+        .catch(err => console.log(err))
     }
 
     toggleCompanies(id) {
@@ -29,12 +29,12 @@ class Company extends Component {
             fetch(`/api/v1/companies/${id}`)
             .then(res => res.json())
             .then(res => {
-                // console.log('fetching', res)
                 this.setState({
                     company: res.results,
                     dataLoaded: true
                 })
             })
+            .catch(err => console.log(err))
         }
     }
 
@@ -48,7 +48,6 @@ class Company extends Component {
             contracts,
         } = this.state.company
         let year = established_date.split('-')[0]
-        console.log('this.state.company', this.state.company)
         return (
             <article>
                 <h2>{name}</h2>

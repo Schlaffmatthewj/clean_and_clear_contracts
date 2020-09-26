@@ -24,12 +24,12 @@ class Profile extends Component {
         fetch(`/api/v1/companies/${id}`)
         .then(res => res.json())
         .then(res => {
-            // console.log('fetching', res)
             this.setState({
                 company: res.results,
                 dataLoaded: true
             })
         })
+        .catch(err => console.log(err))
     }
 
     componentDidUpdate(prevProps) {
@@ -52,6 +52,7 @@ class Profile extends Component {
             this.props.deletedCompany()
             this.props.history.push('/')
         })
+        .catch(err => console.log(err))
     }
 
     isPrimeOrOwner() {
@@ -68,7 +69,6 @@ class Profile extends Component {
     }
 
     conditionalRender() {
-        // console.log('Company Profile', this.state.company)
         const {
             name,
             established_date,

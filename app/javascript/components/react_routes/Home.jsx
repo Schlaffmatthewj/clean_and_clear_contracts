@@ -10,26 +10,25 @@ class Home extends Component {
             dataLoaded: false
         }
     }
-    // FIGURE OUT HOW TO REFORMAT THE DATE TO GET MONTH NAME AND 'th' FOR DAYS
 
     componentDidMount() {
         fetch('/api/v1/projects')
         .then(res => res.json())
         .then((res) => {
-            // console.log('First fetch', res)
             this.setState({
                 projects: res.results
             })
         })
+        .catch(err => console.log(err))
         fetch('/api/v1/companies')
         .then(res => res.json())
         .then(res => {
-            // console.log('Second fetch', res)
             this.setState({
                 companies: res.results,
                 dataLoaded: true
             })
         })
+        .catch(err => console.log(err))
     }
 
     condtionalCompanyRender() {

@@ -47,9 +47,9 @@ class TaskNew extends Component {
         })
         .then(res => res.json())
         .then(res => {
-            // console.log('NEW Task res', res)
             this.props.successfulCreation(res.results.project_id)
         })
+        .catch(err => console.log(err))
     }
 
     render() {

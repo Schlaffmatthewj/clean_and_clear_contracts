@@ -37,8 +37,7 @@ export default class PrimeContractNew extends Component {
                 credentials: 'include'
             })
             .then(res => res.json())
-            .then(res => {
-                // console.log('NEW PRIME Contract res', res)
+            .then(() => {
                 this.props.addedContract()
             })
         } else {

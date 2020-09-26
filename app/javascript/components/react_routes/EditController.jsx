@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 
-import EditCompany from "../partials/projects/forms/EditCompany"
-import EditPhaseAndTask from "../partials/projects/forms/EditPhaseAndTask"
-import EditProject from "../partials/projects/forms/EditProject"
+import EditCompany from "../partials/projects/edit/EditCompany"
+import EditPhaseAndTask from "../partials/projects/edit/EditPhaseAndTask"
+import EditProject from "../partials/projects/edit/EditProject"
 
 export default class EditController extends Component {
   constructor(props) {
@@ -24,7 +24,6 @@ export default class EditController extends Component {
   }
 
   handleSuccessfulCompanyEdit(company) {
-    // console.log('successful Edit', company)
     this.props.currentCompany(company)
     this.props.history.push(`/profile/${company.id}`)
   }

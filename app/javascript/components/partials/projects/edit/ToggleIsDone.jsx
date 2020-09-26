@@ -18,43 +18,37 @@ export default class ToggleIsDone extends Component {
         } = this.props
         if (parentType === 'Task') {
             data = { api_v1_task: { is_done: !this.props.is_done } }
-            // console.log('UPDATE TASK', data)
             fetch(`/api/v1/projects/${project_id}/phases/${phase_id}/tasks/${task_id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),
                 credentials: 'include'
             }).then(res => res.json())
-            .then(res => {
-                // console.log('PUT to TASK res', res)
+            .then(() => {
                 this.props.fireReload()
             })
             .catch(err => console.log(err))
         } else if (parentType === 'Phase') {
             data = { api_v1_phase: { is_done: !this.props.is_done } }
-            // console.log('UPDATE PHASE', data)
             fetch(`/api/v1/projects/${project_id}/phases/${phase_id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),
                 credentials: 'include'
             }).then(res => res.json())
-            .then(res => {
-                // console.log('PUT to PHASE res', res)
+            .then(() => {
                 this.props.fireReload()
             })
             .catch(err => console.log(err))
         } else if (parentType === 'Project') {
             data = { api_v1_project: { is_done: !this.props.is_done } }
-            // console.log('UPDATE PROJECT', data)
             fetch(`/api/v1/projects/${project_id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),
                 credentials: 'include'
             }).then(res => res.json())
-            .then(res => {
-                // console.log('PUT to PROJECT res', res)
+            .then(() => {
                 this.props.fireReload()
             })
             .catch(err => console.log(err))

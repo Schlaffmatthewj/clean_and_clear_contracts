@@ -64,7 +64,6 @@ export default class HomeController extends Component {
       })
       .then(res => res.json())
       .then(res => {
-        // console.log('sessions res', res)
         if (res.logged_in) {
           this.setState({
             company: res.company,
@@ -72,6 +71,7 @@ export default class HomeController extends Component {
           })
         }
       })
+      .catch(err => console.log(err))
     }
   }
 

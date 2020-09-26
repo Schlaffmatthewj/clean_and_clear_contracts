@@ -13,6 +13,7 @@ export default class Logout extends Component {
         .then(() => {
             this.props.toggleLogout()
         })
+        .catch(err => console.log(err))
     }
 
     render() {

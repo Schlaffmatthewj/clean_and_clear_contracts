@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import NumberFormat from 'react-number-format';
 
-import ToggleIsDone from "../projects/forms/ToggleIsDone"
+import ToggleIsDone from "./edit/ToggleIsDone"
 import SubContractNew from "./create/SubContractNew"
 
 class Task extends Component {
@@ -26,7 +26,6 @@ class Task extends Component {
         fetch(`/api/v1/projects/${project_id}/phases/${phase_id}/tasks/${id}`)
         .then(res => res.json())
         .then(res => {
-            // console.log('fetching', res)
             this.setState({
                 task: res.results,
                 dataLoaded: true
@@ -47,6 +46,7 @@ class Task extends Component {
                 }
             }
         })
+        .catch(err => console.log(err))
     }
 
     componentDidUpdate(prevProps) {
@@ -57,11 +57,11 @@ class Task extends Component {
             fetch(`/api/v1/projects/${project_id}/phases/${phase_id}/tasks/${id}`)
             .then(res => res.json())
             .then(res => {
-                // console.log('fetching', res)
                 this.setState({
                     task: res.results,
                 })
             })
+            .catch(err => console.log(err))
         }
     }
 
@@ -72,11 +72,11 @@ class Task extends Component {
         fetch(`/api/v1/projects/${project_id}/phases/${phase_id}/tasks/${id}`)
         .then(res => res.json())
         .then(res => {
-            // console.log('fetching', res)
             this.setState({
                 task: res.results,
             })
         })
+        .catch(err => console.log(err))
     }
 
     addedContract() {
@@ -131,7 +131,6 @@ class Task extends Component {
     }
 
     conditionalRender() {
-        // console.log('state from task', this.state.task)
         const {
             task
         } = this.state
@@ -140,6 +139,7 @@ class Task extends Component {
         let new_update = (new Date(task.updated)).toDateString()
         return (
             <article>
+                {/* THIS IS RATHER UGLY FIX THAT */}
                 <h2>Owner: <Link to={`/company/${task.project.api_v1_company_id}`}>{task.project.owner}</Link></h2>
                 <h2>Project: <Link to={`/project/${task.project.id}`}>{task.project.name}</Link></h2>
                 {task.prime_contractor

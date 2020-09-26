@@ -4,10 +4,8 @@ export default class EditProject extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      name: '',
-      location: '',
-      start_date: '',
-      turnover_date: '',
+      address: '',
+      phone: '',
       dataLoaded: false
     }
 
@@ -17,10 +15,8 @@ export default class EditProject extends Component {
 
   componentDidMount() {
     this.setState({
-      name: this.props.project.name,
-      location: this.props.project.location,
-      start_date: this.props.project.start_date,
-      turnover_date: this.props.project.turnover_date,
+      address: this.props.company.address,
+      phone: this.props.company.phone,
       dataLoaded: true
     })
   }
@@ -32,19 +28,18 @@ export default class EditProject extends Component {
   handleSubmit(evt) {
     evt.preventDefault()
     let data = {
-      api_v1_project: {
-        name: this.state.name,
-        location: this.state.location,
-        start_date: this.state.start_date,
-        turnover_date: this.state.turnover_date
+      api_v1_company: {
+        address: this.state.address,
+        phone: this.state.phone,
       }
     }
-    fetch(`/api/v1/projects/${this.props.project.id}`, {
+    fetch(`/api/v1/companies/${this.props.company.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
       credentials: 'include'
-    }).then(() => this.props.handleSuccessfulEdit(this.props.project.id))
+    }).then(() => this.props.handleSuccessfulCompanyEdit(this.props.company))
+    .catch(err => console.log(err))
   }
 
   conditionalRender() {
@@ -52,30 +47,16 @@ export default class EditProject extends Component {
       <form onSubmit={this.handleSubmit}>
         <input
         type='text'
-        name='name'
-        value={this.state.name}
-        placeholder="Project's Name"
-        onChange={this.handleChange}
-        />
-        <input
-        type='text'
-        name='location'
-        value={this.state.location}
+        name='address'
+        value={this.state.address}
         placeholder='Address'
         onChange={this.handleChange}
         />
         <input
-        type='date'
-        name='start_date'
-        value={this.state.start_date}
+        type='text'
+        name='phone'
+        value={this.state.phone}
         placeholder='Start Date'
-        onChange={this.handleChange}
-        />
-        <input
-        type='date'
-        name='turnover_date'
-        value={this.state.turnover_date}
-        placeholder='Turnover Date'
         onChange={this.handleChange}
         />
         <input

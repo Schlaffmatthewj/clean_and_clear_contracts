@@ -15,7 +15,6 @@ class Auth extends Component {
     }
 
     handleSuccessfulAuth(data) {
-        // console.log('successful auth', data)
         this.props.currentCompany(data)
         this.props.history.push(`/profile/${data.id}`)
     }

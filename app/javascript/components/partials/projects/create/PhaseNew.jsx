@@ -47,9 +47,9 @@ class PhaseNew extends Component {
         })
         .then(res => res.json())
         .then(res => {
-            // console.log('NEW Phase res', res)
             this.props.successfulCreation(res.results.api_v1_project_id)
         })
+        .catch(err => console.log(err))
     }
 
     render() {

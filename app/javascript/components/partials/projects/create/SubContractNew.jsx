@@ -37,10 +37,10 @@ export default class SubContractNew extends Component {
                 credentials: 'include'
             })
             .then(res => res.json())
-            .then(res => {
-                // console.log('NEW SUB Contract res', res)
+            .then(() => {
                 this.props.addedContract()
             })
+            .catch(err => console.log(err))
         } else {
             alert(`Your bid was too high!, the budget is $${this.props.task.budget}`)
             this.setState({ amount: '' })
