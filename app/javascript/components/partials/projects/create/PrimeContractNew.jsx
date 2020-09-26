@@ -40,6 +40,7 @@ export default class PrimeContractNew extends Component {
             .then(() => {
                 this.props.addedContract()
             })
+            .catch(err => console.log(err))
         } else {
             alert(`Your bid was too high!, the budget is $${this.props.project.budget}`)
             this.setState({ amount: '' })
