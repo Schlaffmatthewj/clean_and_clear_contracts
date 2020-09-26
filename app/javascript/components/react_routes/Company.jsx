@@ -81,10 +81,9 @@ class Company extends Component {
                                         {owned.prime_contract.length > 0
                                         ? owned.prime_contract.map(contract => {
                                             return (
-                                                <div>
-                                                    <p key={contract.id}
-                                                        onClick={() => this.toggleCompanies(contract.prime_contractor.id)}>
-                                                            Prime Contractor: {contract.prime_contractor.name}
+                                                <div key={contract.id}>
+                                                    <p onClick={() => this.toggleCompanies(contract.prime_contractor.id)}>
+                                                        Prime Contractor: {contract.prime_contractor.name}
                                                     </p>
                                                     <p>Contract Amount: <NumberFormat
                                                                             value={contract.amount}

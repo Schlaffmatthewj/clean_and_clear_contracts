@@ -53,7 +53,6 @@ class ProjectController extends Component {
                         project_id={project_id}
                         phase_id={phase_id}
                         task_id={task_id}
-                        addedContract={this.addedContract}
                         />
             default:
                 this.props.history.push('/')

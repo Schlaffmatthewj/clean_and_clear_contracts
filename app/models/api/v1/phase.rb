@@ -37,7 +37,7 @@ module Api
             end
 
             def self.default_scope
-                order(created_at: :desc)
+                order(created_at: :asc)
             end
         end
     end
