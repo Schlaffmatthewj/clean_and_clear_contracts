@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom"
 
-import "./stylesheets/HomeController.css"
-
 import Header from "./partials/static/Header"
 import Footer from "./partials/static/Footer"
 
@@ -13,9 +11,6 @@ import AuthController from "../components/react_routes/AuthController"
 import EditController from "../components/react_routes/EditController"
 import CreateController from "../components/react_routes/CreateController"
 import ProjectController from "../components/react_routes/ProjectController";
-
-
-// BUILD A PROFILE COMPONENT AND HAVE AC PUSH TO IT
 
 export default class HomeController extends Component {
   constructor(props) {
