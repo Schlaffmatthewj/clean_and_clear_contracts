@@ -48,13 +48,21 @@ class Project extends Component {
         })
     }
 
-    addAPhase() {
+    addAPhaseAndToggleDone() {
         return (
-            <p>
+            <div>
                 {(this.state.is_current_owner || this.state.is_current_prime)
-                ? <Link to={`/create/project/${this.state.project.id}/phase`}><button>Add A Phase • 👷</button></Link>
+                ? <div>
+                    <Link to={`/create/project/${this.state.project.id}/phase`}><button>Add A Phase • 👷</button></Link>
+                    <ToggleIsDone
+                        parentType='Project'
+                        is_done={this.state.project.is_done}
+                        fireReload={this.fireReload}
+                        project_id={this.state.project.id}
+                    />
+                </div>
                 : null}
-            </p>
+            </div>
         )
     }
 
@@ -68,7 +76,7 @@ class Project extends Component {
                         company={this.props.company}
                         addedContract={this.addedContract}
                     />
-                : <Link to='/create/prime'>Request Prime Contractor Permissions</Link>
+                : <Link to='/create/prime'><button>Request Prime Contractor Permissions • 🏗️</button></Link>
                 : <p>No Prime Contractor</p> }
             </div>
         )
@@ -123,38 +131,23 @@ class Project extends Component {
             is_done,
             phases,
             api_v1_company,
+            total_cost,
+            prime_profits,
+            project_profits,
+            budget_vs_cost,
             updated
         } = this.state.project
         let new_start = (new Date(start_date)).toLocaleDateString()
         let new_turn = (new Date(turnover_date)).toDateString()
         let new_update = (new Date(updated)).toDateString()
-        console.log(this.state.project)
+        // console.log(this.state.project)
         return (
             <section>
                 <article>
                     <aside>
-                        {prime_contractor
-                            ? <div>
-                                <h5>Prime Contractor</h5>
-                                <h6><Link to={`/company/${prime_contractor.id}`}>{prime_contractor.name}</Link></h6>
-                                <p>{prime_contractor.address}</p>
-                                <p>{prime_contractor.phone}</p>
-                                <div>
-                                    <h5>Prime Contract</h5>
-                                    <p>Contract Amount: <NumberFormat
-                                                            value={prime_contract.amount}
-                                                            displayType={'text'}
-                                                            thousandSeparator={true}
-                                                            prefix={'$'}
-                                                        />
-                                    </p>
-                                </div>
-                            </div>
-                            : this.checkPrime()}
-                        'ADD You are Owner and Sub here'
                         {this.state.is_current_owner
                             ? <div>
-                                <h6>You Own This Project</h6>
+                                <h4>You Own This Project</h4>
                                 <button onClick={() => this.deleter('Project', id)}>Delete Project • 🗑️</button>
                                 <Link to={{
                                     pathname: `/edit/project/${id}`,
@@ -164,30 +157,57 @@ class Project extends Component {
                                     }
                                 }}><button>Edit Project • 🛠️</button></Link>
                             </div>
-                            : null}
+                            : <div>
+                                <h4>Owner: <Link to={`/company/${api_v1_company.id}`}>{owner}</Link></h4>
+                                {/* <p>Address: </p>
+                                <p>Phone: </p> */}
+                            </div>}
+                        {prime_contractor
+                            ? <div>
+                                <h5>Prime Contractor: <Link to={`/company/${prime_contractor.id}`}>{prime_contractor.name}</Link></h5>
+                                <p>Address: {prime_contractor.address}</p>
+                                <p>Phone: {prime_contractor.phone}</p>
+                                <div>
+                                    <h5>Prime Contract</h5>
+                                    <p>Contract Amount: <NumberFormat
+                                                            value={prime_contract.amount}
+                                                            displayType={'text'}
+                                                            thousandSeparator={true}
+                                                            prefix={'$'}
+                                                        />
+                                    </p>
+                                    <p>Prime Contract Profits: <NumberFormat
+                                                                    value={prime_profits}
+                                                                    displayType={'text'}
+                                                                    thousandSeparator={true}
+                                                                    prefix={'$'}
+                                                                />
+
+                                    </p>
+                                    <p>Total Cost: <NumberFormat
+                                                        value={total_cost}
+                                                        displayType={'text'}
+                                                        thousandSeparator={true}
+                                                        prefix={'$'}
+                                                    />
+                                    </p>
+                                </div>
+                            </div>
+                            : this.checkPrime()}
+                        {this.addAPhaseAndToggleDone()}
                     </aside>
                     <div>
                         <h2>{name}</h2>
-                        <cite><Link to={`/company/${api_v1_company.id}`}>{owner}</Link></cite>
+                        <cite>Owner: <Link to={`/company/${api_v1_company.id}`}>{owner}</Link></cite>
                         <p>Address: {location}</p>
                         <p>Start Date: {new_start}</p>
                         <p>Turnover Date: {new_turn}</p>
+                        <p>Status: {is_done
+                            ? `Completed • ${new_update}`
+                            : 'Incomplete'}
+                        </p>
                     </div>
                     <aside>
-                        <div>
-                            <p>Status: {is_done
-                                    ? `Completed • ${new_update}`
-                                    : 'Incomplete'}
-                            </p>
-                            {(prime_contractor && (this.state.is_current_owner || this.state.is_current_prime))
-                                ? <ToggleIsDone
-                                        parentType='Project'
-                                        is_done={is_done}
-                                        fireReload={this.fireReload}
-                                        project_id={id}
-                                    />
-                                : null}
-                        </div>
                         <p>Project Budget: <NumberFormat
                                                 value={budget}
                                                 displayType={'text'}
@@ -195,8 +215,13 @@ class Project extends Component {
                                                 prefix={'$'}
                                             />
                         </p>
-                        {/* NEED TO PHASES AND TASKS COST */}
-                        {this.state.dataLoaded && this.addAPhase()}
+                        <p>Project Over/Under: <NumberFormat
+                                            value={project_profits}
+                                            displayType={'text'}
+                                            thousandSeparator={true}
+                                            prefix={'$'}
+                                        />
+                        </p>
                     </aside>
                 </article>
                 <ProjectPhases 
@@ -206,6 +231,7 @@ class Project extends Component {
                     phases={phases}
                     is_current_owner={this.state.is_current_owner}
                     is_current_prime={this.state.is_current_prime}
+                    is_current_sub={this.props.is_current_sub}
                     fireReload={this.fireReload}
                     addedContract={this.addedContract}
                     deleter={this.deleter}

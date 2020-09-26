@@ -60,7 +60,15 @@ class Profile extends Component {
 
     conditionalRender() {
         console.log('Company Profile', this.state.company)
-        let year = (this.state.company.established_date).split('-')[0]
+        const {
+            name,
+            established_date,
+            address,
+            phone,
+            owned_projects,
+            contracts,
+        } = this.state.company
+        let year = established_date.split('-')[0]
         return (
             <article>
                 {this.isPrimeOrOwner()}
@@ -73,69 +81,119 @@ class Profile extends Component {
                         pageStatus: 'Company'
                     }
                 }}><button>Edit Profile • 🛠️</button></Link>
-                <h2>{this.state.company.name}</h2>
+                <h2>{name}</h2>
                 <cite>EST: {year}</cite>
-                <p>Address: {this.state.company.address}</p>
-                <p>Phone: {this.state.company.phone}</p>
+                <p>Address: {address}</p>
+                <p>Phone: {phone}</p>
                 <ul>
-                    <li>Owned Projects</li>
                     <li>
-                        {this.state.company.owned_projects
-                        ? this.state.company.owned_projects.map(el => {
+                        <h4>Owned Projects</h4>
+                        {owned_projects
+                        ? owned_projects.map(owned => {
                             return (
-                                <ul key={el.id}>
-                                    <li><Link to={`/project/${el.id}`}>{el.name}</Link></li>
-                                    <li>Address: {el.address}</li>
-                                    <li>Project Budget: <NumberFormat
-                                                            value={el.budget}
+                                <div key={owned.id}>
+                                    <p>
+                                        <Link to={`/project/${owned.id}`}>
+                                            {owned.name}
+                                        </Link>
+                                    </p>
+                                    <p>Address: {owned.location}</p>
+                                    <p>Completed: {owned.is_done ? 'Completed' : 'Incomplete'}</p>
+                                    <p>
+                                        Project Budget: <NumberFormat
+                                                            value={owned.budget}
                                                             displayType={'text'}
                                                             thousandSeparator={true}
                                                             prefix={'$'}
                                                         />
-                                    </li>
-                                    {/* NEED AMOUNT OF PRIME CONTRACT */}
-                                </ul>
+                                    </p>
+                                    <div>
+                                        {owned.prime_contract.length > 0
+                                        ? owned.prime_contract.map(contract => {
+                                            return (
+                                                <div key={contract.id}>
+                                                    <p onClick={() => this.toggleCompanies(contract.prime_contractor.id)}>
+                                                        Prime Contractor: {contract.prime_contractor.name}
+                                                    </p>
+                                                    <p>Contract Amount: <NumberFormat
+                                                                            value={contract.amount}
+                                                                            displayType={'text'}
+                                                                            thousandSeparator={true}
+                                                                            prefix={'$'}
+                                                                        />
+                                                    </p>
+                                                </div>
+                                            )
+                                        })
+                                        : null }
+                                    </div>
+                                </div>
                             )
                         }) : <p>No Owned Projects</p>}
                     </li>
-                    <li>Prime Contracts</li>
                     <li>
-                    {this.state.company.contracts.prime_contracts.length > 0 
-                    ? this.state.company.contracts.prime_contracts.map(el => {
-                        return (
-                            <ul key={el.id}>
-                                <li><Link to={`/project/${el.project.id}`}>{el.project.name}</Link></li>
-                                <li>Contract Amount: <NumberFormat
-                                                        value={el.amount}
+                        <h4>Prime Contracts</h4>
+                        {contracts.prime_contracts.length > 0 
+                        ? contracts.prime_contracts.map(prime => {
+                            return (
+                                <div key={prime.id}>
+                                    <p>Project: 
+                                        <Link to={`/project/${prime.project.id}`}>
+                                            {prime.project.name}
+                                        </Link>
+                                    </p>
+                                    <p onClick={() => this.toggleCompanies(prime.project.api_v1_company_id)}>Project Owner: {prime.project.owner}</p>
+                                    <p>Contract: <NumberFormat
+                                                    value={prime.amount}
+                                                    displayType={'text'}
+                                                    thousandSeparator={true}
+                                                    prefix={'$'}
+                                                />
+                                    </p>
+                                    <p>Project Budget: <NumberFormat
+                                                            value={prime.project.budget}
+                                                            displayType={'text'}
+                                                            thousandSeparator={true}
+                                                            prefix={'$'}
+                                                        />
+                                    </p>
+                                </div>
+                            )
+                        }) : <p>No Prime Contracts</p>}
+                    </li>
+                    <li>
+                        <h4>Sub Contracts</h4>
+                        {contracts.sub_contracts.length > 0 
+                        ? contracts.sub_contracts.map(task => {
+                            return (
+                                <div key={task.id}>
+                                    <p>Project: 
+                                        <Link to={`/project/${task.project.id}`}>
+                                            {task.project.name}
+                                        </Link>
+                                    </p>
+                                    <p>Contract: <NumberFormat
+                                                    value={task.amount}
+                                                    displayType={'text'}
+                                                    thousandSeparator={true}
+                                                    prefix={'$'}
+                                                />
+                                    </p>
+                                    <p>Task: 
+                                        <Link to={`/project/${task.id}/phase/${task.task.api_v1_phase_id}/task/${task.task.id}`}>
+                                            {task.task.title}
+                                        </Link>
+                                    </p>
+                                    <p>Task Budget: <NumberFormat
+                                                        value={task.task.budget}
                                                         displayType={'text'}
                                                         thousandSeparator={true}
                                                         prefix={'$'}
                                                     />
-                                </li>
-                                {/* NEED TOTAL COST OF PHASES AND TASKS */}
-                            </ul>
-                        )
-                    }) : <p>No Prime Contracts</p>}
-                    </li>
-                    <li>Sub Contracts</li>
-                    <li>
-                    {this.state.company.contracts.sub_contracts.length > 0 
-                    ? this.state.company.contracts.sub_contracts.map(el => {
-                        return (
-                            <ul key={el.id}>
-                                <li>Project: {el.project.name}</li>
-                                <li>Contract Amount: <NumberFormat
-                                                value={el.amount}
-                                                displayType={'text'}
-                                                thousandSeparator={true}
-                                                prefix={'$'}
-                                            />
-                                </li>
-                                {/* NEED TASK BUDGET */}
-                                <li><Link to={`/project/${el.project.id}/phase/${el.task.api_v1_phase_id}/task/${el.task.id}`}>{el.task.title}</Link></li>
-                            </ul>
-                        )
-                    }) : <p>No Sub Contracts</p>}
+                                    </p>
+                                </div>
+                            )
+                        }) : <p>No Sub Contracts</p>}
                     </li>
                 </ul>
             </article>

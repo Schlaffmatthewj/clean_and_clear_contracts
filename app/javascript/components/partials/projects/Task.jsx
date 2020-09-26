@@ -104,9 +104,9 @@ class Task extends Component {
             <div>
                 {(this.props.loggedInStatus === 'LOGGED_IN')
                 ? <SubContractNew
-                task={this.state.task}
-                addedContract={this.addedContract}
-                company={this.props.company}
+                    task={this.state.task}
+                    addedContract={this.addedContract}
+                    company={this.props.company}
                 />
                 : <p>No Sub Contractor</p>}
             </div>
@@ -131,7 +131,7 @@ class Task extends Component {
     }
 
     conditionalRender() {
-        // console.log('state from task', this.state.task)
+        console.log('state from task', this.state.task)
         const {
             task
         } = this.state
@@ -154,6 +154,13 @@ class Task extends Component {
                                     prefix={'$'}
                                 />
                 </p>
+                <p>Task Over/Under: <NumberFormat
+                                    value={task.task_profits}
+                                    displayType={'text'}
+                                    thousandSeparator={true}
+                                    prefix={'$'}
+                                />
+                </p>
                 <p>Start Date: {new_start}</p>
                 <p>Turnover Date: {new_turn}</p>
                 <p>Status: {task.is_done
@@ -161,17 +168,18 @@ class Task extends Component {
                         : 'Incomplete'}
                 </p>
                 {task.sub_contractor && this.isPrimeOrOwner()}
-                <ul>
-                    <li>Sub Contractor</li>
-                        {task.sub_contractor ? <ul>
-                            <li>
+                <div>
+                    <p>Sub Contractor</p>
+                    {task.sub_contractor
+                        ? <div>
+                            <p>
                                 <Link to={`/company/${task.sub_contractor.id}`}>
                                 {task.sub_contractor.name}
                                 </Link>
-                            </li>
-                            <li>{task.sub_contractor.address}</li>
-                            <li>{task.sub_contractor.phone}</li>
-                            <li>
+                            </p>
+                            <p>{task.sub_contractor.address}</p>
+                            <p>{task.sub_contractor.phone}</p>
+                            <div>
                                 <h5>Sub Contract</h5>
                                 <p>Contract Amount: <NumberFormat
                                                         value={task.subcontract.amount}
@@ -180,9 +188,10 @@ class Task extends Component {
                                                         prefix={'$'}
                                                     />
                                 </p>
-                            </li>
-                        </ul> : this.checkSub()}
-                </ul>
+                            </div>
+                        </div> 
+                        : this.checkSub()}
+                </div>
             </article>
         )
     }

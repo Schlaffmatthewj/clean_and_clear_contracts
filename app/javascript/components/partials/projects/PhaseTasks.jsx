@@ -40,16 +40,26 @@ export default class PhaseTasks extends Component {
                                                             prefix={'$'}
                                                         />
                                         </p>
+                                        <p>Task Over/Under: <NumberFormat
+                                                            value={task.task_profits}
+                                                            displayType={'text'}
+                                                            thousandSeparator={true}
+                                                            prefix={'$'}
+                                                        />
+                                        </p>
                                         <p>Status: {task.is_done
                                             ? `Completed • ${new_update}`
                                             : 'Incomplete'}
                                         </p>
                                         {(task.sub_contractor)
-                                            ? <ul>
-                                                <li><Link to={`/company/${task.sub_contractor.id}`}>{task.sub_contractor.name}</Link></li>
-                                                <li>{task.sub_contractor.address}</li>
-                                                <li>{task.sub_contractor.phone}</li>
-                                                <li>
+                                            ? <div>
+                                                <p>Sub Contractor: <Link to={`/company/${task.sub_contractor.id}`}>
+                                                    {task.sub_contractor.name}
+                                                    </Link>
+                                                </p>
+                                                <p>Address: {task.sub_contractor.address}</p>
+                                                <p>Phone: {task.sub_contractor.phone}</p>
+                                                <div>
                                                     <h5>Sub Contract</h5>
                                                     <p>Contract Amount: <NumberFormat
                                                                             value={task.subcontracts.amount}
@@ -58,8 +68,8 @@ export default class PhaseTasks extends Component {
                                                                             prefix={'$'}
                                                                         />
                                                     </p>
-                                                </li>
-                                            </ul>
+                                                </div>
+                                            </div>
                                             : (this.props.loggedInStatus === 'LOGGED_IN')
                                             ? <SubContractNew
                                                 project={this.props.project}
@@ -69,16 +79,20 @@ export default class PhaseTasks extends Component {
                                                 company={this.props.company}
                                             />
                                             : <span>No Subcontract</span>}
-                                        {(task.sub_contractor && (this.props.is_current_owner || this.props.is_current_prime))
-                                            ? <ToggleIsDone
-                                                parentType='Task'
-                                                is_done={task.is_done}
-                                                fireReload={this.props.fireReload}
-                                                project_id={this.props.project_id}
-                                                phase_id={this.props.phase.id}
-                                                task_id={task.id}
-                                                />
-                                            : null}
+                                        {(task.sub_contractor && this.props.loggedInStatus === 'LOGGED_IN') 
+                                            ? (this.props.is_current_owner
+                                                || this.props.is_current_prime
+                                                || (task.subcontracts.api_v1_company_id
+                                                    === this.props.company.id))
+                                                ? <ToggleIsDone
+                                                        parentType='Task'
+                                                        is_done={task.is_done}
+                                                        fireReload={this.props.fireReload}
+                                                        project_id={this.props.project_id}
+                                                        phase_id={this.props.phase.id}
+                                                        task_id={task.id}
+                                                    />
+                                                : null : null}
                                         {this.props.is_current_owner
                                             || this.props.is_current_prime
                                             ? <div>

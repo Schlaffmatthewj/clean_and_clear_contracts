@@ -48,7 +48,7 @@ class Company extends Component {
             contracts,
         } = this.state.company
         let year = established_date.split('-')[0]
-        // console.log('this.state.company', this.state.company)
+        console.log('this.state.company', this.state.company)
         return (
             <article>
                 <h2>{name}</h2>

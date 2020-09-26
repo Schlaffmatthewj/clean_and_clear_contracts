@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 
 export default (props) => (
     <header>
-        <h1>Clean &amp; Clear Contract</h1>
+        <h1><Link to='/'>Clean &amp; Clear Contracts</Link></h1>
         <nav>
             <Link to='/'>Home</Link>
             {(props.loggedInStatus === 'NOT_LOGGED_IN') ? <div>

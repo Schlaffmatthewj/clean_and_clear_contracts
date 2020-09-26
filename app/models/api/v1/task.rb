@@ -26,14 +26,16 @@ module Api
                 end
                 subcontract = self.api_v1_sub_contracts
                 if subcontract 
+                    sub_amount = subcontract.amount
                     sub_contractor = subcontract.api_v1_company
                 end
+                task_profits = (self.budget - sub_amount)
                 { id: self.id, title: self.title, description: self.description,
                 budget: self.budget, start_date: self.start_date,
                 turnover_date: self.turnover_date, is_done: self.is_done,
                 api_v1_phase_id: self.api_v1_phase_id, sub_contractor: sub_contractor,
                 subcontract: subcontract, project: project, prime_contractor: prime_contractor,
-                updated: self.updated_at }
+                updated: self.updated_at, task_profits: task_profits }
             end
 
             def self.default_scope
