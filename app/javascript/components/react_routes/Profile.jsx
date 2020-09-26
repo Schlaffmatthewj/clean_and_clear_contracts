@@ -68,7 +68,7 @@ class Profile extends Component {
     }
 
     conditionalRender() {
-        console.log('Company Profile', this.state.company)
+        // console.log('Company Profile', this.state.company)
         const {
             name,
             established_date,
@@ -101,41 +101,48 @@ class Profile extends Component {
                         ? owned_projects.map(owned => {
                             return (
                                 <div key={owned.id}>
-                                    <p>
-                                        <Link to={`/project/${owned.id}`}>
-                                            {owned.name}
-                                        </Link>
-                                    </p>
+                                    <Link to={`/project/${owned.id}`}>
+                                        {owned.name}
+                                    </Link>
                                     <p>Address: {owned.location}</p>
                                     <p>Completed: {owned.is_done ? 'Completed' : 'Incomplete'}</p>
-                                    <p>
-                                        Project Budget: <NumberFormat
+                                    <p>Project Budget: <NumberFormat
                                                             value={owned.budget}
                                                             displayType={'text'}
                                                             thousandSeparator={true}
                                                             prefix={'$'}
                                                         />
                                     </p>
-                                    <div>
-                                        {owned.prime_contract.length > 0
-                                        ? owned.prime_contract.map(contract => {
-                                            return (
-                                                <div key={contract.id}>
-                                                    <p onClick={() => this.toggleCompanies(contract.prime_contractor.id)}>
-                                                        Prime Contractor: {contract.prime_contractor.name}
-                                                    </p>
-                                                    <p>Contract Amount: <NumberFormat
-                                                                            value={contract.amount}
-                                                                            displayType={'text'}
-                                                                            thousandSeparator={true}
-                                                                            prefix={'$'}
-                                                                        />
-                                                    </p>
-                                                </div>
-                                            )
-                                        })
+                                    <p>Project Over/Under: <NumberFormat
+                                            value={owned.project_profits}
+                                            displayType={'text'}
+                                            thousandSeparator={true}
+                                            prefix={'$'}
+                                        />
+                                    </p>
+                                    <p>Total Cost: <NumberFormat
+                                            value={owned.total_cost}
+                                            displayType={'text'}
+                                            thousandSeparator={true}
+                                            prefix={'$'}
+                                        />
+                                    </p>
+                                    {owned.prime_contract.length > 0
+                                        ? owned.prime_contract.map(contract => (
+                                            <div key={contract.id}>
+                                                <Link to={`/company/${contract.prime_contractor.id}`}>
+                                                    Prime Contractor: {contract.prime_contractor.name}
+                                                </Link>
+                                                <p>Contract Amount: <NumberFormat
+                                                                        value={contract.amount}
+                                                                        displayType={'text'}
+                                                                        thousandSeparator={true}
+                                                                        prefix={'$'}
+                                                                    />
+                                                </p>
+                                            </div>
+                                        ))
                                         : null }
-                                    </div>
                                 </div>
                             )
                         }) : <p>No Owned Projects</p>}
@@ -146,12 +153,21 @@ class Profile extends Component {
                         ? contracts.prime_contracts.map(prime => {
                             return (
                                 <div key={prime.id}>
-                                    <p>Project: 
-                                        <Link to={`/project/${prime.project.id}`}>
-                                            {prime.project.name}
-                                        </Link>
+                                    <Link to={`/project/${prime.project.id}`}>
+                                        {prime.project.name}
+                                    </Link>
+                                    <Link to={`/company/${prime.project.api_v1_company_id}`}>
+                                        {prime.project.owner}
+                                    </Link>
+                                    <p>Address: {prime.project.location}</p>
+                                    <p>Completed: {prime.project.is_done ? 'Completed' : 'Incomplete'}</p>
+                                    <p>Project Budget: <NumberFormat
+                                                            value={prime.project.budget}
+                                                            displayType={'text'}
+                                                            thousandSeparator={true}
+                                                            prefix={'$'}
+                                                        />
                                     </p>
-                                    <p onClick={() => this.toggleCompanies(prime.project.api_v1_company_id)}>Project Owner: {prime.project.owner}</p>
                                     <p>Contract: <NumberFormat
                                                     value={prime.amount}
                                                     displayType={'text'}
@@ -159,8 +175,8 @@ class Profile extends Component {
                                                     prefix={'$'}
                                                 />
                                     </p>
-                                    <p>Project Budget: <NumberFormat
-                                                            value={prime.project.budget}
+                                    <p>Prime Contract Profits: <NumberFormat
+                                                            value={prime.prime_profits}
                                                             displayType={'text'}
                                                             thousandSeparator={true}
                                                             prefix={'$'}
@@ -177,17 +193,12 @@ class Profile extends Component {
                             return (
                                 <div key={task.id}>
                                     <p>Project: 
-                                        <Link to={`/project/${task.project.id}`}>
+                                        <Link to={`/project/${task.project.id}`}> 
                                             {task.project.name}
                                         </Link>
                                     </p>
-                                    <p>Contract: <NumberFormat
-                                                    value={task.amount}
-                                                    displayType={'text'}
-                                                    thousandSeparator={true}
-                                                    prefix={'$'}
-                                                />
-                                    </p>
+                                    <p>Address: {task.project.location}</p>
+                                    <p>Completed: {task.project.is_done ? 'Completed' : 'Incomplete'}</p>
                                     <p>Task: 
                                         <Link to={`/project/${task.id}/phase/${task.task.api_v1_phase_id}/task/${task.task.id}`}>
                                             {task.task.title}
@@ -199,6 +210,20 @@ class Profile extends Component {
                                                         thousandSeparator={true}
                                                         prefix={'$'}
                                                     />
+                                    </p>
+                                    <p>Task Over/Under: <NumberFormat
+                                                        value={task.task.task_profits}
+                                                        displayType={'text'}
+                                                        thousandSeparator={true}
+                                                        prefix={'$'}
+                                                    />
+                                    </p>
+                                    <p>Contract: <NumberFormat
+                                                    value={task.amount}
+                                                    displayType={'text'}
+                                                    thousandSeparator={true}
+                                                    prefix={'$'}
+                                                />
                                     </p>
                                 </div>
                             )

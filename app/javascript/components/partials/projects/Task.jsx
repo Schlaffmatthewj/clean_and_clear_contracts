@@ -131,7 +131,7 @@ class Task extends Component {
     }
 
     conditionalRender() {
-        console.log('state from task', this.state.task)
+        // console.log('state from task', this.state.task)
         const {
             task
         } = this.state
