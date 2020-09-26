@@ -27,7 +27,7 @@ export default class SubContractNew extends Component {
                 api_v1_task_id: this.props.task.id
             }
         }
-        if (this.state.amount < max) {
+        if (this.state.amount <= max) {
             fetch(`/api/v1/companies/${this.props.company.id}/sub_contracts`, {
                 method: 'POST',
                 headers: {

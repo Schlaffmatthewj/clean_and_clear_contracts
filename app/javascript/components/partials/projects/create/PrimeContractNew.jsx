@@ -27,7 +27,7 @@ export default class PrimeContractNew extends Component {
                 api_v1_project_id: this.props.project.id
             }
         }
-        if (this.state.amount < max) {
+        if (this.state.amount <= max) {
             fetch(`/api/v1/companies/${this.props.company.id}/prime_contracts`, {
                 method: 'POST',
                 headers: {

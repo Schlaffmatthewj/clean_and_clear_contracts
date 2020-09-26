@@ -127,6 +127,7 @@ class Project extends Component {
         let new_start = (new Date(start_date)).toLocaleDateString()
         let new_turn = (new Date(turnover_date)).toDateString()
         let new_update = (new Date(updated)).toDateString()
+        // console.log(this.state.project)
         return (
             <section>
                 <article>
@@ -194,6 +195,7 @@ class Project extends Component {
                 fireReload={this.fireReload}
                 addedContract={this.addedContract}
                 deleter={this.deleter}
+                company={this.props.company}
                 />
             </section>
         )

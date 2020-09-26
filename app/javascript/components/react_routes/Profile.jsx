@@ -58,6 +58,7 @@ class Profile extends Component {
     }
 
     conditionalRender() {
+        // console.log('Company Profile', this.state.company)
         let year = (this.state.company.established_date).split('-')[0]
         return (
             <article>

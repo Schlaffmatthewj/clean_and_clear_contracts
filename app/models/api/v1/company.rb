@@ -28,6 +28,21 @@ module Api
                 owned_projects = self.api_v1_projects
                 if owned_projects.length > 0
                     owned_with_prime = owned_projects.map { |project|
+                        phases = project.api_v1_phases
+                        phase_cost = []
+                        task_cost = []
+                        if phases 
+                            phases.map { |phase|
+                                phase_cost.push(phase.budget)
+                                tasks = phase.api_v1_tasks
+                                if tasks 
+                                    tasks.map { |task|
+                                        task_cost.push(task.budget)
+                                    }
+                                end
+                            }
+                        end
+                        total_cost = (phase_cost.sum + task_cost.sum)
                         prime_contract = Api::V1::PrimeContract.find_by api_v1_project_id: project[:id]
                         prime_contracts = []
                         prime_contracts.push(prime_contract)
@@ -46,7 +61,8 @@ module Api
                         { api_v1_company_id: project[:api_v1_company_id], budget: project[:budget],
                             id: project[:id], is_done: project[:is_done], location: project[:location],
                             name: project[:name], owner: project[:owner], start_date: project[:start_date],
-                            turnover_date: project[:turnover_date], prime_contract: each_contract }
+                            turnover_date: project[:turnover_date], prime_contract: each_contract,
+                            total_cost: total_cost }
                     }
                 else
                     owned_projects = []
@@ -66,7 +82,22 @@ module Api
                 if prime_contracts.length > 0
                     prime_projects = prime_contracts.map { |contract|
                         project = contract.api_v1_project
-                        { id: contract[:id], amount: contract[:amount], project: project }
+                        phases = project.api_v1_phases
+                        phase_cost = []
+                        task_cost = []
+                        if phases 
+                            phases.map { |phase|
+                                phase_cost.push(phase.budget)
+                                tasks = phase.api_v1_tasks
+                                if tasks 
+                                    tasks.map { |task|
+                                        task_cost.push(task.budget)
+                                    }
+                                end
+                            }
+                        end
+                        total_cost = (phase_cost.sum + task_cost.sum)
+                        { id: contract[:id], amount: contract[:amount], project: project, total_cost: total_cost }
                     }
                 else
                     prime_projects = []

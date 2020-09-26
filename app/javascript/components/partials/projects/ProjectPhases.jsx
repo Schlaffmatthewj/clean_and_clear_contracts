@@ -57,6 +57,7 @@ export default class ProjectPhases extends Component {
                                             <PhaseTasks
                                             is_current_prime={this.props.is_current_prime}
                                             is_current_owner={this.props.is_current_owner}
+                                            loggedInStatus={this.props.loggedInStatus}
                                             phase={phase}
                                             project_id={this.props.project_id}
                                             project={this.props.project}
