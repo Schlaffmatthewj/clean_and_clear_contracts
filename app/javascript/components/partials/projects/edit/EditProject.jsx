@@ -50,7 +50,7 @@ export default class EditProject extends Component {
 
   conditionalRender() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form className='flex-column' onSubmit={this.handleSubmit}>
         <input
         type='text'
         name='name'
@@ -89,7 +89,7 @@ export default class EditProject extends Component {
 
   render() {
     return (
-      <div>
+      <div className='form-div flex-column'>
         {this.state.dataLoaded && this.conditionalRender()}
       </div>
     )

@@ -44,7 +44,7 @@ class OwnerNew extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form className='flex-column' onSubmit={this.handleSubmit}>
                 <input
                 type='password'
                 name='password'

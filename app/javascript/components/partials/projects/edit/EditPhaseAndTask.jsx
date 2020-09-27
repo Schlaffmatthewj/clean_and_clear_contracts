@@ -78,7 +78,7 @@ export default class EditPhaseAndTask extends Component {
 
   conditionalRender() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form className='flex-column' onSubmit={this.handleSubmit}>
         <input
         type='text'
         name='title'
@@ -117,7 +117,7 @@ export default class EditPhaseAndTask extends Component {
 
   render() {
     return (
-      <div>
+      <div className='form-div flex-column'>
         {this.state.dataLoaded && this.conditionalRender()}
       </div>
     )

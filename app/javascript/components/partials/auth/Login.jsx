@@ -45,7 +45,7 @@ class Login extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form className='flex-column' onSubmit={this.handleSubmit}>
                 <input
                 type='text'
                 name='name'

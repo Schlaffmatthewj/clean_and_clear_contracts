@@ -57,7 +57,7 @@ export default class ToggleIsDone extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form className='flex-column' onSubmit={this.handleSubmit}>
                 <input
                 type='submit'
                 value={this.props.is_done
