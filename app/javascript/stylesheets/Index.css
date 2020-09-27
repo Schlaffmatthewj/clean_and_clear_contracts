@@ -99,8 +99,8 @@ nav {
 
 
 
-/*                              MAIN CONTAINER    */
-main {
+/*                              .MAIN-CONTAINER    */
+.main-container {
   width: 100%;
   padding-top: 12%;
   padding-bottom: 5%;
@@ -182,7 +182,7 @@ main {
   align-items: flex-start;
   justify-content: center;
   width: 100%;
-  padding: 1%;
+  padding: 2%;
   margin: 2% 1%;
   background-color: lightseagreen;
 }
@@ -195,12 +195,44 @@ main {
 
 
 /*                              PROJECT & TASK CONTAINER   */
-
 .project-task-container {
   margin-top: 3%;
-  width: 80%;
+  width: 98%;
   background-color: darkslategrey;
 }
+
+.project-task-top-left, .project-task-top-right {
+  padding: 2%;
+  background-color: dimgrey;
+}
+
+.project-task-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.project-task-bottom {
+  width: 100%;
+}
+
+.project-phase-container h3 {
+  text-align: center;
+}
+
+.project-phase-content {
+  display: flex;
+  justify-content: space-evenly;
+  align-self: flex-start;
+  background-color: fuchsia;
+}
+
+.project-phase-single {
+  background-color: green;
+  margin: 2%;
+}
+
 
 
 /*                              FOOTER   */
@@ -217,8 +249,8 @@ footer {
 
 
 @media (max-width: 1100px) {
-/*                              MAIN CONTAINER  @media 1100  */
-  main {
+/*                              .MAIN-CONTAINER  @media 1100  */
+  .main-container {
     padding-top: 14%;
   }
   
@@ -241,8 +273,8 @@ footer {
 }
 
 @media (max-width: 800px) {
-/*                              MAIN CONTAINER  @media 800  */
-  main {
+/*                              .MAIN-CONTAINER  @media 800  */
+  .main-container {
     padding-top: 27%;
     padding-bottom: 10%;
   }
@@ -290,5 +322,10 @@ footer {
 /*                              PROJECT & TASK CONTAINER   */
   .project-task-container {
     margin-top: 5%;
+  }
+
+  .project-phase-content, .project-task-top {
+    flex-direction: column;
+    align-items: center;
   }
 }

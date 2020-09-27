@@ -53,7 +53,7 @@ class Home extends Component {
 
     render() {
         return (
-            <main className='flex-column'>
+            <main className='main-container flex-column'>
                 <article className='home-container'>
                     <div className='home-content'>
                         <h3>Companies</h3>

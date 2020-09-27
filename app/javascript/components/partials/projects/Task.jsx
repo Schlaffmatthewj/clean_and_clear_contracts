@@ -142,85 +142,87 @@ class Task extends Component {
         let new_turn = (new Date(task.turnover_date)).toDateString()
         let new_update = (new Date(task.updated)).toDateString()
         return (
-            <article>
-                <h2>Owner: 
-                    <Link to={`/company/${task.project.api_v1_company_id}`}>
-                        {task.project.owner}
-                    </Link>
-                </h2>
-                <h2>Project: 
-                    <Link to={`/project/${task.project.id}`}>
-                        {task.project.name}
-                    </Link>
-                </h2>
-                {task.prime_contractor
-                    ? <h2>Prime Contractor: 
-                        <Link to={`/company/${task.prime_contractor.id}`}>
-                            {task.prime_contractor.name}
+            <section className='project-task-container flex-column'>
+                <article className='project-task-content flex-column'>
+                    <h2>Owner: 
+                        <Link to={`/company/${task.project.api_v1_company_id}`}>
+                            {task.project.owner}
                         </Link>
-                    </h2> 
-                    : this.checkPrime() }
-                <h3>{task.title}</h3>
-                <p>Description: {task.description}</p>
-                <p>Task Budget: 
-                    <NumberFormat
-                        value={task.budget}
-                        displayType={'text'}
-                        thousandSeparator={true}
-                        prefix={'$'}
-                    />
-                </p>
-                <p>Task Over/Under: 
-                    <NumberFormat
-                        value={task.task_profits}
-                        displayType={'text'}
-                        thousandSeparator={true}
-                        prefix={'$'}
-                    />
-                </p>
-                <p>Start Date: {new_start}</p>
-                <p>Turnover Date: {new_turn}</p>
-                <p>Status: {task.is_done
-                        ? `Completed • ${new_update}`
-                        : 'Incomplete'}
-                </p>
-                {task.sub_contractor && this.isPrimeOrOwner()}
-                <div>
-                    <p>Sub Contractor</p>
-                    {task.sub_contractor
-                        ? <div>
-                            <p>
-                                <Link to={`/company/${task.sub_contractor.id}`}>
-                                    {task.sub_contractor.name}
-                                </Link>
-                            </p>
-                            <p>{task.sub_contractor.address}</p>
-                            <p>{task.sub_contractor.phone}</p>
-                            <div>
-                                <h5>Sub Contract</h5>
-                                <p>Contract Amount: 
-                                    <NumberFormat
-                                        value={task.subcontract.amount}
-                                        displayType={'text'}
-                                        thousandSeparator={true}
-                                        prefix={'$'}
-                                    />
+                    </h2>
+                    <h2>Project: 
+                        <Link to={`/project/${task.project.id}`}>
+                            {task.project.name}
+                        </Link>
+                    </h2>
+                    {task.prime_contractor
+                        ? <h2>Prime Contractor: 
+                            <Link to={`/company/${task.prime_contractor.id}`}>
+                                {task.prime_contractor.name}
+                            </Link>
+                        </h2> 
+                        : this.checkPrime() }
+                    <h3>{task.title}</h3>
+                    <p>Description: {task.description}</p>
+                    <p>Task Budget: 
+                        <NumberFormat
+                            value={task.budget}
+                            displayType={'text'}
+                            thousandSeparator={true}
+                            prefix={'$'}
+                        />
+                    </p>
+                    <p>Task Over/Under: 
+                        <NumberFormat
+                            value={task.task_profits}
+                            displayType={'text'}
+                            thousandSeparator={true}
+                            prefix={'$'}
+                        />
+                    </p>
+                    <p>Start Date: {new_start}</p>
+                    <p>Turnover Date: {new_turn}</p>
+                    <p>Status: {task.is_done
+                            ? `Completed • ${new_update}`
+                            : 'Incomplete'}
+                    </p>
+                    {task.sub_contractor && this.isPrimeOrOwner()}
+                    <div>
+                        <p>Sub Contractor</p>
+                        {task.sub_contractor
+                            ? <div>
+                                <p>
+                                    <Link to={`/company/${task.sub_contractor.id}`}>
+                                        {task.sub_contractor.name}
+                                    </Link>
                                 </p>
-                            </div>
-                        </div> 
-                        : this.checkSub()}
-                </div>
-            </article>
+                                <p>{task.sub_contractor.address}</p>
+                                <p>{task.sub_contractor.phone}</p>
+                                <div>
+                                    <h5>Sub Contract</h5>
+                                    <p>Contract Amount: 
+                                        <NumberFormat
+                                            value={task.subcontract.amount}
+                                            displayType={'text'}
+                                            thousandSeparator={true}
+                                            prefix={'$'}
+                                        />
+                                    </p>
+                                </div>
+                            </div> 
+                            : this.checkSub()}
+                    </div>
+                </article>
+            </section>
         )
     }
 
     render() {
         return (
-            <section className='project-task-container flex-column'>
+            <main className='project-task-container flex-column'>
                {this.state.dataLoaded
                 ? this.conditionalRender()
                 : <p>Loading...</p>}
-            </section>
+            </main>
         )
     }
 }

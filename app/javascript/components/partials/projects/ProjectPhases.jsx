@@ -12,7 +12,7 @@ export default class ProjectPhases extends Component {
 
     addATaskAndEditPhase(phase) {
         return (
-            <div>
+            <div className='project-phase-controls'>
                 {(this.props.is_current_owner || this.props.is_current_prime)
                 ? <div>
                     <ToggleIsDone
@@ -45,66 +45,73 @@ export default class ProjectPhases extends Component {
 
     render() {
         return (
-            <article>
+            <article className='project-task-bottom flex-column'>
                 {this.props.phases.length > 0
-                    ? <article>
+                    ? <div className='project-phase-container flex-column'>
                         <h3>Phases</h3>
-                        <ol>
+                        <ol className='project-phase-content'>
                             {this.props.phases.map(phase => {
                                 let new_start = (new Date(phase.start_date)).toDateString()
                                 let new_turn = (new Date(phase.turnover_date)).toDateString()
                                 let new_update = (new Date(phase.updated)).toDateString()
                                 return (
-                                    <li key={phase.id}>
-                                        <h4>{phase.title}</h4>
-                                        <div>
-                                            <p>Description: {phase.description}</p>
-                                            <p>Start Date: {new_start}</p>
-                                            <p>Turnover Date: {new_turn}</p>
-                                            <p>Status: {phase.is_done
-                                                ? `Completed • ${new_update}` 
-                                                : 'Incomplete'}
-                                            </p>
-                                            <p>Phase Budget: <NumberFormat
-                                                                value={phase.budget}
-                                                                displayType={'text'}
-                                                                thousandSeparator={true}
-                                                                prefix={'$'}
-                                                            />
-                                            </p>
-                                            <p>Total Cost: <NumberFormat
-                                                                value={phase.total_cost}
-                                                                displayType={'text'}
-                                                                thousandSeparator={true}
-                                                                prefix={'$'}
-                                                            />
-                                            </p>
-                                            <p>Phase Over/Under: <NumberFormat
-                                                                value={phase.phase_profits}
-                                                                displayType={'text'}
-                                                                thousandSeparator={true}
-                                                                prefix={'$'}
-                                                            />
-                                            </p>
+                                    <li className='project-phase-single' key={phase.id}>
+                                        <div className='project-phase-top'>
+                                            <div className='project-phase-details'>
+                                                <h4>{phase.title}</h4>
+                                                <p>Description: {phase.description}</p>
+                                                <p>Start Date: {new_start}</p>
+                                                <p>Turnover Date: {new_turn}</p>
+                                                <p>Status: {phase.is_done
+                                                    ? `Completed • ${new_update}` 
+                                                    : 'Incomplete'}
+                                                </p>
+                                            </div>
                                             {this.addATaskAndEditPhase(phase)}
-                                            <PhaseTasks
-                                                is_current_prime={this.props.is_current_prime}
-                                                is_current_owner={this.props.is_current_owner}
-                                                loggedInStatus={this.props.loggedInStatus}
-                                                phase={phase}
-                                                project_id={this.props.project_id}
-                                                project={this.props.project}
-                                                addedContract={this.props.addedContract}
-                                                company={this.props.company}
-                                                fireReload={this.props.fireReload}
-                                                deleter={this.props.deleter}
-                                            />
+                                            <div className='project-phase-numbers'>
+                                                <p>Phase Budget: 
+                                                    <NumberFormat
+                                                        value={phase.budget}
+                                                        displayType={'text'}
+                                                        thousandSeparator={true}
+                                                        prefix={'$'}
+                                                    />
+                                                </p>
+                                                <p>Total Cost: 
+                                                    <NumberFormat
+                                                        value={phase.total_cost}
+                                                        displayType={'text'}
+                                                        thousandSeparator={true}
+                                                        prefix={'$'}
+                                                    />
+                                                </p>
+                                                <p>Phase Over/Under: 
+                                                    <NumberFormat
+                                                        value={phase.phase_profits}
+                                                        displayType={'text'}
+                                                        thousandSeparator={true}
+                                                        prefix={'$'}
+                                                    />
+                                                </p>
+                                            </div>
                                         </div>
+                                        <PhaseTasks
+                                            is_current_prime={this.props.is_current_prime}
+                                            is_current_owner={this.props.is_current_owner}
+                                            loggedInStatus={this.props.loggedInStatus}
+                                            phase={phase}
+                                            project_id={this.props.project_id}
+                                            project={this.props.project}
+                                            addedContract={this.props.addedContract}
+                                            company={this.props.company}
+                                            fireReload={this.props.fireReload}
+                                            deleter={this.props.deleter}
+                                        />
                                     </li>
                                 )
                             })}
                         </ol>
-                    </article>
+                    </div>
                 : null }
             </article>
         )

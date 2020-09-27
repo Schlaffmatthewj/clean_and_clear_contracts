@@ -31,7 +31,6 @@ class Project extends Component {
                 dataLoaded: true
             })
             if (this.props.loggedInStatus === 'LOGGED_IN') {
-                console.log('WTF IS GOING ON', this.state.project)
                 if (this.props.company.id === this.state.project.api_v1_company.id) this.setState({ is_current_owner: true })
                 if (this.state.project.prime_contractor) if (this.state.project.prime_contractor.id === this.props.company.id) this.setState({ is_current_prime: true })
             }
@@ -42,7 +41,8 @@ class Project extends Component {
     addAPhaseAndToggleDone() {
         return (
             <div>
-                {(this.state.is_current_owner || this.state.is_current_prime)
+                {(this.state.is_current_owner
+                    || this.state.is_current_prime)
                 ? <div>
                     <Link to={`/create/project/${this.state.project.id}/phase`}><button>Add A Phase • 👷</button></Link>
                     <ToggleIsDone
@@ -67,7 +67,11 @@ class Project extends Component {
                         company={this.props.company}
                         addedContract={this.addedContract}
                     />
-                : <Link to='/create/prime'><button>Request Prime Contractor Permissions • 🏗️</button></Link>
+                : <Link to='/create/prime'>
+                    <button>
+                        Request Prime Contractor Permissions • 🏗️
+                    </button>
+                </Link>
                 : <p>No Prime Contractor</p> }
             </div>
         )
@@ -135,13 +139,15 @@ class Project extends Component {
         let new_turn = (new Date(turnover_date)).toDateString()
         let new_update = (new Date(updated)).toDateString()
         return (
-            <div>
-                <article>
-                    <aside>
+            <section className='project-task-container flex-column'>
+                <article className='project-task-top'>
+                    <aside className='project-task-top-left flex-column'>
                         {this.state.is_current_owner
                             ? <div>
                                 <h4>You Own This Project</h4>
-                                <button onClick={() => this.deleter('Project', id)}>Delete Project • 🗑️</button>
+                                <button onClick={() => this.deleter('Project', id)}>
+                                    Delete Project • 🗑️
+                                </button>
                                 <Link to={{
                                     pathname: `/edit/project/${id}`,
                                     state: {
@@ -151,45 +157,37 @@ class Project extends Component {
                                 }}><button>Edit Project • 🛠️</button></Link>
                             </div>
                             : <div>
-                                <h4>Owner: <Link to={`/company/${api_v1_company.id}`}>{owner}</Link></h4>
+                                <h4>Owner: 
+                                    <Link to={`/company/${api_v1_company.id}`}>
+                                        {owner}
+                                    </Link>
+                                </h4>
                             </div>}
-                        {prime_contractor
-                            ? <div>
-                                <h5>Prime Contractor: <Link to={`/company/${prime_contractor.id}`}>{prime_contractor.name}</Link></h5>
-                                <p>Address: {prime_contractor.address}</p>
-                                <p>Phone: {prime_contractor.phone}</p>
-                                <div>
-                                    <h5>Prime Contract</h5>
-                                    <p>Contract Amount: <NumberFormat
-                                                            value={prime_contract.amount}
-                                                            displayType={'text'}
-                                                            thousandSeparator={true}
-                                                            prefix={'$'}
-                                                        />
-                                    </p>
-                                    <p>Prime Contract Profits: <NumberFormat
-                                                                    value={prime_profits}
-                                                                    displayType={'text'}
-                                                                    thousandSeparator={true}
-                                                                    prefix={'$'}
-                                                                />
-
-                                    </p>
-                                    <p>Total Cost: <NumberFormat
-                                                        value={total_cost}
-                                                        displayType={'text'}
-                                                        thousandSeparator={true}
-                                                        prefix={'$'}
-                                                    />
-                                    </p>
-                                </div>
-                            </div>
-                            : this.checkPrime()}
+                        <p>Project Budget: 
+                            <NumberFormat
+                                value={budget}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                prefix={'$'}
+                            />
+                        </p>
+                        <p>Project Over/Under: 
+                            <NumberFormat
+                                value={project_profits}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                prefix={'$'}
+                            />
+                        </p>
                         {this.addAPhaseAndToggleDone()}
                     </aside>
-                    <div>
+                    <div className='project-task-details'>
                         <h2>{name}</h2>
-                        <cite>Owner: <Link to={`/company/${api_v1_company.id}`}>{owner}</Link></cite>
+                        <h2>Owner: 
+                            <Link to={`/company/${api_v1_company.id}`}>
+                                {owner}
+                            </Link>
+                        </h2>
                         <p>Address: {location}</p>
                         <p>Start Date: {new_start}</p>
                         <p>Turnover Date: {new_turn}</p>
@@ -198,21 +196,46 @@ class Project extends Component {
                             : 'Incomplete'}
                         </p>
                     </div>
-                    <aside>
-                        <p>Project Budget: <NumberFormat
-                                                value={budget}
-                                                displayType={'text'}
-                                                thousandSeparator={true}
-                                                prefix={'$'}
-                                            />
-                        </p>
-                        <p>Project Over/Under: <NumberFormat
-                                            value={project_profits}
-                                            displayType={'text'}
-                                            thousandSeparator={true}
-                                            prefix={'$'}
-                                        />
-                        </p>
+                    <aside className='project-task-top-right flex-column'>
+                    {prime_contractor
+                        ? <div>
+                            <h5>Prime Contractor: 
+                                <Link to={`/company/${prime_contractor.id}`}>
+                                    {prime_contractor.name}
+                                </Link>
+                            </h5>
+                            <p>Address: {prime_contractor.address}</p>
+                            <p>Phone: {prime_contractor.phone}</p>
+                            <div>
+                                <h5>Prime Contract</h5>
+                                <p>Contract Amount: 
+                                    <NumberFormat
+                                        value={prime_contract.amount}
+                                        displayType={'text'}
+                                        thousandSeparator={true}
+                                        prefix={'$'}
+                                    />
+                                </p>
+                                <p>Prime Contract Profits: 
+                                    <NumberFormat
+                                        value={prime_profits}
+                                        displayType={'text'}
+                                        thousandSeparator={true}
+                                        prefix={'$'}
+                                    />
+
+                                </p>
+                                <p>Total Cost: 
+                                    <NumberFormat
+                                        value={total_cost}
+                                        displayType={'text'}
+                                        thousandSeparator={true}
+                                        prefix={'$'}
+                                    />
+                                </p>
+                            </div>
+                        </div>
+                        : this.checkPrime()}
                     </aside>
                 </article>
                 <ProjectPhases 
@@ -227,17 +250,17 @@ class Project extends Component {
                     deleter={this.deleter}
                     company={this.props.company}
                 />
-            </div>
+            </section>
         )
     }
 
     render() {
         return (
-            <section className='project-task-container flex-column'>
+            <main className='project-task-container flex-column'>
                {this.state.dataLoaded
                 ? this.conditionalRender()
                 : <p>Loading...</p>}
-            </section>
+            </main>
         )
     }
 }
