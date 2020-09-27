@@ -31,8 +31,12 @@ class Project extends Component {
                 dataLoaded: true
             })
             if (this.props.loggedInStatus === 'LOGGED_IN') {
-                if (this.props.company.id === this.state.project.api_v1_company.id) this.setState({ is_current_owner: true })
-                if (this.state.project.prime_contractor) if (this.state.project.prime_contractor.id === this.props.company.id) this.setState({ is_current_prime: true })
+                if (this.props.company.id 
+                    === this.state.project.api_v1_company.id) 
+                    this.setState({ is_current_owner: true })
+                if (this.state.project.prime_contractor) if (this.state.project.prime_contractor.id 
+                                                            === this.props.company.id) 
+                    this.setState({ is_current_prime: true })
             }
         })
         .catch(err => console.log(err))

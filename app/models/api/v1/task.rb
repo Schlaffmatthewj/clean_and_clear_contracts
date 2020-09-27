@@ -25,11 +25,12 @@ module Api
                     prime_contractor = prime_contract.api_v1_company
                 end
                 subcontract = self.api_v1_sub_contracts
+                task_profits = 0
                 if subcontract 
                     sub_amount = subcontract.amount
                     sub_contractor = subcontract.api_v1_company
+                    task_profits = (self.budget - sub_amount)
                 end
-                task_profits = (self.budget - sub_amount)
                 { id: self.id, title: self.title, description: self.description,
                 budget: self.budget, start_date: self.start_date,
                 turnover_date: self.turnover_date, is_done: self.is_done,

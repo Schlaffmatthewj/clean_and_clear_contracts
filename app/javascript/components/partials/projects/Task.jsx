@@ -17,6 +17,7 @@ class Task extends Component {
         }
 
         this.fireReload = this.fireReload.bind(this)
+        this.addedContract = this.addedContract.bind(this)
     }
 
     componentDidMount() {
@@ -101,39 +102,6 @@ class Task extends Component {
         )
     }
 
-    checkSub() {
-        return (
-            <div>
-                {(this.props.loggedInStatus === 'LOGGED_IN')
-                ? <SubContractNew
-                    task={this.state.task}
-                    addedContract={this.addedContract}
-                    company={this.props.company}
-                />
-                : <p>No Sub Contractor</p>}
-            </div>
-        )
-    }
-
-    isPrimeOrOwner() {
-        return (
-            <div>
-                {(this.state.is_current_owner
-                    || this.state.is_current_prime
-                    || this.state.is_current_sub )
-                    ? <ToggleIsDone
-                        parentType='Task'
-                        is_done={this.state.task.is_done}
-                        fireReload={this.fireReload}
-                        project_id={this.props.project_id}
-                        phase_id={this.props.phase_id}
-                        task_id={this.props.task_id}
-                    />
-                    : null}
-            </div>
-        )
-    }
-
     conditionalRender() {
         const {
             task
@@ -144,73 +112,92 @@ class Task extends Component {
         return (
             <section className='project-task-container flex-column'>
                 <article className='project-task-content flex-column'>
-                    <h2>Owner: 
-                        <Link to={`/company/${task.project.api_v1_company_id}`}>
-                            {task.project.owner}
-                        </Link>
-                    </h2>
-                    <h2>Project: 
-                        <Link to={`/project/${task.project.id}`}>
-                            {task.project.name}
-                        </Link>
-                    </h2>
-                    {task.prime_contractor
-                        ? <h2>Prime Contractor: 
-                            <Link to={`/company/${task.prime_contractor.id}`}>
-                                {task.prime_contractor.name}
+                    <div className='task-details'>
+                        <h2>Project: 
+                            <Link to={`/project/${task.project.id}`}>
+                                {task.project.name}
                             </Link>
-                        </h2> 
-                        : this.checkPrime() }
-                    <h3>{task.title}</h3>
-                    <p>Description: {task.description}</p>
-                    <p>Task Budget: 
-                        <NumberFormat
-                            value={task.budget}
-                            displayType={'text'}
-                            thousandSeparator={true}
-                            prefix={'$'}
-                        />
-                    </p>
-                    <p>Task Over/Under: 
-                        <NumberFormat
-                            value={task.task_profits}
-                            displayType={'text'}
-                            thousandSeparator={true}
-                            prefix={'$'}
-                        />
-                    </p>
-                    <p>Start Date: {new_start}</p>
-                    <p>Turnover Date: {new_turn}</p>
-                    <p>Status: {task.is_done
-                            ? `Completed • ${new_update}`
-                            : 'Incomplete'}
-                    </p>
-                    {task.sub_contractor && this.isPrimeOrOwner()}
-                    <div>
-                        <p>Sub Contractor</p>
-                        {task.sub_contractor
-                            ? <div>
-                                <p>
-                                    <Link to={`/company/${task.sub_contractor.id}`}>
-                                        {task.sub_contractor.name}
-                                    </Link>
-                                </p>
-                                <p>{task.sub_contractor.address}</p>
-                                <p>{task.sub_contractor.phone}</p>
-                                <div>
-                                    <h5>Sub Contract</h5>
-                                    <p>Contract Amount: 
-                                        <NumberFormat
-                                            value={task.subcontract.amount}
-                                            displayType={'text'}
-                                            thousandSeparator={true}
-                                            prefix={'$'}
-                                        />
-                                    </p>
-                                </div>
-                            </div> 
-                            : this.checkSub()}
+                        </h2>
+                        <h2>Owner: 
+                            <Link to={`/company/${task.project.api_v1_company_id}`}>
+                                {task.project.owner}
+                            </Link>
+                        </h2>
+                        {task.prime_contractor
+                            ? <h2>Prime Contractor: 
+                                <Link to={`/company/${task.prime_contractor.id}`}>
+                                    {task.prime_contractor.name}
+                                </Link>
+                            </h2> 
+                            : this.checkPrime()}
+                        <h3>Task: {task.title}</h3>
+                        <p>Description: {task.description}</p>
+                        <p>Start Date: {new_start}</p>
+                        <p>Turnover Date: {new_turn}</p>
+                        <p>Status: {task.is_done
+                                ? `Completed • ${new_update}`
+                                : 'Incomplete'}
+                        </p>
                     </div>
+                    {task.sub_contractor && (this.state.is_current_owner
+                                        || this.state.is_current_prime
+                                        || this.state.is_current_sub )
+                        ? <ToggleIsDone
+                            parentType='Task'
+                            is_done={this.state.task.is_done}
+                            fireReload={this.fireReload}
+                            project_id={this.props.project_id}
+                            phase_id={this.props.phase_id}
+                            task_id={this.props.task_id}
+                        />
+                        : null}
+                    <div className='task-numbers'>
+                        <p>Task Budget: 
+                            <NumberFormat
+                                value={task.budget}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                prefix={'$'}
+                            />
+                        </p>
+                        <p>Task Over/Under: 
+                            <NumberFormat
+                                value={task.task_profits}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                prefix={'$'}
+                            />
+                        </p>
+                    </div>
+                    {task.sub_contractor
+                        ? <div className='task-sub'>
+                            <p>Sub Contractor</p>
+                            <p>
+                                <Link to={`/company/${task.sub_contractor.id}`}>
+                                    {task.sub_contractor.name}
+                                </Link>
+                            </p>
+                            <p>{task.sub_contractor.address}</p>
+                            <p>{task.sub_contractor.phone}</p>
+                            <div>
+                                <h5>Sub Contract</h5>
+                                <p>Contract Amount: 
+                                    <NumberFormat
+                                        value={task.subcontract.amount}
+                                        displayType={'text'}
+                                        thousandSeparator={true}
+                                        prefix={'$'}
+                                    />
+                                </p>
+                            </div>
+                        </div> 
+                        : (this.props.loggedInStatus === 'LOGGED_IN')
+                            ? <SubContractNew
+                                task={this.state.task}
+                                addedContract={this.addedContract}
+                                company={this.props.company}
+                            />
+                            : <p>No Sub Contractor</p>}
                 </article>
             </section>
         )

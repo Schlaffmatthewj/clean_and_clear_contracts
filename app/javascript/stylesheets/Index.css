@@ -230,6 +230,7 @@ nav {
 
 .project-phase-single {
   background-color: green;
+  height: auto;
   margin: 2%;
 }
 
@@ -327,5 +328,9 @@ footer {
   .project-phase-content, .project-task-top {
     flex-direction: column;
     align-items: center;
+  }
+
+  .project-phase-container, .project-phase-content, .project-phase-single {
+    width: 95%;
   }
 }

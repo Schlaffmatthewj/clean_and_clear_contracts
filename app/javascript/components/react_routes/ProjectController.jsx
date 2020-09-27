@@ -45,14 +45,15 @@ class ProjectController extends Component {
             case 'Project':
                 return <Project
                         loggedInStatus={this.props.loggedInStatus}
-                        company={this.props.company}
-                        project_id={project_id}
-                        phaseForm={this.phaseForm}
                         switchToProfile={this.switchToProfile}
+                        company={this.props.company}
+                        phaseForm={this.phaseForm}
+                        project_id={project_id}
                         />
             case 'Task':
                 return <Task
                         loggedInStatus={this.props.loggedInStatus}
+                        switchToProfile={this.switchToProfile}
                         company={this.props.company}
                         project_id={project_id}
                         phase_id={phase_id}
