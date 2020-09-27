@@ -79,104 +79,104 @@ export default class HomeController extends Component {
           loggedInStatus={this.state.loggedInStatus}
           handleLogout={this.handleLogout}
           company={this.state.company}
-          />
+        />
         <Switch>
           <Route path='/' exact
           render={props => <Home {...props}
-                            loggedInStatus={this.state.loggedInStatus}
-                            company={this.state.company}
+                              loggedInStatus={this.state.loggedInStatus}
+                              company={this.state.company}
                             />}
           />
           <Route path='/company/:company_id' exact
           render={props => <Company {...props}
-                            loggedInStatus={this.state.loggedInStatus}
-                            company={this.state.company}
+                              loggedInStatus={this.state.loggedInStatus}
+                              company={this.state.company}
                             />}
           />
           <Route path='/create/owner' exact
           render={props => <CreateController {...props}
-                            updateCompany={this.updateCompany}
-                            currentStatus='Property_Owner'
-                            loggedInStatus={this.state.loggedInStatus}
-                            company={this.state.company}
+                              updateCompany={this.updateCompany}
+                              currentStatus='Property_Owner'
+                              loggedInStatus={this.state.loggedInStatus}
+                              company={this.state.company}
                             />}
           />
           <Route path='/create/prime' exact
           render={props => <CreateController {...props}
-                            updateCompany={this.updateCompany}
-                            currentStatus='Prime_Contractor'
-                            loggedInStatus={this.state.loggedInStatus}
-                            company={this.state.company}
+                              updateCompany={this.updateCompany}
+                              currentStatus='Prime_Contractor'
+                              loggedInStatus={this.state.loggedInStatus}
+                              company={this.state.company}
                             />}
           />
           <Route path='/create/project' exact
           render={props => <CreateController {...props}
-                            currentStatus='Project_New'
-                            loggedInStatus={this.state.loggedInStatus}
-                            company={this.state.company}
+                              currentStatus='Project_New'
+                              loggedInStatus={this.state.loggedInStatus}
+                              company={this.state.company}
                             />}
           />
           <Route path='/create/project/:project_id/phase' exact
           render={props => <CreateController {...props}
-                            currentStatus='Phase_New'
-                            loggedInStatus={this.state.loggedInStatus}
-                            company={this.state.company}
+                              currentStatus='Phase_New'
+                              loggedInStatus={this.state.loggedInStatus}
+                              company={this.state.company}
                             />}
           />
           <Route path='/create/project/:project_id/phase/:phase_id/task' exact
           render={props => <CreateController {...props}
-                            currentStatus='Task_New'
-                            loggedInStatus={this.state.loggedInStatus}
-                            company={this.state.company}
+                              currentStatus='Task_New'
+                              loggedInStatus={this.state.loggedInStatus}
+                              company={this.state.company}
                             />}
           />
           <Route path='/edit/:type/:type_id' exact
           render={props => <EditController {...props}
-                            loggedInStatus={this.state.loggedInStatus}
-                            company={this.state.company}
-                            currentCompany={this.currentCompany}
+                              loggedInStatus={this.state.loggedInStatus}
+                              company={this.state.company}
+                              currentCompany={this.currentCompany}
                             />}
           />
           <Route path='/profile/:company_id' exact
           render={props => <Profile {...props}
-                            company={this.state.company}
-                            handleLogout={this.handleLogout}
-                            deletedCompany={this.deletedCompany}
-                            loggedInStatus={this.state.loggedInStatus}
+                              company={this.state.company}
+                              handleLogout={this.handleLogout}
+                              deletedCompany={this.deletedCompany}
+                              loggedInStatus={this.state.loggedInStatus}
                             />}
           />
           <Route path='/project/:project_id' exact
           render={props => <ProjectController {...props}
-                            currentStatus='Project'
-                            loggedInStatus={this.state.loggedInStatus}
-                            company={this.state.company}
+                              currentStatus='Project'
+                              loggedInStatus={this.state.loggedInStatus}
+                              company={this.state.company}
                             />}
           />
           <Route path='/project/:project_id/phase/:phase_id/task/:task_id' exact
           render={props => <ProjectController {...props}
-                            currentStatus='Task'
-                            loggedInStatus={this.state.loggedInStatus}
-                            company={this.state.company}
+                              currentStatus='Task'
+                              loggedInStatus={this.state.loggedInStatus}
+                              company={this.state.company}
                             />}
           />
           <Route path='/verify/login' exact
           render={props => <AuthController {...props}
-                            currentStatus='Login'
-                            currentCompany={this.currentCompany}
-                            loggedInStatus={this.state.loggedInStatus}
-                            company={this.state.company}
+                              currentStatus='Login'
+                              currentCompany={this.currentCompany}
+                              loggedInStatus={this.state.loggedInStatus}
+                              company={this.state.company}
                             />}
           />
           <Route path='/verify/register' exact
           render={props => <AuthController {...props}
-                            currentStatus='Register'
-                            currentCompany={this.currentCompany}
-                            loggedInStatus={this.state.loggedInStatus}
-                            company={this.state.company}
+                              currentStatus='Register'
+                              currentCompany={this.currentCompany}
+                              loggedInStatus={this.state.loggedInStatus}
+                              company={this.state.company}
                             />}
           />
         </Switch>
-        <Footer />
+        <Footer/>
       </Router>
     )
   }

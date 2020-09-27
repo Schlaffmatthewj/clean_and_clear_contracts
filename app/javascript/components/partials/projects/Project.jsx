@@ -246,9 +246,9 @@ class Project extends Component {
 
     render() {
         return (
-            <main>
+            <div>
                {this.state.dataLoaded ? this.conditionalRender() : <p>Loading...</p>}
-            </main>
+            </div>
         )
     }
 }
