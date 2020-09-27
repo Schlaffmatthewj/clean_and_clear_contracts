@@ -16,6 +16,7 @@ class Company extends Component {
         fetch(`/api/v1/companies/${id}`)
         .then(res => res.json())
         .then(res => {
+            this.props.history.push(`/company/${id}`)
             this.setState({
                 company: res.results,
                 dataLoaded: true
@@ -25,17 +26,16 @@ class Company extends Component {
     }
 
     toggleCompanies(id) {
-        if (this.state.company.id !== id) {
-            fetch(`/api/v1/companies/${id}`)
-            .then(res => res.json())
-            .then(res => {
-                this.setState({
-                    company: res.results,
-                    dataLoaded: true
-                })
+        fetch(`/api/v1/companies/${id}`)
+        .then(res => res.json())
+        .then(res => {
+            this.props.history.push(`/company/${id}`)
+            this.setState({
+                company: res.results,
+                dataLoaded: true
             })
-            .catch(err => console.log(err))
-        }
+        })
+        .catch(err => console.log(err))
     }
 
     conditionalRender() {

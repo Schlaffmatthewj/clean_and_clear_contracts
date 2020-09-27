@@ -33,7 +33,7 @@ class Home extends Component {
 
     condtionalCompanyRender() {
         if (this.state.companies.length > 0) {
-            return this.state.companies.map(el => <li key={el.id}><Link to={`/company/${el.id}`}>{el.name}, est. {el.established_date}</Link></li> )
+            return this.state.companies.map(el => <p key={el.id}><Link to={`/company/${el.id}`}>{el.name}, est. {el.established_date}</Link></p> )
         } else {
             return (
                 <p>Sadly, there are NO Companies in this Database</p>
@@ -43,7 +43,7 @@ class Home extends Component {
 
     condtionalProjectRender() {
         if (this.state.projects.length > 0) {
-            return this.state.projects.map(el => <li key={el.id}><Link to={`/project/${el.id}`}>{el.name}, Owner: {el.owner}</Link></li> )
+            return this.state.projects.map(el => <p key={el.id}><Link to={`/project/${el.id}`}>{el.name}</Link></p> )
         } else {
             return (
                 <p>Sadly, there are NO Projects in this Database</p>
@@ -54,15 +54,15 @@ class Home extends Component {
     render() {
         return (
             <main className='flex-column'>
-                <article>
-                    <ul>
-                        <li><h3>Companies</h3></li>
-                        {this.state.dataLoaded ? this.condtionalCompanyRender() : <li>Loading Companies...</li>}
-                    </ul>
-                    <ul>
-                        <li><h3>Projects</h3></li>
-                        {this.state.dataLoaded ? this.condtionalProjectRender() : <li>Loading Projects...</li>}
-                    </ul>
+                <article className='home-container'>
+                    <div className='home-content'>
+                        <h3>Companies</h3>
+                        {this.state.dataLoaded ? this.condtionalCompanyRender() : <p>Loading Companies...</p>}
+                    </div>
+                    <div className='home-content'>
+                        <h3>Projects</h3>
+                        {this.state.dataLoaded ? this.condtionalProjectRender() : <p>Loading Projects...</p>}
+                    </div>
                 </article>
             </main>
         )
