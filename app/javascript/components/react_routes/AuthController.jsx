@@ -51,7 +51,7 @@ class Auth extends Component {
 
     render() {
         return (
-            <main>
+            <main className='flex-column'>
                {this.state.dataLoaded && this.conditionalRender()}
             </main>
         )

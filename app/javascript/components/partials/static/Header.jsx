@@ -27,7 +27,7 @@ export default (props) => {
                         </div>
                         : <div>
                             <li><Link to={`/profile/${props.company.id}`}>{props.company.name}</Link></li>
-                            <li onClick={() => logoutCompany()}>Logout</li>
+                            <li className='link' onClick={() => logoutCompany()}>Logout</li>
                         </div> }
                     <li><Link to='/about'>About</Link></li>
                 </ul>

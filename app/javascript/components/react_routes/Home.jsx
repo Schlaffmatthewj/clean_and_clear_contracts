@@ -53,7 +53,7 @@ class Home extends Component {
 
     render() {
         return (
-            <main>
+            <main className='flex-column'>
                 <article>
                     <ul>
                         <li><h3>Companies</h3></li>
