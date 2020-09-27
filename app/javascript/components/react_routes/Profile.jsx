@@ -57,7 +57,7 @@ class Profile extends Component {
 
     isPrimeOrOwner() {
         return (
-            <aside>
+            <aside className='profile-top-right'>
                 {!this.state.company.is_prime
                     ? <Link to='/create/prime'><button>Prime Contractor Permissions • 🏗️</button></Link>
                     : null }
@@ -80,156 +80,176 @@ class Profile extends Component {
         let year = established_date.split('-')[0]
         return (
             <article>
-                {this.isPrimeOrOwner()}
-                <Logout toggleLogout={this.toggleLogout} />
-                <button onClick={() => this.deleteAccount()}>Delete Account • 🗑️</button>
-                <Link to={{
-                    pathname: `/edit/company/${this.state.company.id}`,
-                    state: {
-                        company: this.state.company,
-                        pageStatus: 'Company'
-                    }
-                }}><button>Edit Profile • 🛠️</button></Link>
-                <h2>{name}</h2>
-                <cite>EST: {year}</cite>
-                <p>Address: {address}</p>
-                <p>Phone: {phone}</p>
-                <ul>
-                    <li>
-                        <h4>Owned Projects</h4>
+                <div className='profile-controls'>
+                    <aside className='profile-top-left'>
+                        <Logout toggleLogout={this.toggleLogout} />
+                        <button onClick={() => this.deleteAccount()}>Delete Account • 🗑️</button>
+                        <Link to={{
+                            pathname: `/edit/company/${this.state.company.id}`,
+                            state: {
+                                company: this.state.company,
+                                pageStatus: 'Company'
+                            }
+                        }}><button>Edit Profile • 🛠️</button></Link>
+                    </aside>
+                    {this.isPrimeOrOwner()}
+                </div>
+                <div className='profile-body'>
+                    <div className='profile-details'>
+                        <h2>{name}</h2>
+                        <cite>EST: {year}</cite>
+                        <p>Address: {address}</p>
+                        <p>Phone: {phone}</p>
+                    </div>
+                    <div className='profile-all-projects'>
                         {owned_projects
-                        ? owned_projects.map(owned => {
-                            return (
-                                <div key={owned.id}>
-                                    <Link to={`/project/${owned.id}`}>
-                                        {owned.name}
-                                    </Link>
-                                    <p>Address: {owned.location}</p>
-                                    <p>Completed: {owned.is_done ? 'Completed' : 'Incomplete'}</p>
-                                    <p>Project Budget: <NumberFormat
-                                                            value={owned.budget}
-                                                            displayType={'text'}
-                                                            thousandSeparator={true}
-                                                            prefix={'$'}
-                                                        />
-                                    </p>
-                                    <p>Project Over/Under: <NumberFormat
-                                            value={owned.project_profits}
-                                            displayType={'text'}
-                                            thousandSeparator={true}
-                                            prefix={'$'}
-                                        />
-                                    </p>
-                                    <p>Total Cost: <NumberFormat
-                                            value={owned.total_cost}
-                                            displayType={'text'}
-                                            thousandSeparator={true}
-                                            prefix={'$'}
-                                        />
-                                    </p>
-                                    {owned.prime_contract.length > 0
-                                        ? owned.prime_contract.map(contract => (
-                                            <div key={contract.id}>
-                                                <Link to={`/company/${contract.prime_contractor.id}`}>
-                                                    Prime Contractor: {contract.prime_contractor.name}
-                                                </Link>
-                                                <p>Contract Amount: <NumberFormat
-                                                                        value={contract.amount}
-                                                                        displayType={'text'}
-                                                                        thousandSeparator={true}
-                                                                        prefix={'$'}
-                                                                    />
-                                                </p>
-                                            </div>
-                                        ))
-                                        : null }
-                                </div>
-                            )
-                        }) : <p>No Owned Projects</p>}
-                    </li>
-                    <li>
-                        <h4>Prime Contracts</h4>
+                            ? <div className='profile-projects'>
+                                <h4>Owned Projects</h4>
+                                {owned_projects.map(owned => {
+                                    return (
+                                        <div className='profile-single' key={owned.id}>
+                                            <Link to={`/project/${owned.id}`}>
+                                                {owned.name}
+                                            </Link>
+                                            <p>Address: {owned.location}</p>
+                                            <p>Completed: {owned.is_done
+                                                ? 'Completed'
+                                                : 'Incomplete'}
+                                            </p>
+                                            <p>Project Budget: <NumberFormat
+                                                                    value={owned.budget}
+                                                                    displayType={'text'}
+                                                                    thousandSeparator={true}
+                                                                    prefix={'$'}
+                                                                />
+                                            </p>
+                                            <p>Project Over/Under: <NumberFormat
+                                                    value={owned.project_profits}
+                                                    displayType={'text'}
+                                                    thousandSeparator={true}
+                                                    prefix={'$'}
+                                                />
+                                            </p>
+                                            <p>Total Cost: <NumberFormat
+                                                    value={owned.total_cost}
+                                                    displayType={'text'}
+                                                    thousandSeparator={true}
+                                                    prefix={'$'}
+                                                />
+                                            </p>
+                                            {owned.prime_contract.length > 0
+                                                ? owned.prime_contract.map(contract => (
+                                                    <div key={contract.id}>
+                                                        <Link to={`/company/${contract.prime_contractor.id}`}>
+                                                            Prime Contractor: {contract.prime_contractor.name}
+                                                        </Link>
+                                                        <p>Contract Amount: <NumberFormat
+                                                                                value={contract.amount}
+                                                                                displayType={'text'}
+                                                                                thousandSeparator={true}
+                                                                                prefix={'$'}
+                                                                            />
+                                                        </p>
+                                                    </div>
+                                                ))
+                                                : null }
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                            : <p>No Owned Projects</p>}
                         {contracts.prime_contracts.length > 0 
-                        ? contracts.prime_contracts.map(prime => {
-                            return (
-                                <div key={prime.id}>
-                                    <Link to={`/project/${prime.project.id}`}>
-                                        {prime.project.name}
-                                    </Link>
-                                    <Link to={`/company/${prime.project.api_v1_company_id}`}>
-                                        {prime.project.owner}
-                                    </Link>
-                                    <p>Address: {prime.project.location}</p>
-                                    <p>Completed: {prime.project.is_done ? 'Completed' : 'Incomplete'}</p>
-                                    <p>Project Budget: <NumberFormat
-                                                            value={prime.project.budget}
+                            ? <div className='profile-projects'>
+                                <h4>Prime Contracts</h4>
+                                {contracts.prime_contracts.map(prime => {
+                                    return (
+                                        <div className='profile-single' key={prime.id}>
+                                            <Link to={`/project/${prime.project.id}`}>
+                                                {prime.project.name}
+                                            </Link>
+                                            <Link to={`/company/${prime.project.api_v1_company_id}`}>
+                                                {prime.project.owner}
+                                            </Link>
+                                            <p>Address: {prime.project.location}</p>
+                                            <p>Completed: {prime.project.is_done
+                                                ? 'Completed'
+                                                : 'Incomplete'}
+                                            </p>
+                                            <p>Project Budget: <NumberFormat
+                                                                    value={prime.project.budget}
+                                                                    displayType={'text'}
+                                                                    thousandSeparator={true}
+                                                                    prefix={'$'}
+                                                                />
+                                            </p>
+                                            <p>Contract: <NumberFormat
+                                                            value={prime.amount}
                                                             displayType={'text'}
                                                             thousandSeparator={true}
                                                             prefix={'$'}
                                                         />
-                                    </p>
-                                    <p>Contract: <NumberFormat
-                                                    value={prime.amount}
-                                                    displayType={'text'}
-                                                    thousandSeparator={true}
-                                                    prefix={'$'}
-                                                />
-                                    </p>
-                                    <p>Prime Contract Profits: <NumberFormat
-                                                            value={prime.prime_profits}
-                                                            displayType={'text'}
-                                                            thousandSeparator={true}
-                                                            prefix={'$'}
-                                                        />
-                                    </p>
-                                </div>
-                            )
-                        }) : <p>No Prime Contracts</p>}
-                    </li>
-                    <li>
-                        <h4>Sub Contracts</h4>
+                                            </p>
+                                            <p>Prime Contract Profits: <NumberFormat
+                                                                    value={prime.prime_profits}
+                                                                    displayType={'text'}
+                                                                    thousandSeparator={true}
+                                                                    prefix={'$'}
+                                                                />
+                                            </p>
+                                        </div>
+                                    )
+                                })}
+                            </div>  
+                            : <p>No Prime Contracts</p>}
                         {contracts.sub_contracts.length > 0 
-                        ? contracts.sub_contracts.map(task => {
-                            return (
-                                <div key={task.id}>
-                                    <p>Project: 
-                                        <Link to={`/project/${task.project.id}`}> 
-                                            {task.project.name}
-                                        </Link>
-                                    </p>
-                                    <p>Address: {task.project.location}</p>
-                                    <p>Completed: {task.project.is_done ? 'Completed' : 'Incomplete'}</p>
-                                    <p>Task: 
-                                        <Link to={`/project/${task.id}/phase/${task.task.api_v1_phase_id}/task/${task.task.id}`}>
-                                            {task.task.title}
-                                        </Link>
-                                    </p>
-                                    <p>Task Budget: <NumberFormat
-                                                        value={task.task.budget}
-                                                        displayType={'text'}
-                                                        thousandSeparator={true}
-                                                        prefix={'$'}
-                                                    />
-                                    </p>
-                                    <p>Task Over/Under: <NumberFormat
-                                                        value={task.task.task_profits}
-                                                        displayType={'text'}
-                                                        thousandSeparator={true}
-                                                        prefix={'$'}
-                                                    />
-                                    </p>
-                                    <p>Contract: <NumberFormat
-                                                    value={task.amount}
-                                                    displayType={'text'}
-                                                    thousandSeparator={true}
-                                                    prefix={'$'}
-                                                />
-                                    </p>
-                                </div>
-                            )
-                        }) : <p>No Sub Contracts</p>}
-                    </li>
-                </ul>
+                            ? <div className='profile-projects'>
+                                <h4>Sub Contracts</h4>
+                                {contracts.sub_contracts.map(task => {
+                                    return (
+                                        <div className='profile-single' key={task.id}>
+                                            <p>Project: 
+                                                <Link to={`/project/${task.project.id}`}> 
+                                                    {task.project.name}
+                                                </Link>
+                                            </p>
+                                            <p>Address: {task.project.location}</p>
+                                            <p>Completed: {task.project.is_done
+                                                ? 'Completed'
+                                                : 'Incomplete'}
+                                            </p>
+                                            <p>Task: 
+                                                <Link to={`/project/${task.id}/phase/${task.task.api_v1_phase_id}/task/${task.task.id}`}>
+                                                    {task.task.title}
+                                                </Link>
+                                            </p>
+                                            <p>Task Budget: <NumberFormat
+                                                                value={task.task.budget}
+                                                                displayType={'text'}
+                                                                thousandSeparator={true}
+                                                                prefix={'$'}
+                                                            />
+                                            </p>
+                                            <p>Task Over/Under: <NumberFormat
+                                                                value={task.task.task_profits}
+                                                                displayType={'text'}
+                                                                thousandSeparator={true}
+                                                                prefix={'$'}
+                                                            />
+                                            </p>
+                                            <p>Contract: <NumberFormat
+                                                            value={task.amount}
+                                                            displayType={'text'}
+                                                            thousandSeparator={true}
+                                                            prefix={'$'}
+                                                        />
+                                            </p>
+                                        </div>
+                                    )
+                                })}
+                            </div> 
+                            : <p>No Sub Contracts</p>}
+                    </div>
+                </div>
             </article>
         )
     }

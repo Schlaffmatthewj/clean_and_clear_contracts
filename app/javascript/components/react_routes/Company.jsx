@@ -157,6 +157,9 @@ class Company extends Component {
                                             {task.project.name}
                                         </Link>
                                     </p>
+                                    <p onClick={() => this.toggleCompanies(task.project.api_v1_company_id)}>
+                                        Project Owner: {task.project.owner}
+                                    </p>
                                     <p>Address: {task.project.location}</p>
                                     <p>Completed: {task.project.is_done ? 'Completed' : 'Incomplete'}</p>
                                     <p>Task: 

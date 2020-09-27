@@ -162,8 +162,6 @@ class Project extends Component {
                             </div>
                             : <div>
                                 <h4>Owner: <Link to={`/company/${api_v1_company.id}`}>{owner}</Link></h4>
-                                {/* <p>Address: </p>
-                                <p>Phone: </p> */}
                             </div>}
                         {prime_contractor
                             ? <div>

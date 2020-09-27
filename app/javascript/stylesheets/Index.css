@@ -1,13 +1,19 @@
 
 /*    BODY & GENERAL   */
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
 .Page {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 100%;
-  position: relative;
+  position: absolute;
 }
 
 ul {
@@ -75,8 +81,7 @@ main {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
-  padding-top: 12%;
+  padding-top: 14%;
   padding-bottom: 5%;
   background-color: darkgoldenrod;
 }
@@ -96,7 +101,7 @@ footer {
 
 @media (max-width: 1100px) {
   main {
-    padding-top: 15%;
+    padding-top: 17%;
   }
   
   h1 {
@@ -108,7 +113,7 @@ footer {
 @media (max-width: 800px) {
 
   main {
-    padding-top: 20%;
+    padding-top: 25%;
     padding-bottom: 10%;
   }
 
