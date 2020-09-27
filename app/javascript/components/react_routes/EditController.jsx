@@ -44,6 +44,12 @@ export default class EditController extends Component {
     })
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.company.id !== this.props.company.id) {
+      this.props.history.push('/')
+    }
+  }
+
   conditionalRender() {
     const {
       project,

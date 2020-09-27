@@ -123,6 +123,10 @@ module Api
                     owned_projects: owned_with_prime, contracts: { prime_contracts: prime_projects,
                     sub_contracts: sub_tasks } }
             end
+
+            def self.default_scope
+                order(created_at: :asc)
+            end
         end
     end
 end

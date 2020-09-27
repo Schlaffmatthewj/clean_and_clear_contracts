@@ -14,18 +14,22 @@ class ProjectController extends Component {
         this.switchToProfile = this.switchToProfile.bind(this)
     }
 
-    componentDidUpdate() {
-        if (this.props.currentStatus !== this.state.pageStatus) {
-            this.setState({ pageStatus: this.props.currentStatus })
-        }
-    }
-
+    
     componentDidMount() {
         if (this.props.currentStatus !== this.state.pageStatus) {
             this.setState({
                 pageStatus: this.props.currentStatus,
                 dataLoaded: true
             })
+        }
+    }
+    
+    componentDidUpdate(prevProps) {
+        if (this.props.currentStatus !== this.state.pageStatus) {
+            this.setState({ pageStatus: this.props.currentStatus })
+        }
+        if (prevProps.company.id !== this.props.company.id) {
+            this.props.history.push('/')
         }
     }
 

@@ -83,6 +83,10 @@ module Api
                     total_cost: phase_cost.sum, project_profits: project_profits, prime_profits: prime_profits,
                     budget_vs_cost: budget_vs_cost }
             end
+
+            def self.default_scope
+                order(created_at: :asc)
+            end
         end
     end
 end

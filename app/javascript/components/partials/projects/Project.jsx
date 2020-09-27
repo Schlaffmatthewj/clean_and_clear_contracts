@@ -145,7 +145,7 @@ class Project extends Component {
         let new_turn = (new Date(turnover_date)).toDateString()
         let new_update = (new Date(updated)).toDateString()
         return (
-            <section>
+            <div>
                 <article>
                     <aside>
                         {this.state.is_current_owner
@@ -240,15 +240,15 @@ class Project extends Component {
                     deleter={this.deleter}
                     company={this.props.company}
                 />
-            </section>
+            </div>
         )
     }
 
     render() {
         return (
-            <div>
+            <section>
                {this.state.dataLoaded ? this.conditionalRender() : <p>Loading...</p>}
-            </div>
+            </section>
         )
     }
 }

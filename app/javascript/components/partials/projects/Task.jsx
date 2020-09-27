@@ -198,9 +198,9 @@ class Task extends Component {
 
     render() {
         return (
-            <div>
+            <section>
                {this.state.dataLoaded ? this.conditionalRender() : <p>Loading...</p>}
-            </div>
+            </section>
         )
     }
 }
