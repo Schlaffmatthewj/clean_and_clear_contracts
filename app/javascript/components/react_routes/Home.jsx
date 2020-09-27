@@ -57,11 +57,15 @@ class Home extends Component {
                 <article className='home-container'>
                     <div className='home-content'>
                         <h3>Companies</h3>
-                        {this.state.dataLoaded ? this.condtionalCompanyRender() : <p>Loading Companies...</p>}
+                        {this.state.dataLoaded
+                            ? this.condtionalCompanyRender()
+                            : <p>Loading Companies...</p>}
                     </div>
                     <div className='home-content'>
                         <h3>Projects</h3>
-                        {this.state.dataLoaded ? this.condtionalProjectRender() : <p>Loading Projects...</p>}
+                        {this.state.dataLoaded
+                            ? this.condtionalProjectRender()
+                            : <p>Loading Projects...</p>}
                     </div>
                 </article>
             </main>

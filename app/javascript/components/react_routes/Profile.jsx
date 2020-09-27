@@ -227,9 +227,7 @@ class Profile extends Component {
                                     return (
                                         <div className='company-profile-single' key={task.id}>
                                             <h4>Task: 
-                                                <Link to={`/project/${task.id}
-                                                            /phase/${task.task.api_v1_phase_id}
-                                                            /task/${task.task.id}`}>
+                                                <Link to={`/project/${task.id}/phase/${task.task.api_v1_phase_id}/task/${task.task.id}`}>
                                                     {task.task.title}
                                                 </Link>
                                             </h4>
@@ -288,7 +286,9 @@ class Profile extends Component {
     render() {
         return (
             <main className='flex-column'>
-               {this.state.dataLoaded ? this.conditionalRender() : <p>Loading...</p>}
+               {this.state.dataLoaded
+                ? this.conditionalRender()
+                : <p>Loading...</p>}
             </main>
         )
     }

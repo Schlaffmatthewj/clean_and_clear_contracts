@@ -31,18 +31,18 @@ class Task extends Component {
                 dataLoaded: true
             })
             if (this.props.loggedInStatus === 'LOGGED_IN') {
-                if (this.props.company.id === this.state.task.project.api_v1_company_id) {
-                    this.setState({ is_current_owner: true })
-                }
+                if (this.props.company.id
+                    === this.state.task.project.api_v1_company_id) 
+                        this.setState({ is_current_owner: true })
                 if (this.state.task.prime_contractor) {
-                    if (this.state.task.prime_contractor.id === this.props.company.id) {
-                        this.setState({ is_current_prime: true })
-                    }
+                    if (this.state.task.prime_contractor.id
+                        === this.props.company.id) 
+                            this.setState({ is_current_prime: true })
                 }
                 if (this.state.task.sub_contractor) {
-                    if (this.state.task.sub_contractor.id === this.props.company.id) {
-                        this.setState({ is_current_sub: true })
-                    }
+                    if (this.state.task.sub_contractor.id
+                        === this.props.company.id) 
+                            this.setState({ is_current_sub: true })
                 }
             }
         })
@@ -89,11 +89,13 @@ class Task extends Component {
                 {(this.props.loggedInStatus ===  'LOGGED_IN')
                 ? (this.props.company.is_prime)
                     ? <PrimeContractNew
-                            project={this.state.task.project}
-                            company={this.props.company}
-                            addedContract={this.addedContract}
-                        />
-                    : <Link to='/create/prime'>Request Prime Contractor Permissions</Link>
+                        project={this.state.task.project}
+                        company={this.props.company}
+                        addedContract={this.addedContract}
+                    />
+                    : <Link to='/create/prime'>
+                        Request Prime Contractor Permissions
+                    </Link>
                 : <p>No Prime Contractor</p> }
             </div>
         )
@@ -116,16 +118,18 @@ class Task extends Component {
     isPrimeOrOwner() {
         return (
             <div>
-                {(this.state.is_current_owner || this.state.is_current_prime || this.state.is_current_sub )
-                ? <ToggleIsDone
-                    parentType='Task'
-                    is_done={this.state.task.is_done}
-                    fireReload={this.fireReload}
-                    project_id={this.props.project_id}
-                    phase_id={this.props.phase_id}
-                    task_id={this.props.task_id}
-                />
-                : null}
+                {(this.state.is_current_owner
+                    || this.state.is_current_prime
+                    || this.state.is_current_sub )
+                    ? <ToggleIsDone
+                        parentType='Task'
+                        is_done={this.state.task.is_done}
+                        fireReload={this.fireReload}
+                        project_id={this.props.project_id}
+                        phase_id={this.props.phase_id}
+                        task_id={this.props.task_id}
+                    />
+                    : null}
             </div>
         )
     }
@@ -139,27 +143,40 @@ class Task extends Component {
         let new_update = (new Date(task.updated)).toDateString()
         return (
             <article>
-                {/* THIS IS RATHER UGLY FIX THAT */}
-                <h2>Owner: <Link to={`/company/${task.project.api_v1_company_id}`}>{task.project.owner}</Link></h2>
-                <h2>Project: <Link to={`/project/${task.project.id}`}>{task.project.name}</Link></h2>
+                <h2>Owner: 
+                    <Link to={`/company/${task.project.api_v1_company_id}`}>
+                        {task.project.owner}
+                    </Link>
+                </h2>
+                <h2>Project: 
+                    <Link to={`/project/${task.project.id}`}>
+                        {task.project.name}
+                    </Link>
+                </h2>
                 {task.prime_contractor
-                    ? <h2>Prime Contractor: <Link to={`/company/${task.prime_contractor.id}`}>{task.prime_contractor.name}</Link></h2> 
+                    ? <h2>Prime Contractor: 
+                        <Link to={`/company/${task.prime_contractor.id}`}>
+                            {task.prime_contractor.name}
+                        </Link>
+                    </h2> 
                     : this.checkPrime() }
                 <h3>{task.title}</h3>
                 <p>Description: {task.description}</p>
-                <p>Task Budget: <NumberFormat
-                                    value={task.budget}
-                                    displayType={'text'}
-                                    thousandSeparator={true}
-                                    prefix={'$'}
-                                />
+                <p>Task Budget: 
+                    <NumberFormat
+                        value={task.budget}
+                        displayType={'text'}
+                        thousandSeparator={true}
+                        prefix={'$'}
+                    />
                 </p>
-                <p>Task Over/Under: <NumberFormat
-                                    value={task.task_profits}
-                                    displayType={'text'}
-                                    thousandSeparator={true}
-                                    prefix={'$'}
-                                />
+                <p>Task Over/Under: 
+                    <NumberFormat
+                        value={task.task_profits}
+                        displayType={'text'}
+                        thousandSeparator={true}
+                        prefix={'$'}
+                    />
                 </p>
                 <p>Start Date: {new_start}</p>
                 <p>Turnover Date: {new_turn}</p>
@@ -174,19 +191,20 @@ class Task extends Component {
                         ? <div>
                             <p>
                                 <Link to={`/company/${task.sub_contractor.id}`}>
-                                {task.sub_contractor.name}
+                                    {task.sub_contractor.name}
                                 </Link>
                             </p>
                             <p>{task.sub_contractor.address}</p>
                             <p>{task.sub_contractor.phone}</p>
                             <div>
                                 <h5>Sub Contract</h5>
-                                <p>Contract Amount: <NumberFormat
-                                                        value={task.subcontract.amount}
-                                                        displayType={'text'}
-                                                        thousandSeparator={true}
-                                                        prefix={'$'}
-                                                    />
+                                <p>Contract Amount: 
+                                    <NumberFormat
+                                        value={task.subcontract.amount}
+                                        displayType={'text'}
+                                        thousandSeparator={true}
+                                        prefix={'$'}
+                                    />
                                 </p>
                             </div>
                         </div> 
@@ -198,8 +216,10 @@ class Task extends Component {
 
     render() {
         return (
-            <section>
-               {this.state.dataLoaded ? this.conditionalRender() : <p>Loading...</p>}
+            <section className='project-task-container flex-column'>
+               {this.state.dataLoaded
+                ? this.conditionalRender()
+                : <p>Loading...</p>}
             </section>
         )
     }

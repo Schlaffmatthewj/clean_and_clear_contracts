@@ -66,7 +66,9 @@ class ProjectController extends Component {
     render() {
         return (
             <main className='flex-column'>
-               {this.state.dataLoaded ? this.conditionalRender() : <p>Loading...</p>}
+               {this.state.dataLoaded
+                ? this.conditionalRender()
+                : <p>Loading...</p>}
             </main>
         )
     }

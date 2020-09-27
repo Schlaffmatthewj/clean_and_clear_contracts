@@ -13,7 +13,6 @@ class Project extends Component {
             project: null,
             is_current_owner: false,
             is_current_prime: false,
-            is_current_sub: false,
             dataLoaded: false,
         }
 
@@ -32,17 +31,9 @@ class Project extends Component {
                 dataLoaded: true
             })
             if (this.props.loggedInStatus === 'LOGGED_IN') {
+                console.log('WTF IS GOING ON', this.state.project)
                 if (this.props.company.id === this.state.project.api_v1_company.id) this.setState({ is_current_owner: true })
                 if (this.state.project.prime_contractor) if (this.state.project.prime_contractor.id === this.props.company.id) this.setState({ is_current_prime: true })
-                if (this.state.project.phases) {
-                    this.state.project.phases.map(phase => {
-                        if (phase.tasks) {
-                            phase.tasks.map(task => {
-                                if (task.sub_contractor) if (task.sub_contractor.id === this.props.company.id) this.setState({ is_current_sub: true })
-                            })
-                        }
-                    })
-                }
             }
         })
         .catch(err => console.log(err))
@@ -138,7 +129,6 @@ class Project extends Component {
             total_cost,
             prime_profits,
             project_profits,
-            budget_vs_cost,
             updated
         } = this.state.project
         let new_start = (new Date(start_date)).toLocaleDateString()
@@ -232,7 +222,6 @@ class Project extends Component {
                     phases={phases}
                     is_current_owner={this.state.is_current_owner}
                     is_current_prime={this.state.is_current_prime}
-                    is_current_sub={this.props.is_current_sub}
                     fireReload={this.fireReload}
                     addedContract={this.addedContract}
                     deleter={this.deleter}
@@ -244,8 +233,10 @@ class Project extends Component {
 
     render() {
         return (
-            <section>
-               {this.state.dataLoaded ? this.conditionalRender() : <p>Loading...</p>}
+            <section className='project-task-container flex-column'>
+               {this.state.dataLoaded
+                ? this.conditionalRender()
+                : <p>Loading...</p>}
             </section>
         )
     }

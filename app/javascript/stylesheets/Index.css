@@ -1,5 +1,5 @@
 
-/*    BODY & GENERAL   */
+/*                                BODY & GENERAL   */
 body {
   width: 100%;
   height: 100%;
@@ -43,7 +43,7 @@ h4 {
   margin: 2% 0;
 }
 
-/*  HEADER  */
+/*                              HEADER     */
 header {
   display: flex;
   justify-content: space-between;
@@ -99,7 +99,7 @@ nav {
 
 
 
-/*  MAIN CONTAINER    */
+/*                              MAIN CONTAINER    */
 main {
   width: 100%;
   padding-top: 12%;
@@ -109,7 +109,7 @@ main {
 
 
 
-/*  HOME PAGE    */
+/*                              HOME PAGE    */
 .home-container {
   display: flex;
   justify-content: space-evenly;
@@ -127,7 +127,7 @@ main {
 
 
 
-/*  COMPANY & PROFILE PAGES    */
+/*                              COMPANY & PROFILE PAGES    */
 .company-profile-container {
   width: 90%;
   padding: 2%;
@@ -194,7 +194,16 @@ main {
 
 
 
-/*  FOOTER   */
+/*                              PROJECT & TASK CONTAINER   */
+
+.project-task-container {
+  margin-top: 3%;
+  width: 80%;
+  background-color: darkslategrey;
+}
+
+
+/*                              FOOTER   */
 footer {
   display: flex;
   justify-content: center;
@@ -208,16 +217,19 @@ footer {
 
 
 @media (max-width: 1100px) {
+/*                              MAIN CONTAINER  @media 1100  */
   main {
     padding-top: 14%;
   }
   
+/*                              HEADER  @media 1100  */
   h1 {
     font-size: 1.5em;
     font-weight: 500;
     margin-right: 0;
   }
 
+/*                              COMPANY & PROFILE PAGES  @media 1100  */
   .company-profile-all-projects {
     flex-direction: column;
     align-items: center;
@@ -229,12 +241,13 @@ footer {
 }
 
 @media (max-width: 800px) {
-
+/*                              MAIN CONTAINER  @media 800  */
   main {
     padding-top: 27%;
     padding-bottom: 10%;
   }
 
+/*                              HEADER   @media 800  */
   nav {
     min-width: 0;
     justify-content: flex-start;
@@ -258,17 +271,24 @@ footer {
     margin: 0;
   }
 
+/*                              HOME PAGE  @media 800  */
   .home-container {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
   }
-
+  
+/*                              COMPANY & PROFILE PAGES  @media 800  */
   .company-profile-details {
     flex-direction: column;
   }
 
   .company-profile-projects {
     width: 97.5%;
+  }
+
+/*                              PROJECT & TASK CONTAINER   */
+  .project-task-container {
+    margin-top: 5%;
   }
 }

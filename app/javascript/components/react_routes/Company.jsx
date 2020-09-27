@@ -182,13 +182,10 @@ class Company extends Component {
                             ? <div className='company-profile-projects flex-column'>
                                 <h3>Sub Contracts</h3>
                                 {contracts.sub_contracts.map(task => {
-                                    console.log('looking for prime in task', task)
                                     return (
                                         <div className='company-profile-single flex-column' key={task.id}>
                                             <h4>Task: 
-                                                <Link to={`/project/${task.id}
-                                                            /phase/${task.task.api_v1_phase_id}
-                                                            /task/${task.task.id}`}>
+                                                <Link to={`/project/${task.id}/phase/${task.task.api_v1_phase_id}/task/${task.task.id}`}>
                                                     {task.task.title}
                                                 </Link>
                                             </h4>
@@ -248,7 +245,9 @@ class Company extends Component {
     render() {
         return (
             <main className='flex-column'>
-               {this.state.dataLoaded ? this.conditionalRender() : <p>Loading...</p>}
+               {this.state.dataLoaded
+                ? this.conditionalRender()
+                : <p>Loading...</p>}
             </main>
         )
     }

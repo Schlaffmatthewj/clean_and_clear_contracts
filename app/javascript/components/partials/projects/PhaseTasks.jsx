@@ -33,19 +33,21 @@ export default class PhaseTasks extends Component {
                                         <p>Description: {task.description}</p>
                                         <p>Start Date: {new_start}</p>
                                         <p>Turnover Date: {new_turn}</p>
-                                        <p>Task Budget: <NumberFormat
-                                                            value={task.budget}
-                                                            displayType={'text'}
-                                                            thousandSeparator={true}
-                                                            prefix={'$'}
-                                                        />
+                                        <p>Task Budget: 
+                                            <NumberFormat
+                                                value={task.budget}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                prefix={'$'}
+                                            />
                                         </p>
-                                        <p>Task Over/Under: <NumberFormat
-                                                            value={task.task_profits}
-                                                            displayType={'text'}
-                                                            thousandSeparator={true}
-                                                            prefix={'$'}
-                                                        />
+                                        <p>Task Over/Under: 
+                                            <NumberFormat
+                                                value={task.task_profits}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                prefix={'$'}
+                                            />
                                         </p>
                                         <p>Status: {task.is_done
                                             ? `Completed • ${new_update}`
@@ -53,20 +55,22 @@ export default class PhaseTasks extends Component {
                                         </p>
                                         {(task.sub_contractor)
                                             ? <div>
-                                                <p>Sub Contractor: <Link to={`/company/${task.sub_contractor.id}`}>
-                                                    {task.sub_contractor.name}
+                                                <p>Sub Contractor: 
+                                                    <Link to={`/company/${task.sub_contractor.id}`}>
+                                                        {task.sub_contractor.name}
                                                     </Link>
                                                 </p>
                                                 <p>Address: {task.sub_contractor.address}</p>
                                                 <p>Phone: {task.sub_contractor.phone}</p>
                                                 <div>
                                                     <h5>Sub Contract</h5>
-                                                    <p>Contract Amount: <NumberFormat
-                                                                            value={task.subcontracts.amount}
-                                                                            displayType={'text'}
-                                                                            thousandSeparator={true}
-                                                                            prefix={'$'}
-                                                                        />
+                                                    <p>Contract Amount: 
+                                                        <NumberFormat
+                                                            value={task.subcontracts.amount}
+                                                            displayType={'text'}
+                                                            thousandSeparator={true}
+                                                            prefix={'$'}
+                                                        />
                                                     </p>
                                                 </div>
                                             </div>
@@ -79,7 +83,8 @@ export default class PhaseTasks extends Component {
                                                 company={this.props.company}
                                             />
                                             : <span>No Subcontract</span>}
-                                        {(task.sub_contractor && this.props.loggedInStatus === 'LOGGED_IN') 
+                                        {(task.sub_contractor && this.props.loggedInStatus
+                                                                 === 'LOGGED_IN')
                                             ? (this.props.is_current_owner
                                                 || this.props.is_current_prime
                                                 || (task.subcontracts.api_v1_company_id
@@ -96,7 +101,12 @@ export default class PhaseTasks extends Component {
                                         {this.props.is_current_owner
                                             || this.props.is_current_prime
                                             ? <div>
-                                                <button onClick={() => this.props.deleter('Task', this.props.project_id, this.props.phase.id, task.id)}>Delete Task • 🗑️</button>
+                                                <button
+                                                    onClick={() => this.props.deleter('Task', 
+                                                                    this.props.project_id, 
+                                                                    this.props.phase.id, task.id)}>
+                                                        Delete Task • 🗑️
+                                                </button>
                                                 <Link to={{
                                                     pathname: `/edit/task/${task.id}`,
                                                     state: {
