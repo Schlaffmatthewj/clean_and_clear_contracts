@@ -275,6 +275,17 @@ input:last-child:hover, button:hover {
   padding-right: 5%;
 }
 
+.about-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 95%;
+  margin-top: 2%;
+  padding: 2%;
+  background-color: #C9CBA3;
+}
+
 
 
 /*                              FOOTER   */
