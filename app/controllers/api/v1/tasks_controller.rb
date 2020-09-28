@@ -6,8 +6,7 @@ module Api
             def index
                 tasks = Api::V1::Task.where api_v1_phase_id: params[:phase_id]
                 if tasks
-                    tasks_with_sub_contracts 
-                        = tasks.map { |task| task.to_json_with_sub_contract }
+                    tasks_with_sub_contracts = tasks.map { |task| task.to_json_with_sub_contract }
                     render json: { message: 'All tasks loaded successfully.', 
                         results: tasks_with_sub_contracts }
                 else

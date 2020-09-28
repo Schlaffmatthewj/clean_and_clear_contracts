@@ -6,8 +6,7 @@ module Api
             def index
                 companies = Api::V1::Company.all
                 if companies
-                    companies_with_contracts 
-                        = companies.map { |company| company.to_json_with_contracts }
+                    companies_with_contracts = companies.map { |company| company.to_json_with_contracts }
                     render json: { message: 'All companies loaded successfully.', 
                         results: companies_with_contracts }
                 else

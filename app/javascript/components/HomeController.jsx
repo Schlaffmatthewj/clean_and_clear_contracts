@@ -178,6 +178,7 @@ export default class HomeController extends Component {
                                 company={this.state.company}
                               />}
             />
+            <Route path='/*' component={Home} />
           </Switch>
           <Footer/>
         </Router>

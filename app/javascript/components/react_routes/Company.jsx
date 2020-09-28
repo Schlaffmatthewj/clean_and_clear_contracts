@@ -16,11 +16,16 @@ class Company extends Component {
         fetch(`/api/v1/companies/${id}`)
         .then(res => res.json())
         .then(res => {
-            this.props.history.push(`/company/${id}`)
-            this.setState({
-                company: res.results,
-                dataLoaded: true
-            })
+            if (res.status === 'not_found') {
+                this.props.history.push('/')
+                alert(`${res.error}`)
+            } else {
+                this.props.history.push(`/company/${id}`)
+                this.setState({
+                    company: res.results,
+                    dataLoaded: true
+                })
+            }
         })
         .catch(err => console.log(err))
     }
@@ -29,11 +34,16 @@ class Company extends Component {
         fetch(`/api/v1/companies/${id}`)
         .then(res => res.json())
         .then(res => {
-            this.props.history.push(`/company/${id}`)
-            this.setState({
-                company: res.results,
-                dataLoaded: true
-            })
+            if (res.status === 'not_found') {
+                this.props.history.push('/')
+                alert(`${res.error}`)
+            } else {
+                this.props.history.push(`/company/${id}`)
+                this.setState({
+                    company: res.results,
+                    dataLoaded: true
+                })
+            }
         })
         .catch(err => console.log(err))
     }

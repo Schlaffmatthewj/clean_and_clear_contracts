@@ -6,10 +6,9 @@ module Api
             def index
                 projects = Api::V1::Project.all
                 if projects
-                    phases_and_contracts 
-                        = projects.map { |project| project.to_json_with_phases_and_contracts }
+                    phases_and_contracts = projects.map { |project| project.to_json_with_phases_and_contracts }
                     render json: { message: 'All projects loaded successfully.', 
-                        results: phases_and_contracts }
+                        results: phases_and_contracts, loaded: true }
                 else
                     render json: { message: 'All projects loaded successfully.', 
                         results: projects }

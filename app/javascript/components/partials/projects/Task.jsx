@@ -26,11 +26,16 @@ class Task extends Component {
         let id = this.props.task_id
         fetch(`/api/v1/projects/${project_id}/phases/${phase_id}/tasks/${id}`)
         .then(res => res.json())
-        .then(res => {
-            this.setState({
-                task: res.results,
-                dataLoaded: true
-            })
+        .then(res => { 
+            if (res.status === 'not_found') {
+                this.props.errorHandle()
+                alert(`${res.error}`)
+            } else {
+                this.setState({
+                    task: res.results,
+                    dataLoaded: true
+                })
+            }
             if (this.props.loggedInStatus === 'LOGGED_IN') {
                 if (this.props.company.id
                     === this.state.task.project.api_v1_company_id) 
@@ -58,9 +63,15 @@ class Task extends Component {
             fetch(`/api/v1/projects/${project_id}/phases/${phase_id}/tasks/${id}`)
             .then(res => res.json())
             .then(res => {
-                this.setState({
-                    task: res.results,
-                })
+                if (res.status === 'not_found') {
+                    this.props.errorHandle()
+                    alert(`${res.error}`)
+                } else {
+                    this.setState({
+                        task: res.results,
+                        dataLoaded: true
+                    })
+                }
             })
             .catch(err => console.log(err))
         }
@@ -73,9 +84,15 @@ class Task extends Component {
         fetch(`/api/v1/projects/${project_id}/phases/${phase_id}/tasks/${id}`)
         .then(res => res.json())
         .then(res => {
-            this.setState({
-                task: res.results,
-            })
+            if (res.status === 'not_found') {
+                this.props.errorHandle()
+                alert(`${res.error}`)
+            } else {
+                this.setState({
+                    task: res.results,
+                    dataLoaded: true
+                })
+            }
         })
         .catch(err => console.log(err))
     }

@@ -4,8 +4,7 @@ module Api
             before_action :set_api_v1_prime_contract, only: [:destroy]
 
             def create
-                @api_v1_prime_contract 
-                    = Api::V1::PrimeContract.new api_v1_prime_contract_params
+                @api_v1_prime_contract = Api::V1::PrimeContract.new api_v1_prime_contract_params
         
                 if @api_v1_prime_contract.save
                     render json: { message: 'Prime_contract was successfully created.', 

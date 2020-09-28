@@ -24,10 +24,15 @@ class Profile extends Component {
         fetch(`/api/v1/companies/${id}`)
         .then(res => res.json())
         .then(res => {
-            this.setState({
-                company: res.results,
-                dataLoaded: true
-            })
+            if (res.status === 'not_found') {
+                this.props.history.push('/')
+                alert(`${res.error}`)
+            } else {
+                this.setState({
+                    company: res.results,
+                    dataLoaded: true
+                })
+            }
         })
         .catch(err => console.log(err))
     }

@@ -26,10 +26,15 @@ class Project extends Component {
         fetch(`/api/v1/projects/${id}`)
         .then(res => res.json())
         .then(res => {
-            this.setState({
-                project: res.results,
-                dataLoaded: true
-            })
+            if (res.status === 'not_found') {
+                this.props.errorHandle()
+                alert(`${res.error}`)
+            } else {
+                this.setState({
+                    project: res.results,
+                    dataLoaded: true
+                })
+            }
             if (this.props.loggedInStatus === 'LOGGED_IN') {
                 if (this.props.company.id 
                     === this.state.project.api_v1_company.id) 
@@ -90,10 +95,15 @@ class Project extends Component {
         fetch(`/api/v1/projects/${id}`)
         .then(res => res.json())
         .then(res => {
-            this.setState({
-                project: res.results,
-                dataLoaded: true
-            })
+            if (res.status === 'not_found') {
+                this.props.errorHandle()
+                alert(`${res.error}`)
+            } else {
+                this.setState({
+                    project: res.results,
+                    dataLoaded: true
+                })
+            }
         })
         .catch(err => console.log(err))
     }

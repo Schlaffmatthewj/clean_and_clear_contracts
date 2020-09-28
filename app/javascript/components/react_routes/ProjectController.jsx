@@ -12,6 +12,7 @@ class ProjectController extends Component {
         }
 
         this.switchToProfile = this.switchToProfile.bind(this)
+        this.errorHandle = this.errorHandle.bind(this)
     }
 
     
@@ -33,6 +34,10 @@ class ProjectController extends Component {
         }
     }
 
+    errorHandle() {
+        this.props.history.push('/')
+    }
+
     switchToProfile() {
         this.props.history.push(`/profile/${this.props.company.id}`)
     }
@@ -46,6 +51,7 @@ class ProjectController extends Component {
                 return <Project
                         loggedInStatus={this.props.loggedInStatus}
                         switchToProfile={this.switchToProfile}
+                        errorHandle={this.errorHandle}
                         company={this.props.company}
                         phaseForm={this.phaseForm}
                         project_id={project_id}
@@ -54,6 +60,7 @@ class ProjectController extends Component {
                 return <Task
                         loggedInStatus={this.props.loggedInStatus}
                         switchToProfile={this.switchToProfile}
+                        errorHandle={this.errorHandle}
                         company={this.props.company}
                         project_id={project_id}
                         phase_id={phase_id}
