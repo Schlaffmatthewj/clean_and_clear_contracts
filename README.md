@@ -112,7 +112,8 @@ gem 'puma', '~> 4.1'
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 4.0'
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
+# Turbolinks makes navigating your web application faster. 
+# Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.7'
@@ -135,10 +136,12 @@ group :development, :test do
 end
 
 group :development do
-  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
+  # Access an interactive console on exception pages 
+  # or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.2'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  # Spring speeds up development by keeping your 
+  # application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
@@ -156,11 +159,11 @@ gem 'dotenv-rails', groups: [:development, :test]
 ## Unsolved Problems && Major Hurdles
 
 <div>
-    <p>     One of my largest obstacles was that I actually taught myself a different way to connect Rails and React than what was showed to us in this course. This led to fewer resources to ask for help, so I spent a lot of time troubleshooting for myself. This was a Pro and a Con though.. as many troubles I encountered I was able to achieve my goals.
+    <p>One of my largest obstacles was that I actually taught myself a different way to connect Rails and React than what was showed to us in this course. This led to fewer resources to ask for help, so I spent a lot of time troubleshooting for myself. This was a Pro and a Con though.. as many troubles I encountered I was able to achieve my goals.
     </p>
-    <p>     Another Issue that I encountered was I felt a little disconnected from the content of the app. The concept is a real need for the construction industry, however with building a 'mock-up' for a product was so different than building something that returns data to you when you ask for it. This app is capable of handling more complex features that would make for a more attractive interface for users and companies alike. One more additional side-note is that this was my previous trade and this was a lot of old memories.
+    <p>Another Issue that I encountered was I felt a little disconnected from the content of the app. The concept is a real need for the construction industry, however with building a 'mock-up' for a product was so different than building something that returns data to you when you ask for it. This app is capable of handling more complex features that would make for a more attractive interface for users and companies alike. One more additional side-note is that this was my previous trade and this was a lot of old memories.
     </p>
-    <p>     Last note would be that having further knowledge about having sub-routers would've been useful. I was unsuccessful trying to impliment this in two projects.
+    <p>Last note would be that having further knowledge about having sub-routers would've been useful. I was unsuccessful trying to impliment this in two projects.
     </p>
 </div>
 
