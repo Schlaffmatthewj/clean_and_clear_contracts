@@ -3,12 +3,9 @@ import React, { Component } from "react"
 export default class ToggleIsDone extends Component {
     constructor(props) {
         super(props)
-
-        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleSubmit(evt) {
-        evt.preventDefault()
+    toggleComplete() {
         let data = {}
         const {
             project_id,
@@ -57,14 +54,11 @@ export default class ToggleIsDone extends Component {
 
     render() {
         return (
-            <form className='flex-column' onSubmit={this.handleSubmit}>
-                <input
-                type='submit'
-                value={this.props.is_done
+            <button onClick={() => this.toggleComplete()}>
+                {this.props.is_done
                         ? 'Mark as Incomplete • ↩️'
                         : 'Mark as Completed • ✅'}
-                />
-            </form>
+            </button>
         )
     }
 }

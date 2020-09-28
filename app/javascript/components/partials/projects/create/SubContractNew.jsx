@@ -49,7 +49,7 @@ export default class SubContractNew extends Component {
 
     render() {
         return (
-            <form className='flex-column' onSubmit={this.handleSubmit}>
+            <form className='sub-contract flex-column' onSubmit={this.handleSubmit}>
                 <input
                 type='money'
                 name='amount'

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-d
 import Header from "./partials/static/Header"
 import Footer from "./partials/static/Footer"
 
+import About from "../components/partials/static/About"
 import Home from "../components/react_routes/Home"
 import Company from "./react_routes/Company"
 import Profile from "./react_routes/Profile"
@@ -88,6 +89,7 @@ export default class HomeController extends Component {
                                 company={this.state.company}
                               />}
             />
+            <Route path='/about' exact component={About} />
             <Route path='/company/:company_id' exact
             render={props => <Company {...props}
                                 loggedInStatus={this.state.loggedInStatus}

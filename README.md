@@ -14,14 +14,14 @@
     - You can create a Company Profile which will grant access to more features of the app.
 
 - Companies && Project Owners
-    - When on your own Company's Profile there will be a option for Prime Contractor.
+    - When on your own Company's Profile there will be an option for Prime Contractor.
         - Create new Phases.
             - Allows for cleaner job organization.
             - Create as many Tasks needed to complete a Phase.
         - Create new Tasks.
             - Gives descriptions of the jobs to be completed within a scheduled time.
     - Have access to additional features regarding Projects and Tasks.
-        - Projects wil have an option to acquire the Prime Contract.
+        - Projects will have an option to acquire the Prime Contract.
             - This data will now be linked to your Company's Profile.
         - Tasks will have an option to acquire the Sub Contract.
             - This data will now be linked to your Company's Profile.
@@ -36,13 +36,13 @@
 ## General Approach
 ### Technologies Approach
 <div>
-    <p>I enjoyed the usability of Rails while we taught ourselves how to contruct the 3.5 app. Additionally I thought it would look better in my portfolio if I used Rails to launch an app on a larger scale. Rails made it extremely easy to define many-to-many relationships and all of the subsequent things needed for PostgreSQL commands. I think that React is just such a solid option for the Front-end that really didn't go up for debate. I am also comfortable with handling Authentication in React as well as handling State and Props.
+    <p>I enjoyed the usability of Rails while we taught ourselves how to construct the 3.5 app. Additionally, I thought it would look better in my portfolio if I used Rails to launch an app on a larger scale. Rails made it extremely easy to define many-to-many relationships and all of the subsequent things needed for PostgreSQL commands. I think that React is just such a solid option for the Front-end that really didn't go up for debate. I am also comfortable with handling Authentication in React as well as handling State and Props.
     </p>
 </div>
 
 ### Concept Approach
 <div>
-    <p>While working in the Construction Industry for over a decade I became used to do doing thing in such in out-dated way. All the way from turning in time-sheets for the week to the process of how companies have access to important documents regarding the project. This app is beginning to tackle some of those issues with storing cruical data regarding scheduling and the details of contractual responsibilities. Additional features that will be included in the next launch of this will include more ways to communicate with other companies. I would also like to entertain the idea of this app handling any pre-awarding of a contract, in the sense that a company could submit a bid for the contract and then have to be selected by the awarding party.
+    <p>While working in the Construction Industry for over a decade I became used to doing things in such an outdated way. All the way from turning in time-sheets for the week to the process of how companies have access to important documents regarding their projects. This app is beginning to tackle some of those issues with storing cruical data regarding scheduling and the details of contractual responsibilities. An additional feature that will be included in the next launch of this will be more ways to communicate with other companies. I would also like to entertain the idea of this app handling any pre-awarding of a contract, in the sense that a company could submit a bid for the contract and then have to be selected by the awarding party.
     </p>
 </div>
 
@@ -56,7 +56,7 @@
             - If you are clean you can use `git clone *copied_link_from_github*`.
             - If your status reads a current repo, cd into a brand new directory then run the above command.
         - Now you can cd into this newly cloned repository.
-            - You should run `yarn install` to pick up any dependecies that your device may not have available.
+            - You should run `yarn install` to pick up any dependencies that your device may not have available.
             - Additionally you will run `gem install` for the same reason.
     - Rails
         - Now you will want to create the database for your localhost using `rails db:create`.
@@ -159,11 +159,11 @@ gem 'dotenv-rails', groups: [:development, :test]
 ## Unsolved Problems && Major Hurdles
 
 <div>
-    <p>One of my largest obstacles was that I actually taught myself a different way to connect Rails and React than what was showed to us in this course. This led to fewer resources to ask for help, so I spent a lot of time troubleshooting for myself. This was a Pro and a Con though.. as many troubles I encountered I was able to achieve my goals.
+    <p>One of my largest obstacles was that I actually taught myself a different way to connect Rails and React than what was shown to us in this course. This led to fewer resources to ask for help, so I spent a lot of time troubleshooting for myself.
     </p>
     <p>Another Issue that I encountered was I felt a little disconnected from the content of the app. The concept is a real need for the construction industry, however with building a 'mock-up' for a product was so different than building something that returns data to you when you ask for it. This app is capable of handling more complex features that would make for a more attractive interface for users and companies alike. One more additional side-note is that this was my previous trade and this was a lot of old memories.
     </p>
-    <p>Last note would be that having further knowledge about having sub-routers would've been useful. I was unsuccessful trying to impliment this in two projects.
+    <p>Last note would be that having further knowledge about having sub-routers would've been useful. I was unsuccessful in trying to impliment this in two projects.
     </p>
 </div>
 
