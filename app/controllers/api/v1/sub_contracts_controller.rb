@@ -8,10 +8,10 @@ module Api
         
                 if @api_v1_sub_contract.save
                     render json: { message: 'Sub_contract was successfully created.', 
-                    results: @api_v1_sub_contract }
+                    results: @api_v1_sub_contract, created: true }
                 else
                     render json: { message: 'Sub_contract was NOT successfully created.', 
-                    results: @api_v1_sub_contract.errors }
+                    results: @api_v1_sub_contract.errors.full_messages }
                 end
             end
         

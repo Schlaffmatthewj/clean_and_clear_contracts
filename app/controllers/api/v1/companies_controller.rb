@@ -6,15 +6,19 @@ module Api
             def index
                 companies = Api::V1::Company.all
                 if companies
-                    companies_with_contracts = companies.map { |company| company.to_json_with_contracts }
-                    render json: { message: 'All companies loaded successfully.', results: companies_with_contracts }
+                    companies_with_contracts 
+                        = companies.map { |company| company.to_json_with_contracts }
+                    render json: { message: 'All companies loaded successfully.', 
+                        results: companies_with_contracts }
                 else
-                    render json: { message: 'All companies loaded successfully.', results: companies }
+                    render json: { message: 'All companies loaded successfully.', 
+                        results: companies }
                 end
             end
         
             def show
-                render json: { message: 'Company loaded successfully.', results: @api_v1_company.to_json_with_contracts }
+                render json: { message: 'Company loaded successfully.', 
+                    results: @api_v1_company.to_json_with_contracts }
             end
         
             def create
@@ -22,17 +26,21 @@ module Api
 
                 if api_v1_company.save
                     session[:company_id] = api_v1_company.id
-                    render json: { message: 'Company was successfully created.', status: :created, logged_in: true, results: api_v1_company }
+                    render json: { message: 'Company was successfully created.', 
+                        status: :created, logged_in: true, results: api_v1_company }
                 else
-                    render json: { message: 'Company was NOT successfully created.', status: 500, results: api_v1_company.errors }
+                    render json: { message: 'Company was NOT successfully created.', 
+                        status: 500, results: api_v1_company.errors.full_messages }
                 end
             end
 
             def update
                 if @api_v1_company.update api_v1_company_params
-                    render json: { message: 'Company was successfully updated.', results: @api_v1_company }
+                    render json: { message: 'Company was successfully updated.', 
+                        results: @api_v1_company, updated: true }
                 else
-                    render json: { message: 'Company was NOT successfully updated.', results: @api_v1_company.errors }
+                    render json: { message: 'Company was NOT successfully updated.', 
+                        results: @api_v1_company.errors.full_messages }
                 end
             end
 
@@ -49,7 +57,9 @@ module Api
             end
         
             def api_v1_company_params
-                params.require(:api_v1_company).permit(:name, :password, :password_confirmation, :address, :phone, :established_date, :is_prime, :is_owner)
+                params.require(:api_v1_company).permit(:name, :password, 
+                    :password_confirmation, :address, :phone, :established_date, 
+                    :is_prime, :is_owner)
             end
         end
     end    

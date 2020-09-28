@@ -47,7 +47,9 @@ class PhaseNew extends Component {
         })
         .then(res => res.json())
         .then(res => {
-            this.props.successfulCreation(res.results.api_v1_project_id)
+            if (res.created) this.props
+                    .successfulCreation(res.results.api_v1_project_id)
+            else alert(`${res.results}`)
         })
         .catch(err => console.log(err))
     }

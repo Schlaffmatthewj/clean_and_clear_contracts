@@ -47,7 +47,8 @@ class TaskNew extends Component {
         })
         .then(res => res.json())
         .then(res => {
-            this.props.successfulCreation(res.results.project_id)
+            if (res.created) this.props.successfulCreation(res.results.project_id)
+            else alert(`${res.results}`)
         })
         .catch(err => console.log(err))
     }

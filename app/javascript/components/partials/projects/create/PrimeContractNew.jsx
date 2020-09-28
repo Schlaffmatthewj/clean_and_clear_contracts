@@ -37,8 +37,12 @@ export default class PrimeContractNew extends Component {
                 credentials: 'include'
             })
             .then(res => res.json())
-            .then(() => {
-                this.props.addedContract()
+            .then(res => {
+                if (res.created) this.props.addedContract()
+                else {
+                    this.setState({ amount: '' })
+                    alert(`${res.results}`)
+                }
             })
             .catch(err => console.log(err))
         } else {

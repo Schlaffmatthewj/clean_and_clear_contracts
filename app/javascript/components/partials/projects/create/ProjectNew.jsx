@@ -48,7 +48,8 @@ class ProjectNew extends Component {
         })
         .then(res => res.json())
         .then(res => {
-            this.props.successfulCreation(res.results.id)
+            if (res.created) this.props.successfulCreation(res.results.id)
+            else alert(`${res.results}`)
         })
         .catch(err => console.log(err))
     }

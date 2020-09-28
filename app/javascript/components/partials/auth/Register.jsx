@@ -50,7 +50,8 @@ class Register extends Component {
         })
         .then(res => res.json())
         .then(res => {
-            this.props.handleSuccessfulAuth(res.results)
+            if (res.logged_in) this.props.handleSuccessfulAuth(res.results)
+            else alert(`${res.results}`)
         })
         .catch(err => console.log(err))
     }

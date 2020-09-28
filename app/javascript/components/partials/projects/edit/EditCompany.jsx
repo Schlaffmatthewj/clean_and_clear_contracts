@@ -38,7 +38,11 @@ export default class EditProject extends Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
       credentials: 'include'
-    }).then(() => this.props.handleSuccessfulCompanyEdit(this.props.company))
+    }).then(res => res.json())
+    .then(res => {
+      if (res.updated) this.props.handleSuccessfulCompanyEdit(this.props.company)
+      else alert(`${res.results}`)
+    })
     .catch(err => console.log(err))
   }
 

@@ -7,14 +7,17 @@ module Api
                 phases = Api::V1::Phase.where api_v1_project_id: params[:project_id]
                 if phases
                     phases_with_tasks = phases.map { |phase| phase.to_json_with_tasks }
-                    render json: { message: 'All phases loaded successfully.', results: phases_with_tasks }
+                    render json: { message: 'All phases loaded successfully.', 
+                        results: phases_with_tasks }
                 else
-                    render json: { message: 'All phases loaded successfully.', results: 0 }
+                    render json: { message: 'All phases loaded successfully.', 
+                        results: 0 }
                 end
             end
         
             def show
-                render json: { message: 'Phase loaded successfully.', results: @api_v1_phase.to_json_with_tasks }
+                render json: { message: 'Phase loaded successfully.', 
+                    results: @api_v1_phase.to_json_with_tasks }
             end
         
             def create
@@ -23,17 +26,21 @@ module Api
                 @api_v1_phase[:api_v1_project_id] = project_id
         
                 if @api_v1_phase.save
-                    render json: { message: 'Phase was successfully created.', results: @api_v1_phase }
+                    render json: { message: 'Phase was successfully created.', 
+                        created: true, results: @api_v1_phase }
                 else
-                    render json: { message: 'Phase was NOT successfully created.', results: @api_v1_phase.errors }
+                    render json: { message: 'Phase was NOT successfully created.', 
+                        results: @api_v1_phase.errors.full_messages }
                 end
             end
         
             def update
                 if @api_v1_phase.update api_v1_phase_params
-                    render json: { message: 'Phase was successfully updated.', results: @api_v1_phase.to_json_with_tasks }
+                    render json: { message: 'Phase was successfully updated.', updated: true,
+                        results: @api_v1_phase.to_json_with_tasks }
                 else
-                    render json: { message: 'Phase was NOT successfully updated.', results: @api_v1_phase.errors }
+                    render json: { message: 'Phase was NOT successfully updated.', 
+                        results: @api_v1_phase.errors.full_messages }
                 end
             end
         
@@ -49,7 +56,8 @@ module Api
             end
         
             def api_v1_phase_params
-                params.require(:api_v1_phase).permit(:title, :description, :budget, :start_date, :turnover_date, :is_done)
+                params.require(:api_v1_phase).permit(:title, :description, :budget, 
+                    :start_date, :turnover_date, :is_done)
             end
         end
     end    

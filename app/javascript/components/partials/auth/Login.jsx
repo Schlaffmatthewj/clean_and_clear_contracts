@@ -38,7 +38,14 @@ class Login extends Component {
         })
         .then(res => res.json())
         .then(res => {
-            this.props.handleSuccessfulAuth(res.company)
+            if (res.logged_in) this.props.handleSuccessfulAuth(res.company)
+            else {
+                this.setState({
+                    name: '',
+                    password: ''
+                })
+                alert('Input does not match existing records')
+            }
         })
         .catch(err => console.log(err))
     }

@@ -6,15 +6,18 @@ module Api
             def index
                 tasks = Api::V1::Task.where api_v1_phase_id: params[:phase_id]
                 if tasks
-                    tasks_with_sub_contracts = tasks.map { |task| task.to_json_with_sub_contract }
-                    render json: { message: 'All tasks loaded successfully.', results: tasks_with_sub_contracts }
+                    tasks_with_sub_contracts 
+                        = tasks.map { |task| task.to_json_with_sub_contract }
+                    render json: { message: 'All tasks loaded successfully.', 
+                        results: tasks_with_sub_contracts }
                 else
                     render json: { message: 'All tasks loaded successfully.', results: 0 }
                 end
             end
         
             def show
-                render json: { message: 'Task loaded successfully.', results: @api_v1_task.to_json_with_sub_contract }
+                render json: { message: 'Task loaded successfully.', 
+                    results: @api_v1_task.to_json_with_sub_contract }
             end
         
             def create
@@ -30,17 +33,21 @@ module Api
                     }
         
                 if @api_v1_task.save
-                    render json: { message: 'Task was successfully created.', results: task }
+                    render json: { message: 'Task was successfully created.', 
+                        results: task, created: true }
                 else
-                    render json: { message: 'Task was NOT successfully created.', results: @api_v1_task.errors }
+                    render json: { message: 'Task was NOT successfully created.', 
+                        results: @api_v1_task.errors.full_messages }
                 end
             end
         
             def update
                 if @api_v1_task.update api_v1_task_params
-                    render json: { message: 'Task was successfully updated.', results: @api_v1_task.to_json_with_sub_contract }
+                    render json: { message: 'Task was successfully updated.', 
+                        results: @api_v1_task.to_json_with_sub_contract, updated: true }
                 else
-                    render json: { message: 'Task was NOT successfully updated.', results: @api_v1_task.errors }
+                    render json: { message: 'Task was NOT successfully updated.', 
+                        results: @api_v1_task.errors.full_messages }
                 end
             end
         
@@ -56,7 +63,8 @@ module Api
             end
         
             def api_v1_task_params
-                params.require(:api_v1_task).permit(:title, :description, :budget, :start_date, :turnover_date, :is_done)
+                params.require(:api_v1_task).permit(:title, :description, :budget, 
+                    :start_date, :turnover_date, :is_done)
             end
         end
     end    

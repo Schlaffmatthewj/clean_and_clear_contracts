@@ -33,7 +33,11 @@ class PrimeNew extends Component {
             })
             .then(res => res.json())
             .then(res => {
-                this.props.togglePrimeOrOwner(res.results)
+                if (res.created) this.props.togglePrimeOrOwner(res.results)
+                else {
+                    this.setState({ password: '' })
+                    alert(`${res.results}`)
+                }
             })
             .catch(err => console.log(err))
         } else {

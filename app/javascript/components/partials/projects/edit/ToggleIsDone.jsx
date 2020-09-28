@@ -21,8 +21,9 @@ export default class ToggleIsDone extends Component {
                 body: JSON.stringify(data),
                 credentials: 'include'
             }).then(res => res.json())
-            .then(() => {
-                this.props.fireReload()
+            .then(res => {
+                if (res.updated) this.props.fireReload()
+                else alert(`${res.results}`)
             })
             .catch(err => console.log(err))
         } else if (parentType === 'Phase') {
@@ -33,8 +34,9 @@ export default class ToggleIsDone extends Component {
                 body: JSON.stringify(data),
                 credentials: 'include'
             }).then(res => res.json())
-            .then(() => {
-                this.props.fireReload()
+            .then(res => {
+                if (res.updated) this.props.fireReload()
+                else alert(`${res.results}`)
             })
             .catch(err => console.log(err))
         } else if (parentType === 'Project') {
@@ -45,8 +47,9 @@ export default class ToggleIsDone extends Component {
                 body: JSON.stringify(data),
                 credentials: 'include'
             }).then(res => res.json())
-            .then(() => {
-                this.props.fireReload()
+            .then(res => {
+                if (res.updated) this.props.fireReload()
+                else alert(`${res.results}`)
             })
             .catch(err => console.log(err))
         }

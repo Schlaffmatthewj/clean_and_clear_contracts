@@ -6,15 +6,19 @@ module Api
             def index
                 projects = Api::V1::Project.all
                 if projects
-                    phases_and_contracts = projects.map { |project| project.to_json_with_phases_and_contracts }
-                    render json: { message: 'All projects loaded successfully.', results: phases_and_contracts }
+                    phases_and_contracts 
+                        = projects.map { |project| project.to_json_with_phases_and_contracts }
+                    render json: { message: 'All projects loaded successfully.', 
+                        results: phases_and_contracts }
                 else
-                    render json: { message: 'All projects loaded successfully.', results: projects }
+                    render json: { message: 'All projects loaded successfully.', 
+                        results: projects }
                 end
             end
         
             def show
-                render json: { message: 'Project loaded successfully.', results: @api_v1_project.to_json_with_phases_and_contracts }
+                render json: { message: 'Project loaded successfully.', 
+                    results: @api_v1_project.to_json_with_phases_and_contracts }
             end
         
             def create
@@ -23,17 +27,21 @@ module Api
                 @api_v1_project[:api_v1_company_id] = property_owner[:id]
 
                 if @api_v1_project.save
-                    render json: { message: 'Project was successfully created.', results: @api_v1_project }
+                    render json: { message: 'Project was successfully created.', 
+                        results: @api_v1_project, created: true }
                 else
-                    render json: { message: 'Project was NOT successfully created.', results: @api_v1_project.errors }
+                    render json: { message: 'Project was NOT successfully created.', 
+                        results: @api_v1_project.errors.full_messages }
                 end
             end
         
             def update
                 if @api_v1_project.update! api_v1_project_params
-                    render json: { message: 'Project was successfully updated.', results: @api_v1_project.to_json_with_phases_and_contracts }
+                    render json: { message: 'Project was successfully updated.', 
+                    updated: true, results: @api_v1_project.to_json_with_phases_and_contracts }
                 else
-                    render json: { message: 'Project was NOT successfully updated.', results: @api_v1_project.errors }
+                    render json: { message: 'Project was NOT successfully updated.', 
+                        results: @api_v1_project.errors.full_messages }
                 end
             end
         
@@ -49,7 +57,8 @@ module Api
             end
         
             def api_v1_project_params
-                params.require(:api_v1_project).permit(:name, :owner, :location, :budget, :start_date, :turnover_date, :is_done)
+                params.require(:api_v1_project).permit(:name, :owner, :location, 
+                    :budget, :start_date, :turnover_date, :is_done)
             end
         end
     end
