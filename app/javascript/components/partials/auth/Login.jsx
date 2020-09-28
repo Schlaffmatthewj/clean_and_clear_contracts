@@ -38,8 +38,9 @@ class Login extends Component {
         })
         .then(res => res.json())
         .then(res => {
-            if (res.logged_in) this.props.handleSuccessfulAuth(res.company)
-            else {
+            if (res.logged_in) {
+                this.props.handleSuccessfulAuth(res.company)
+            } else {
                 this.setState({
                     name: '',
                     password: ''
