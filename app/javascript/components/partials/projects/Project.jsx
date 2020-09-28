@@ -131,7 +131,6 @@ class Project extends Component {
     }
 
     conditionalRender() {
-        console.log('this.state.project', this.state.project)
         const {
             id,
             name,
