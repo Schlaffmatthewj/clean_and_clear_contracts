@@ -12,7 +12,8 @@ module Api
                     render json: {
                         status: :created,
                         logged_in: true,
-                        company: company
+                        company: company,
+                        session: session
                     }
                 else
                     render json: { status: 401 }
