@@ -46,6 +46,27 @@
     </p>
 </div>
 
+## Installation Process
+
+- Github
+    - If you plan on making edits, first fork the repo and then you want the link for your github copied to your clipboard.
+- CLI
+    - Git
+        - First check your directory for an existing git repository using `git status`.
+            - If you are clean you can use `git clone *copied_link_from_github*`.
+            - If your status reads a current repo, cd into a brand new directory then run the above command.
+        - Now you can cd into this newly cloned repository.
+            - You should run `yarn install` to pick up any dependecies that your device may not have available.
+            - Additionally you will run `gem install` for the same reason.
+    - Rails
+        - Now you will want to create the database for your localhost using `rails db:create`.
+        - Next you migrate the tables into the database with `rails db:migrate`.
+        - DONE!! run `rails server`.
+- Browser
+    - Enter this URL `http://localhost:3000/`.
+    - ENJOY!!
+
+
 ## Included Technologies
 
 - package.json
@@ -131,14 +152,15 @@ gem 'dotenv-rails', groups: [:development, :test]
 
 #### Also used NumberFormat && I added 'rack-cors' to the Gemfile
 
+
 ## Unsolved Problems && Major Hurdles
 
 <div>
-    <p>One of my largest obstacles was that I actually taught myself a different way to connect Rails and React than what was showed to us in this course. This led to fewer resources to ask for help, so I spent a lot of time troubleshooting for myself. This was a Pro and a Con though.. as many troubles I encountered I was able to achieve my goals.
+    <p>     One of my largest obstacles was that I actually taught myself a different way to connect Rails and React than what was showed to us in this course. This led to fewer resources to ask for help, so I spent a lot of time troubleshooting for myself. This was a Pro and a Con though.. as many troubles I encountered I was able to achieve my goals.
     </p>
-    <p>Another Issue that I encountered was I felt a little disconnected from the content of the app. The concept is a real need for the construction industry, however with building a 'mock-up' for a product was so different than building something that returns data to you when you ask for it. This app is capable of handling more complex features that would make for a more attractive interface for users and companies alike. One more additional side-note is that this was my previous trade and this was a lot of old memories.
+    <p>     Another Issue that I encountered was I felt a little disconnected from the content of the app. The concept is a real need for the construction industry, however with building a 'mock-up' for a product was so different than building something that returns data to you when you ask for it. This app is capable of handling more complex features that would make for a more attractive interface for users and companies alike. One more additional side-note is that this was my previous trade and this was a lot of old memories.
     </p>
-    <p>Last note would be that having further knowledge about having sub-routers would've been useful. I was unsuccessful trying to impliment this in two projects.
+    <p>     Last note would be that having further knowledge about having sub-routers would've been useful. I was unsuccessful trying to impliment this in two projects.
     </p>
 </div>
 
