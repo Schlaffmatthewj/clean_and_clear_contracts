@@ -155,7 +155,6 @@ nav {
 .company-profile-body {
   width: 97.5%;
   padding: 2%;
-  /* background-color: lightcoral; */
 }
 
 .company-profile-details {
@@ -266,6 +265,14 @@ input:last-child:hover, button:hover {
 
 .sub-contract {
   background-color: #F9CC6F;
+}
+
+
+
+/*                              ABOUT   */
+.about {
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 
