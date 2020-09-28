@@ -2,7 +2,8 @@
 
 ## <a href='https://fast-coast-80968.herokuapp.com/' target='_blank' >Heroku Deployment</a>
 
-<image src='https://imgur.com/a/UOdJnEU' alt='screenshot of the app'/>
+<!-- <image src='https://imgur.com/a/UOdJnEU' alt='screenshot of the app'/> -->
+![alt text](https://imgur.com/a/UOdJnEU)
 
 ## User Stories
 
