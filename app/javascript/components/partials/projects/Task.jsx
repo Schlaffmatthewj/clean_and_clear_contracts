@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import NumberFormat from 'react-number-format';
 
 import ToggleIsDone from "./edit/ToggleIsDone"
+import PrimeContractNew from "./create/PrimeContractNew"
 import SubContractNew from "./create/SubContractNew"
 
 class Task extends Component {
