@@ -54,12 +54,14 @@ class Project extends Component {
                     || this.state.is_current_prime)
                 ? <div>
                     <Link to={`/create/project/${this.state.project.id}/phase`}><button>Add A Phase • 👷</button></Link>
-                    <ToggleIsDone
-                        parentType='Project'
-                        is_done={this.state.project.is_done}
-                        fireReload={this.fireReload}
-                        project_id={this.state.project.id}
-                    />
+                    {this.state.project.prime_contractor
+                        ? <ToggleIsDone
+                            parentType='Project'
+                            is_done={this.state.project.is_done}
+                            fireReload={this.fireReload}
+                            project_id={this.state.project.id}
+                        />
+                        : null}
                 </div>
                 : null}
             </div>

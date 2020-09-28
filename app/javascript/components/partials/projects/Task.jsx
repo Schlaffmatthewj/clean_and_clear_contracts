@@ -102,24 +102,6 @@ class Task extends Component {
         this.props.switchToProfile()
     }
 
-    checkPrime() {
-        return (
-            <div>
-                {(this.props.loggedInStatus ===  'LOGGED_IN')
-                ? (this.props.company.is_prime)
-                    ? <PrimeContractNew
-                        project={this.state.task.project}
-                        company={this.props.company}
-                        addedContract={this.addedContract}
-                    />
-                    : <Link to='/create/prime'>
-                        Request Prime Contractor Permissions
-                    </Link>
-                : <p>No Prime Contractor</p> }
-            </div>
-        )
-    }
-
     conditionalRender() {
         const {
             task
@@ -147,7 +129,7 @@ class Task extends Component {
                                     {task.prime_contractor.name}
                                 </Link>
                             </h2> 
-                            : this.checkPrime()}
+                            : <p>No Prime Contractor</p>}
                         <h3>Task: {task.title}</h3>
                         <p>Description: {task.description}</p>
                         <p>Start Date: {new_start}</p>
