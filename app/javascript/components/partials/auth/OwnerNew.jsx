@@ -33,8 +33,9 @@ class OwnerNew extends Component {
             })
             .then(res => res.json())
             .then(res => {
-                if (res.created) this.props.togglePrimeOrOwner(res.results)
-                else {
+                if (res.created) {
+                    this.props.togglePrimeOrOwner(res.results)
+                } else {
                     this.setState({ password: '' })
                     alert(`${res.results}`)
                 }

@@ -6,7 +6,7 @@ module Api
             def create
                 company = Api::V1::Company.find_by(name: params["api_v1_company"]["name"])
                     .try(:authenticate, params["api_v1_company"]["password"])
-        
+
                 if company
                     session[:company_id] = company.id
                     render json: {
