@@ -38,7 +38,6 @@ class Login extends Component {
         })
         .then(res => res.json())
         .then(res => {
-            console.log('login res', res)
             if (res.logged_in) {
                 this.props.handleSuccessfulAuth(res.company)
             } else {
